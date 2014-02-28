@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>pl.slawas</groupId>
+	<artifactId>schelper</artifactId>
+	<name>SC Biblioteka Pomocnicza</name>
+	<version>WS-0.0.2-SNAPSHOT</version>
+	<description>Pomocnicza biblioteka Sławka Cichego (SC)</description>
+	<developers>
+		<developer>
+			<id>slawas</id>
+			<name>Sławomir Cichy</name>
+			<email>slawas@slawas.pl</email>
+			<roles>
+				<role>developer</role>
+				<role>manager</role>
+			</roles>
+			<url>
+				http://slawas.pl
+			</url>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
+
+	<properties>
+		<jboss.home.dir>.</jboss.home.dir>
+	</properties>
+	<build>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-webdav</artifactId>
+				<version>1.0-beta-2</version>
+			</extension>
+		</extensions>
+		<resources>
+			<resource>
+				<filtering>true</filtering>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-site-plugin</artifactId>
+				<configuration>
+					<outputEncoding>UTF-8</outputEncoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.13</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.4</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Tylko do testów twl4j (nakładki na logger'a) -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.5.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.5.2</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.3</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- <dependency> <groupId>commons-fileupload</groupId> <artifactId>commons-fileupload</artifactId> 
+			<version>1.1.1</version> <scope>provided</scope> </dependency> <dependency> 
+			<groupId>commons-io</groupId> <artifactId>commons-io</artifactId> <version>1.0</version> 
+			<scope>provided</scope> </dependency> -->
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.axis</groupId>
+			<artifactId>axis-jaxrpc</artifactId>
+			<version>1.4</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.axis</groupId>
+			<artifactId>axis</artifactId>
+			<version>1.4</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-discovery</groupId>
+			<artifactId>commons-discovery</artifactId>
+			<version>0.4</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.ejb</groupId>
+			<artifactId>ejb</artifactId>
+			<version>3.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.3</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.xml</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>2.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.xml.soap</groupId>
+			<artifactId>saaj-api</artifactId>
+			<version>1.3</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+			<version>1.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sun</groupId>
+			<artifactId>tools</artifactId>
+			<version>1.6.0_37</version>
+		</dependency>
+
+	</dependencies>
+</project>
