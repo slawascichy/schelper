@@ -4,7 +4,7 @@
 	<groupId>pl.slawas</groupId>
 	<artifactId>schelper</artifactId>
 	<name>SC Biblioteka Pomocnicza</name>
-	<version>0.0.3</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<description>Pomocnicza biblioteka Sławka Cichego (SC)</description>
 	<developers>
 		<developer>
