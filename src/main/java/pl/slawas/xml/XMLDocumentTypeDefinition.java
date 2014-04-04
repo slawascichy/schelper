@@ -43,7 +43,7 @@ public class XMLDocumentTypeDefinition {
 		 * dokument systemowy
 		 */
 		SYSTEM,
-				/**
+		/**
 		 * dokument publiczny
 		 */
 		PUBLIC;
@@ -74,18 +74,17 @@ public class XMLDocumentTypeDefinition {
 
 	private final String docElement;
 
-	private String comment = "-//Wirtualna Polska S.A.//DTD document//PL";
+	private String comment = "-//Sci Software Sławomir Cichy//DTD document//PL";
 
 	/**
 	 * Konstruktor który domyślnie ustawi wartość pola {@link #docType} na
 	 * {@link DTDType#PUBLIC}
 	 * 
 	 * @param docName
-	 *           nazwa dokumentu np. {@code 
-	 *           "http://projekty.int.slawas.pl/ares-static
-	 *           /dtd/dhtmlselect_grouped_list_1_0.dtd"}
+	 *            nazwa dokumentu np.
+	 *            {@code  "http://scisoftware.pl/dhtmlselect/dtd/dhtmlselect_grouped_list_1_0.dtd"}
 	 * @param docElement
-	 *           nazwa elementu którego dotuczy DTD
+	 *            nazwa elementu którego dotuczy DTD
 	 * 
 	 */
 	public XMLDocumentTypeDefinition(String docName, String docElement) {
@@ -98,16 +97,16 @@ public class XMLDocumentTypeDefinition {
 	 * Konstruktor, który ustawi zarówno typ dokumentu jaki i jego nazwę
 	 * 
 	 * @param docType
-	 *           możliwe wartośi: {@link DTDType#PUBLIC} albo
-	 *           {@link DTDType#SYSTEM}
+	 *            możliwe wartośi: {@link DTDType#PUBLIC} albo
+	 *            {@link DTDType#SYSTEM}
 	 * @param docName
-	 *           nazwa dokumentu np. {@code 
-	 *           "http://projekty.int.slawas.pl/ares-static
-	 *           /dtd/dhtmlselect_grouped_list_1_0.dtd"}
+	 *            nazwa dokumentu np.
+	 *            {@code  "http://scisoftware.pl/dhtmlselect/dtd/dhtmlselect_grouped_list_1_0.dtd"}
 	 * @param docElement
-	 *           nazwa elementu którego dotuczy DTD
+	 *            nazwa elementu którego dotuczy DTD
 	 */
-	public XMLDocumentTypeDefinition(DTDType docType, String docName, String docElement) {
+	public XMLDocumentTypeDefinition(DTDType docType, String docName,
+			String docElement) {
 		this.docType = docType;
 		this.docName = docName;
 		this.docElement = docElement;
@@ -129,10 +128,12 @@ public class XMLDocumentTypeDefinition {
 
 	public String toString() {
 		return "<!DOCTYPE "
-				+ this.docElement + " "
-				+ this.docType.toString() + " "
-				+ (StringUtils.isNotBlank(this.comment) ? "\"" + this.comment + "\" " : "")
-				+ "\"" + this.docName + "\">";
+				+ this.docElement
+				+ " "
+				+ this.docType.toString()
+				+ " "
+				+ (StringUtils.isNotBlank(this.comment) ? "\"" + this.comment
+						+ "\" " : "") + "\"" + this.docName + "\">";
 	}
 
 	/**
