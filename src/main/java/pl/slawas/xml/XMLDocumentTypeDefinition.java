@@ -82,7 +82,7 @@ public class XMLDocumentTypeDefinition {
 	 * 
 	 * @param docName
 	 *            nazwa dokumentu np.
-	 *            {@code  "http://scisoftware.pl/dhtmlselect/dtd/dhtmlselect_grouped_list_1_0.dtd"}
+	 *            {@code  "http://scisoftware.pl/dtd/dhtmlselect/dhtmlselect_grouped_list_1_0.dtd"}
 	 * @param docElement
 	 *            nazwa elementu którego dotuczy DTD
 	 * 
@@ -101,7 +101,7 @@ public class XMLDocumentTypeDefinition {
 	 *            {@link DTDType#SYSTEM}
 	 * @param docName
 	 *            nazwa dokumentu np.
-	 *            {@code  "http://scisoftware.pl/dhtmlselect/dtd/dhtmlselect_grouped_list_1_0.dtd"}
+	 *            {@code  "http://scisoftware.pl/dtd/dhtmlselect/dhtmlselect_grouped_list_1_0.dtd"}
 	 * @param docElement
 	 *            nazwa elementu którego dotuczy DTD
 	 */

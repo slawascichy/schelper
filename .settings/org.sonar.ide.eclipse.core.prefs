@@ -1,6 +1,7 @@
 analyseLocally=false
 eclipse.preferences.version=1
-extraProperties=sonar.host.url\=http\://sonar.ibpm.pro
+extraProperties=sonar.host.url\=https\://sonar.ibpm.pro
+lastAnalysisDate=1393948916000
 projectKey=pl.slawas\:schelper
-serverUrl=http\://localhost\:9000
+serverUrl=https\://sonar.ibpm.pro\:9001
 version=2
