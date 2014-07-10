@@ -6,7 +6,7 @@
  * THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN
- * NO EVENT SHALL SŁAWOMIR CICHY BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * NO EVENT SHALL SĹ�AWOMIR CICHY BE LIABLE FOR ANY DIRECT, INDIRECT,
  * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
  * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
  * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
@@ -31,8 +31,8 @@ import sun.tools.java.CompilerError;
 
 /**
  * 
- * ClassCreator - dynamiczne tworzenie klas, na podstawie źródła danych
- * zawartego w {@link StringBuffer}. Przykład zastosowania można znaleźć w
+ * ClassCreator - dynamiczne tworzenie klas, na podstawie źródła‚a danych
+ * zawartego w {@link StringBuffer}. Przykład zastosowania można znależć w
  * implementacji testów:
  * 
  * <pre>
@@ -87,13 +87,13 @@ public class ClassCreator implements Serializable {
 
 	public Class<?> generate(String className, StringBuffer source)
 			throws IOException, ClassNotFoundException {
-		/* utworzenie pliku źródła */
+		/* utworzenie pliku ĹşrĂłdĹ‚a */
 		FileWriter aWriter = new FileWriter(classesDir + "/" + className
 				+ ".java", true);
 		aWriter.write(source.toString());
 		aWriter.flush();
 		aWriter.close();
-		/* kompilacja źródła */
+		/* kompilacja ĹşrĂłdĹ‚a */
 		String[] sourceFile = { (new StringBuffer()).append(classesDir)
 				.append("/").append(className).append(".java").toString() };
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
