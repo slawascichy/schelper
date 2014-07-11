@@ -34,71 +34,71 @@ public interface _IPagingInfo extends Serializable {
 	 * 
 	 * @return informacje o aktualnej stronie
 	 */
-	public Page getCurrentPageInfo();
+	Page getCurrentPageInfo();
 
 	/**
 	 * Pobranie informacji o pierwszej stronie
 	 * 
 	 * @return informacje o pierwszej stronie
 	 */
-	public Page getFirstPageInfo();
+	Page getFirstPageInfo();
 
 	/**
 	 * Pobranie informacji o poprzedniej stronie
 	 * 
 	 * @return informacje o poprzedniej stronie
 	 * @throws PagedResultException
-	 *            zwraca błąd gdy obecna strona {@link #getCurrentPageInfo()}
-	 *            jest stroną pierwszą. Poprzednia nie istnieje.
+	 *             zwraca błąd gdy obecna strona {@link #getCurrentPageInfo()}
+	 *             jest stroną pierwszą. Poprzednia nie istnieje.
 	 */
-	public Page getPreviousPageInfo() throws PagedResultException;
+	Page getPreviousPageInfo() throws PagedResultException;
 
 	/**
 	 * Pobranie informacji o następnej stronie
 	 * 
 	 * @return informacje o następnej stronie
 	 * @throws PagedResultException
-	 *            zwraca błąd gdy obecna strona {@link #getCurrentPageInfo()}
-	 *            jest stroną ostatnią. Nastepna nie istnieje.
+	 *             zwraca błąd gdy obecna strona {@link #getCurrentPageInfo()}
+	 *             jest stroną ostatnią. Nastepna nie istnieje.
 	 */
-	public Page getNextPageInfo() throws PagedResultException;
+	Page getNextPageInfo() throws PagedResultException;
 
 	/**
 	 * Pobranie informacji o stronie o podanym numerze
 	 * 
 	 * @param pageNumber
-	 *           numer intetersującej nas strony
+	 *            numer intetersującej nas strony
 	 * @return informacje o stronie
 	 * @throws PagedResultException
-	 *            zwraca błąd gdy strona o danym numerze nie istnieje.
+	 *             zwraca błąd gdy strona o danym numerze nie istnieje.
 	 */
-	public Page getPageInfo(Integer pageNumber) throws PagedResultException;
+	Page getPageInfo(Integer pageNumber) throws PagedResultException;
 
 	/**
 	 * Pobranie informacji o ostatniej stronie
 	 * 
 	 * @return informacje o ostatniej stronie
 	 */
-	public Page getLastPageInfo();
+	Page getLastPageInfo();
 
 	/**
 	 * @return the pages
 	 */
-	public Enumeration<Page> getAllPages();
+	Enumeration<Page> getAllPages();
 
 	/**
 	 * Komunikat wyniku
 	 * 
 	 * @return komunikat wyniku {@link ResultMessage}
 	 */
-	public ResultMessage getMessage();
+	ResultMessage getMessage();
 
 	/**
 	 * Liczba wswzystkich wierszy jakie można otrzymać w wyniku tego zapytania.
 	 * 
 	 * @return liczba wierszy
 	 */
-	public int getResultSize();
+	int getResultSize();
 
 	/**
 	 * Metode można wykożystać do badania czy został przekroczony zakres liczby
@@ -118,35 +118,32 @@ public interface _IPagingInfo extends Serializable {
 	 * if (pagedResult.hasMoreResultRows()) {
 	 * 	T lastQuery = pagedResult.getQuery();
 	 * 	lastQuery.setExecuted(false);
-	 * 	lastQuery.execute(
-	 * 			em.getConnection(),
-	 * 			pagedResult.getLastRowPosition() + 1,
-	 * 			null,
-	 * 			CacheUsage.NONE);
+	 * 	lastQuery.execute(em.getConnection(), pagedResult.getLastRowPosition() + 1,
+	 * 			null, CacheUsage.NONE);
 	 * }
 	 * </pre>
 	 * 
 	 * @return {@code true} oznacza, że jest więcej wierszy w bazie danych
 	 *         spełniających warunek wyszukiwania zapytania SQL.
 	 */
-	public boolean hasMoreResultRows();
+	boolean hasMoreResultRows();
 
 	/**
 	 * Implementacja biblioteki pozwala na pobranie kolejnej czesci wyników
-	 * zapytania w przypadku gdy {@link #hasMoreResultRows()} zwraca {@code true}
-	 * . Dla takiego stronicowanego wyniku istotna jest infomacja czy posiada ona
-	 * poprzednia część rezultatu.
+	 * zapytania w przypadku gdy {@link #hasMoreResultRows()} zwraca
+	 * {@code true} . Dla takiego stronicowanego wyniku istotna jest infomacja
+	 * czy posiada ona poprzednia część rezultatu.
 	 * 
 	 * @return {@code true} oznacza, że dany wynik jest wynikiem rozszerzonym
 	 *         (poza granicą maksymalnej liczby stron) i posiada poprzedzający
 	 *         obecny wynik obiekt wyniku stronicowanego.
 	 */
-	public boolean hasPreviousResultRows();
+	boolean hasPreviousResultRows();
 
 	/**
 	 * @return ostatnia pozycja wiersza w stronicowanym wyniku zapytania.
 	 */
-	public Integer getLastRowPosition();
+	Integer getLastRowPosition();
 
 	/**
 	 * @see #hasPreviousResultRows()
@@ -156,7 +153,7 @@ public interface _IPagingInfo extends Serializable {
 	 *         poprzenia paczka nie istnieje (zobacz
 	 *         {@link #hasPreviousResultRows()}), zwraca {@code null}.
 	 */
-	public Integer getFirstRowPositionOfPreviousResultRows();
+	Integer getFirstRowPositionOfPreviousResultRows();
 
 	/**
 	 * Na skróty: Pobieranie rozmiaru obecnej strony.
@@ -168,7 +165,7 @@ public interface _IPagingInfo extends Serializable {
 	 * 
 	 * @return rozmiar aktualnej strony
 	 */
-	public int getPageSize();
+	int getPageSize();
 
 	/**
 	 * Na skróty: Pobieranie liczby wierszy na obecnej strony.
@@ -180,8 +177,8 @@ public interface _IPagingInfo extends Serializable {
 	 * 
 	 * @return rozmiar aktualnej strony
 	 */
-	public int getNumberOfRowsOnThePage();
-	
+	int getNumberOfRowsOnThePage();
+
 	/**
 	 * Na skróty: Pobieranie numeru obecnej strony
 	 * <p>
@@ -192,11 +189,11 @@ public interface _IPagingInfo extends Serializable {
 	 * 
 	 * @return numer aktualnej strony
 	 */
-	public int getPageNr();
-	
+	int getPageNr();
+
 	/**
 	 * @return the pagingParams
 	 */
-	public PagingParams getPagingParams();
+	PagingParams getPagingParams();
 
 }

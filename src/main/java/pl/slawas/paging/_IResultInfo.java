@@ -21,46 +21,50 @@ public interface _IResultInfo {
 	/**
 	 * @return numer pierwszej pozycji na stronie
 	 */
-	public int getStartPosition();
+	int getStartPosition();
 
 	/**
-	 * @return  numer ostatniej pozycji na stronie
+	 * @return numer ostatniej pozycji na stronie
 	 */
-	public int getEndPosition();
+	int getEndPosition();
 
 	/**
 	 * @return rozmiar rezultatu
 	 */
-	public int getResultSize();
+	int getResultSize();
 
 	/**
 	 * @return komunikat związany z rezultatem ({@link ResultMessage})
 	 */
-	public ResultMessage getMessage();
+	ResultMessage getMessage();
 
 	/**
 	 * @return the hasMoreResultRows
 	 */
-	public boolean hasMoreResultRows();
+	boolean hasMoreResultRows();
 
 	/**
 	 * @return ostatnia pozycja rezultatu
 	 */
-	public Integer getLastRowPosition();
+	Integer getLastRowPosition();
 
 	/**
 	 * @return pierwsza pozycja rezultatu
 	 */
-	public int getFirstRowPosition();
+	int getFirstRowPosition();
 
 	/**
 	 * @return predefiniowana maksymalna liczba stron w rezultacie
 	 */
-	public int getResultMaxPages();
+	int getResultMaxPages();
 
 	/**
 	 * @return absolutny pierwszy numer wiersza w wyniku zapytania
 	 */
-	public int getAbsoluteFirstRowPosition();
+	int getAbsoluteFirstRowPosition();
 
+	/**
+	 * @return czas wykonania zapytania (w milisekundach)
+	 */
+	Long getExecutionTime();
 }

@@ -26,35 +26,34 @@ import java.io.Serializable;
  * @version $Revision: 1.1 $
  * 
  * @param <Obj>
- *           klasa obiektu na liscie rezultatów
+ *            klasa obiektu na liscie rezultatów
  */
 public interface _IPagedQuery<Obj> extends Serializable {
 
-	
 	/**
 	 * @param page
-	 *           the page to set
+	 *            the page to set
 	 */
-	public void setPage(Page page);
+	void setPage(Page page);
 
 	/**
 	 * Zwraca wynik zapytania na stronie zdefiniowanej metodą
-	 * {@link #setPage(Page)}. Jeżeli strona nie jest ustawiona zostanie zwrócony
-	 * wynik strony o numerze {@link Page#DEFAULT_PAGE_NR}. Mozna tez
-	 * uzywać metody {@link #setFirstResult(int)} do ustwiwania numeru strony ale
-	 * takie rozwiązanie nie jest zalecane.
+	 * {@link #setPage(Page)}. Jeżeli strona nie jest ustawiona zostanie
+	 * zwrócony wynik strony o numerze {@link Page#DEFAULT_PAGE_NR}. Mozna tez
+	 * uzywać metody {@link #setFirstResult(int)} do ustwiwania numeru strony
+	 * ale takie rozwiązanie nie jest zalecane.
 	 * 
 	 * @return zwraca stronicowany wynik
 	 */
-	public _IPagedResult<Obj>  getPagedResult();
+	_IPagedResult<Obj> getPagedResult();
 
 	/**
 	 * Zwraca stronicowany wynik zapytania na zadanej stronie
 	 * 
 	 * @param page
-	 *           strona wyników
+	 *            strona wyników
 	 * @return winik zapytania na danej stronie
 	 */
-	public _IPagedResult<Obj> getPagedResult(Page page);
+	_IPagedResult<Obj> getPagedResult(Page page);
 
 }

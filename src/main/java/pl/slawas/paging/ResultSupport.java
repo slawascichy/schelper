@@ -21,11 +21,12 @@ import java.util.Collection;
 
 /**
  * 
- * ResultSupport klasa abstrakcyjna predefiniująca wynik stronicowanego zapytania 
- *
+ * ResultSupport klasa abstrakcyjna predefiniująca wynik stronicowanego
+ * zapytania
+ * 
  * @author Slawomir Cichy &lt;slawas@slawas.pl&gt;
  * @version $Revision: 1.2 $
- *
+ * 
  * @param <Obj>
  */
 @SuppressWarnings("serial")
@@ -51,37 +52,35 @@ public abstract class ResultSupport<Obj> implements Serializable, _IResultInfo {
 
 	private final int absoluteFirstRowPosition;
 
+	/** Czas wykonania zapytania (w milisekundach) */
+	private final Long executionTime;
+
 	/**
 	 * @param startPosition
-	 *           numer pierwszej pozycji na stronie
+	 *            numer pierwszej pozycji na stronie
 	 * @param endPosition
-	 *           numer ostatniej pozycji na stronie
+	 *            numer ostatniej pozycji na stronie
 	 * @param firstRowPosition
-	 *           pierwsza pozycja rezultatu
+	 *            pierwsza pozycja rezultatu
 	 * @param resultSize
-	 *           rozmiar rezultatu
+	 *            rozmiar rezultatu
 	 * @param lastRowPosition
-	 *           ostatnia pozycja rezultatu
+	 *            ostatnia pozycja rezultatu
 	 * @param result
-	 *           lista wyników rezultatu
+	 *            lista wyników rezultatu
 	 * @param message
-	 *           komunikat związany z rezultatem ({@link ResultMessage})
+	 *            komunikat związany z rezultatem ({@link ResultMessage})
 	 * @param absoluteFirstRowPosition
-	 *           absolutny pierwszy numer wiersza w wyniku zapytania
+	 *            absolutny pierwszy numer wiersza w wyniku zapytania
 	 * @param resultMaxPages
-	 *           predefiniowana maksymalna liczba stron w rezultacie.
+	 *            predefiniowana maksymalna liczba stron w rezultacie.
+	 * @param executionTime
+	 *            czas wykonania zapytania (w milisekundach)
 	 */
-	protected ResultSupport(
-			int startPosition,
-			int endPosition,
-			Integer firstRowPosition,
-			int resultSize,
-			Integer lastRowPosition,
-			Collection<Obj> result,
-			ResultMessage message,
-			int absoluteFirstRowPosition,
-			int resultMaxPages
-			) {
+	protected ResultSupport(int startPosition, int endPosition,
+			Integer firstRowPosition, int resultSize, Integer lastRowPosition,
+			Collection<Obj> result, ResultMessage message,
+			int absoluteFirstRowPosition, int resultMaxPages, Long executionTime) {
 		super();
 		this.startPosition = startPosition;
 		this.endPosition = endPosition;
@@ -92,25 +91,17 @@ public abstract class ResultSupport<Obj> implements Serializable, _IResultInfo {
 		this.firstRowPosition = firstRowPosition;
 		this.absoluteFirstRowPosition = absoluteFirstRowPosition;
 		this.resultMaxPages = resultMaxPages;
+		this.executionTime = executionTime;
 	}
 
-	/* (non-Javadoc)
-	 * @see pl.wp.andro.paging._IResultInfo#getStartPosition()
-	 */
 	public int getStartPosition() {
 		return startPosition;
 	}
 
-	/* (non-Javadoc)
-	 * @see pl.wp.andro.paging._IResultInfo#getEndPosition()
-	 */
 	public int getEndPosition() {
 		return endPosition;
 	}
 
-	/* (non-Javadoc)
-	 * @see pl.wp.andro.paging._IResultInfo#getResultSize()
-	 */
 	public int getResultSize() {
 		return resultSize;
 	}
@@ -122,9 +113,6 @@ public abstract class ResultSupport<Obj> implements Serializable, _IResultInfo {
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see pl.wp.andro.paging._IResultInfo#getMessage()
-	 */
 	public ResultMessage getMessage() {
 		return message;
 	}
@@ -136,47 +124,39 @@ public abstract class ResultSupport<Obj> implements Serializable, _IResultInfo {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see pl.wp.andro.paging._IResultInfo#hasMoreResultRows()
-	 */
 	public boolean hasMoreResultRows() {
 		return hasMoreResultRows;
 	}
 
 	/**
 	 * @param hasMoreResultRows
-	 *           the hasMoreResultRows to set
+	 *            the hasMoreResultRows to set
 	 */
 	public void setHasMoreResultRows(boolean hasMoreResultRows) {
 		this.hasMoreResultRows = hasMoreResultRows;
 	}
 
-	/* (non-Javadoc)
-	 * @see pl.wp.andro.paging._IResultInfo#getLastRowPosition()
-	 */
 	public Integer getLastRowPosition() {
 		return lastRowPosition;
 	}
 
-	/* (non-Javadoc)
-	 * @see pl.wp.andro.paging._IResultInfo#getFirstRowPosition()
-	 */
 	public int getFirstRowPosition() {
 		return firstRowPosition;
 	}
 
-	/* (non-Javadoc)
-	 * @see pl.wp.andro.paging._IResultInfo#getResultMaxPages()
-	 */
 	public int getResultMaxPages() {
 		return resultMaxPages;
 	}
 
-	/* (non-Javadoc)
-	 * @see pl.wp.andro.paging._IResultInfo#getAbsoluteFirstRowPosition()
-	 */
 	public int getAbsoluteFirstRowPosition() {
 		return absoluteFirstRowPosition;
+	}
+
+	/**
+	 * @return the {@link #executionTime}
+	 */
+	public Long getExecutionTime() {
+		return executionTime;
 	}
 
 }

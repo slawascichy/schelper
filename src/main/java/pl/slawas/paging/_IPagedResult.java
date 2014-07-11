@@ -26,24 +26,23 @@ import java.util.Collection;
  * @version $Revision: 1.2 $
  * 
  * @param <Obj>
- *           klasa obiektu na liscie rezultatów
+ *            klasa obiektu na liscie rezultatów
  */
-public interface _IPagedResult<Obj> extends  _IPagingInfo {
-
+public interface _IPagedResult<Obj> extends _IPagingInfo {
 
 	/**
 	 * Kolekcja wierszy na obecnej stronie
 	 * 
 	 * @return lista wierszy na stronie
 	 */
-	public Collection<Obj> getResult();
+	Collection<Obj> getResult();
 
 	/**
 	 * Kolekcja wierszy na zadanej stronie
 	 * 
 	 * 
 	 * @param page
-	 *           obiekt strony, której wyniki nas integersują
+	 *            obiekt strony, której wyniki nas integersują
 	 * @return lista wierszy na zadanej stronie
 	 */
 	public Collection<Obj> getResult(Page page);
@@ -54,7 +53,6 @@ public interface _IPagedResult<Obj> extends  _IPagingInfo {
 	 * @return wiersz na stronie
 	 */
 	public Obj getUniqueResult();
-
 
 	/**
 	 * @return zwraca zapytanie na podstawie, którego została utworzona strona
