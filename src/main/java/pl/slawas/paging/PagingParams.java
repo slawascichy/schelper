@@ -22,7 +22,6 @@ import pl.slawas.entities._ICopyable;
 import pl.slawas.twl4j.Logger;
 import pl.slawas.twl4j.LoggerFactory;
 
-
 /**
  * 
  * PagingParams - klasa służy do definiowania ile, i których z kolei dokumentów
@@ -51,15 +50,15 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 
 		/** parematr {@link #offset} */
 		offset,
-				/** parematr {@link #cursorOfPage} */
+		/** parematr {@link #cursorOfPage} */
 		cursorOfPage,
-				/** parematr {@link #maxPageSize} */
+		/** parematr {@link #maxPageSize} */
 		maxPageSize,
-				/** parematr {@link #maxCount} */
+		/** parematr {@link #maxCount} */
 		maxCount,
-				/** parematr {@link #pageSize} */
+		/** parematr {@link #pageSize} */
 		pageSize,
-				/** parematr {@link #page} */
+		/** parematr {@link #page} */
 		page;
 
 		private String value;
@@ -74,8 +73,8 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 			return this;
 		}
 
-		private Param checkAccessibilityOperation(
-				int currCalue, int newValue, boolean objectIsReadOnly) {
+		private Param checkAccessibilityOperation(int currCalue, int newValue,
+				boolean objectIsReadOnly) {
 			setValue(Integer.toString(newValue));
 			if (objectIsReadOnly && currCalue != newValue)
 				throw new PaginigParamsException("[" + getMsgLabel()
@@ -94,8 +93,8 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	public static int DEFAULT_PAGING_OFFSET = 0;
 
 	/**
-	 * <b>Prametr stronicowania:</b> Liczba pierwszych wyników/dokumentów jaka ma
-	 * być pominięta w odpowiedzi wyszukiwarki
+	 * <b>Prametr stronicowania:</b> Liczba pierwszych wyników/dokumentów jaka
+	 * ma być pominięta w odpowiedzi wyszukiwarki
 	 */
 	private int offset = DEFAULT_PAGING_OFFSET;
 
@@ -140,7 +139,8 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	 * domyślnych parametrów: {@link Page#DEFAULT_MAX_PAGES} oraz
 	 * {@link #MAX_PAGE_SIZE}.
 	 */
-	public static final int MAX_DOC_COUNT = Page.DEFAULT_MAX_PAGES * MAX_PAGE_SIZE;
+	public static final int MAX_DOC_COUNT = Page.DEFAULT_MAX_PAGES
+			* MAX_PAGE_SIZE;
 
 	/**
 	 * <b>Prametr stronicowania:</b> Dynamiczne ustawienie ograniczenia na ilość
@@ -152,8 +152,8 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	/**
 	 * <b>Prametr stronicowania:</b> Liczba dokumentów, jak ma występować na
 	 * stronie. Na jego podstawie generowany jest między innymi obiekt strony w
-	 * metodzie pobierania strony {@link #getPage()}, jeżeli oczywiście wcześniej
-	 * nie był on ustawiony. Jeżeli ustwiamy obiekt strony (metoda
+	 * metodzie pobierania strony {@link #getPage()}, jeżeli oczywiście
+	 * wcześniej nie był on ustawiony. Jeżeli ustwiamy obiekt strony (metoda
 	 * {@link #setPage(Page)}) to parametr jest autoamtycznie przepisywany z
 	 * definicji strony i przyjmuje wartość {@link Page#getSize()}.
 	 */
@@ -177,7 +177,7 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	 * 
 	 * @see #setPage(Page)
 	 * @param page
-	 *           definicja strony.
+	 *            definicja strony.
 	 */
 	public PagingParams(Page page) {
 		super();
@@ -194,9 +194,9 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	 * @see #maxPageSize
 	 * 
 	 * @param page
-	 *           definicja strony
+	 *            definicja strony
 	 * @param maxPageSize
-	 *           ograniczenie na rozmiar strony
+	 *            ograniczenie na rozmiar strony
 	 */
 	public PagingParams(Page page, int maxPageSize) {
 		super();
@@ -218,11 +218,11 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	 * @see #maxCount
 	 * 
 	 * @param page
-	 *           definicja strony
+	 *            definicja strony
 	 * @param maxPageSize
-	 *           ograniczenie na rozmiar strony
+	 *            ograniczenie na rozmiar strony
 	 * @param maxCount
-	 *           ograniczenie na liczbę zwracanych wyników
+	 *            ograniczenie na liczbę zwracanych wyników
 	 */
 	public PagingParams(Page page, int maxPageSize, int maxCount) {
 		super();
@@ -241,10 +241,10 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	 * wywołania metody {@link #getPage()}.
 	 * 
 	 * @param pageSize
-	 *           roziar strony, liczba elementów na stronie
+	 *            roziar strony, liczba elementów na stronie
 	 * @param offset
-	 *           numer pozycji elementu w wyniku zapytania dla pierwszego
-	 *           dokumentu na stronie.
+	 *            numer pozycji elementu w wyniku zapytania dla pierwszego
+	 *            dokumentu na stronie.
 	 */
 	public PagingParams(int pageSize, int offset) {
 		super();
@@ -265,12 +265,12 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	 * @see #maxPageSize
 	 * 
 	 * @param pageSize
-	 *           roziar strony, liczba elementów na stronie
+	 *            roziar strony, liczba elementów na stronie
 	 * @param offset
-	 *           numer pozycji elementu w wyniku zapytania dla pierwszego
-	 *           dokumentu na stronie.
+	 *            numer pozycji elementu w wyniku zapytania dla pierwszego
+	 *            dokumentu na stronie.
 	 * @param maxPageSize
-	 *           ograniczenie na rozmiar strony
+	 *            ograniczenie na rozmiar strony
 	 */
 	public PagingParams(int pageSize, int offset, int maxPageSize) {
 		super();
@@ -295,14 +295,14 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	 * @see #maxCount
 	 * 
 	 * @param pageSize
-	 *           roziar strony, liczba elementów na stronie
+	 *            roziar strony, liczba elementów na stronie
 	 * @param offset
-	 *           numer pozycji elementu w wyniku zapytania dla pierwszego
-	 *           dokumentu na stronie.
+	 *            numer pozycji elementu w wyniku zapytania dla pierwszego
+	 *            dokumentu na stronie.
 	 * @param maxPageSize
-	 *           ograniczenie na rozmiar strony
+	 *            ograniczenie na rozmiar strony
 	 * @param maxCount
-	 *           ograniczenie na liczbę zwracanych wyników
+	 *            ograniczenie na liczbę zwracanych wyników
 	 */
 	public PagingParams(int pageSize, int offset, int maxPageSize, int maxCount) {
 		super();
@@ -333,7 +333,7 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	 * strony (zobacz {@link #maxPageSize}).
 	 * 
 	 * @param pageSize
-	 *           rozmiar strony, liczba dokumentów na stronie
+	 *            rozmiar strony, liczba dokumentów na stronie
 	 * @return {@code true}, jeżeli wszystko jest OK.
 	 */
 	public boolean setPageSize(int pageSize) {
@@ -343,14 +343,14 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	/**
 	 * 
 	 * @param pageSize
-	 *           wartość parametru rozmiaru strony
+	 *            wartość parametru rozmiaru strony
 	 * @param changePage
-	 *           czy ma być zmieniony obiekt strony ({@link #page})?
+	 *            czy ma być zmieniony obiekt strony ({@link #page})?
 	 * @return
 	 */
 	private boolean setPageSize(int pageSize, boolean changePage) {
-		Param paramInfo =
-				Param.pageSize.checkAccessibilityOperation(this.pageSize, pageSize, isReadOnly);
+		Param paramInfo = Param.pageSize.checkAccessibilityOperation(
+				this.pageSize, pageSize, isReadOnly);
 
 		if (checkRestrictions(paramInfo, pageSize, changePage)) {
 			this.pageSize = pageSize;
@@ -374,7 +374,7 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	 * poprawności w stosunku do ograniczeń związanych obiektem stronicowania.
 	 * 
 	 * @param cursorOfPage
-	 *           wartość parametru
+	 *            wartość parametru
 	 * @return {@code true}, jeżeli wszystko jest OK.
 	 */
 	public boolean setCursorOfPage(int cursorOfPage) {
@@ -383,9 +383,7 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 
 	private boolean setCursorOfPage(int cursorOfPage, boolean changePage) {
 		Param paramInfo = Param.cursorOfPage.checkAccessibilityOperation(
-				this.cursorOfPage,
-				cursorOfPage,
-				isReadOnly);
+				this.cursorOfPage, cursorOfPage, isReadOnly);
 
 		if (checkRestrictions(paramInfo, cursorOfPage, changePage)) {
 			this.cursorOfPage = cursorOfPage;
@@ -430,7 +428,7 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	 * @see #page
 	 * 
 	 * @param page
-	 *           defnicja strony
+	 *            defnicja strony
 	 * @return {@code true}, jeżeli wszystko jest OK.
 	 */
 	public boolean setPage(Page page) {
@@ -448,7 +446,7 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	 * Przeliczenie pozycji kursora na podstawie obiektu strony
 	 * 
 	 * @param page
-	 *           definicja strony
+	 *            definicja strony
 	 * @return przeliczona pozycja kursora
 	 */
 	private int calculateCursorOfPage(Page page) {
@@ -459,18 +457,17 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	 * Sprawdzenie restrykcji dotyczących zmiany definicji strony
 	 * 
 	 * @param page
-	 *           definicja strony
-	 * @return jezeli definicja strony jest poprawna to zostanie zwrócona wartość
-	 *         {@code true}
+	 *            definicja strony
+	 * @return jezeli definicja strony jest poprawna to zostanie zwrócona
+	 *         wartość {@code true}
 	 */
 	private boolean checkRestrictinsOfPage(Page page) {
-		Param paramPageSizeInfo =
-				Param.pageSize.checkAccessibilityOperation(this.pageSize, page.getSize(), isReadOnly);
+		Param paramPageSizeInfo = Param.pageSize.checkAccessibilityOperation(
+				this.pageSize, page.getSize(), isReadOnly);
 		int cursorOfPage = calculateCursorOfPage(page);
-		Param paramCursorOfPageInfo = Param.cursorOfPage.checkAccessibilityOperation(
-				this.cursorOfPage,
-				cursorOfPage,
-				isReadOnly);
+		Param paramCursorOfPageInfo = Param.cursorOfPage
+				.checkAccessibilityOperation(this.cursorOfPage, cursorOfPage,
+						isReadOnly);
 
 		return checkRestrictions(paramPageSizeInfo, page.getSize(), false)
 				&& checkRestrictions(paramCursorOfPageInfo, cursorOfPage, false);
@@ -484,7 +481,7 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	 * @see #page
 	 * 
 	 * @param pageNumber
-	 *           numer strony
+	 *            numer strony
 	 * @return {@code true}, jeżeli wszystko jest OK.
 	 */
 	public boolean setPage(int pageNumber) {
@@ -542,7 +539,7 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	 * {@link #maxPageSize}
 	 * 
 	 * @param maxPageSize
-	 *           nowa wartość ograniczeń
+	 *            nowa wartość ograniczeń
 	 */
 	public void setMaxPageSize(int maxPageSize) {
 		this.setMaxPageSize(maxPageSize, true);
@@ -553,26 +550,29 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	 * {@link #maxPageSize}
 	 * 
 	 * @param maxPageSize
-	 *           proponowana wartość maksymalnego rozmiaru strony
+	 *            proponowana wartość maksymalnego rozmiaru strony
 	 * @param checkPageSize
-	 *           czy mam porównać proponowaną wartość maksymalnego rozmiaru
-	 *           strony, z obcna wartoscia rozmiaru strony?
+	 *            czy mam porównać proponowaną wartość maksymalnego rozmiaru
+	 *            strony, z obcna wartoscia rozmiaru strony?
 	 */
 	private void setMaxPageSize(int maxPageSize, boolean checkPageSize) {
-		Param.maxPageSize.checkAccessibilityOperation(this.maxPageSize, maxPageSize, isReadOnly);
+		Param.maxPageSize.checkAccessibilityOperation(this.maxPageSize,
+				maxPageSize, isReadOnly);
 
 		if (checkPageSize && maxPageSize < this.pageSize) {
-			throw new PaginigParamsException("Obecny rozmiar strony "
-					+ this.pageSize
-					+ "jest wiekszy od proponowanej wartosci na maksymalny rozmiar strony "
-					+ maxPageSize
-					+ ". Wpierw zmniejsz rozmiar strony za pomoca metody setPageSize(int).");
+			throw new PaginigParamsException(
+					"Obecny rozmiar strony "
+							+ this.pageSize
+							+ "jest wiekszy od proponowanej wartosci na maksymalny rozmiar strony "
+							+ maxPageSize
+							+ ". Wpierw zmniejsz rozmiar strony za pomoca metody setPageSize(int).");
 		}
 		if (maxPageSize > this.maxCount)
-			throw new PaginigParamsException("Proponowana wartosc na maksymalny rozmiar strony "
-					+ maxPageSize
-					+ " jest wieksza od maksymalnej mozliwej liczby pobranych dokumentow: "
-					+ this.maxCount);
+			throw new PaginigParamsException(
+					"Proponowana wartosc na maksymalny rozmiar strony "
+							+ maxPageSize
+							+ " jest wieksza od maksymalnej mozliwej liczby pobranych dokumentow: "
+							+ this.maxCount);
 		this.maxPageSize = maxPageSize;
 	}
 
@@ -605,7 +605,7 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	 * zapytania {@link #maxCount}
 	 * 
 	 * @param maxCount
-	 *           nowa wartość ograniczeń
+	 *            nowa wartość ograniczeń
 	 */
 	public void setMaxCount(int maxCount) {
 		this.setMaxCount(maxCount, true);
@@ -616,24 +616,22 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	 * zapytania {@link #maxCount}
 	 * 
 	 * @param maxCount
-	 *           nowa wartość ograniczeń {@link #maxCount}
+	 *            nowa wartość ograniczeń {@link #maxCount}
 	 * @param checkPagingParams
-	 *           sprawdzić czy nowa wartość ograniczeń narusza obecną
-	 *           konfiguracje stronicowania?
+	 *            sprawdzić czy nowa wartość ograniczeń narusza obecną
+	 *            konfiguracje stronicowania?
 	 */
 	private void setMaxCount(int maxCount, boolean checkPagingParams) {
-		Param.maxCount.checkAccessibilityOperation(this.maxCount, maxCount, isReadOnly);
+		Param.maxCount.checkAccessibilityOperation(this.maxCount, maxCount,
+				isReadOnly);
 		if (checkPagingParams
-				&& (offset >= maxCount || cursorOfPage + pageSize > maxCount))
-		{
+				&& (offset >= maxCount || cursorOfPage + pageSize > maxCount)) {
 			throw new PaginigParamsException("Obecne parametry stronicowania:"
-					+ " pageSize: " + this.pageSize
-					+ ", cursorOfPage: " + this.cursorOfPage
-					+ ", offset: " + this.offset
+					+ " pageSize: " + this.pageSize + ", cursorOfPage: "
+					+ this.cursorOfPage + ", offset: " + this.offset
 					+ ", nie pozwalaja na zmiane maksymalnej "
 					+ "liczby dokumentow w wyniku zapytania na wartosc: "
-					+ maxCount
-					+ ".");
+					+ maxCount + ".");
 		}
 		this.maxCount = maxCount;
 	}
@@ -642,83 +640,74 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	 * Sprawdza warunki graniczene ustawień stronicowania.
 	 * 
 	 * @param param
-	 *           informacja o tym, podczas ustawiania którego z parametrów
-	 *           wywoływana jest metoda sprawdzenia restrykcji
+	 *            informacja o tym, podczas ustawiania którego z parametrów
+	 *            wywoływana jest metoda sprawdzenia restrykcji
 	 * @param value
-	 *           wartość na jaką ma zostać zmieniony parametr
+	 *            wartość na jaką ma zostać zmieniony parametr
 	 * @param pageIsChanged
-	 *           informacja o tym czy obiekt strony zostal zmieniony poprzez
-	 *           zmiany parametru, o którym jest mowa w argumencie 'param'
+	 *            informacja o tym czy obiekt strony zostal zmieniony poprzez
+	 *            zmiany parametru, o którym jest mowa w argumencie 'param'
 	 * @return warunki są spełnione
 	 */
-	private boolean checkRestrictions(Param param, int value, boolean pageIsChanged) {
+	private boolean checkRestrictions(Param param, int value,
+			boolean pageIsChanged) {
 
 		switch (param) {
 		case pageSize:
 			if ((offset % value) != 0) {
-				logger
-						.error(
-						"[{}] Zle ustawione stronicowanie. Parametr 'offset' nie jest " +
-						"wielokrotnoscia parametru 'pageSize' ({})! Ma warosc {}",
-						new Object[]
-					{ param.getMsgLabel(), pageSize, offset });
+				logger.error(
+						"[{}] Zle ustawione stronicowanie. Parametr 'offset' nie jest "
+								+ "wielokrotnoscia parametru 'pageSize' ({})! Ma warosc {}",
+						new Object[] { param.getMsgLabel(), pageSize, offset });
 				valid = false;
 				return false;
 			}
 			if (value <= 0 || value > maxPageSize) {
-				logger
-						.error(
-								"[{}] Zle ustawione stronicowanie. Parametr 'pageSize' musi zawierac sie w (0,{}]! Ma warosc {}",
-								new Object[]
-									{ param.getMsgLabel(), maxPageSize, pageSize });
+				logger.error(
+						"[{}] Zle ustawione stronicowanie. Parametr 'pageSize' musi zawierac sie w (0,{}]! "
+								+ "Obecnie parametr 'pageSize' ma ustawiona warosc {}",
+						new Object[] { param.getMsgLabel(), maxPageSize,
+								pageSize });
 				valid = false;
 				return false;
 			}
 			if (offset + value > maxCount) {
-				logger
-						.error(
-								"[{}] Zle ustawione stronicowanie. Nie moge ustawic parametrow strony. "
-										+
-										"CursorOfPage ma wartosc: {}, pageSize: {}. Zbudowanie strony powoduje"
-										+
-										" przekroczenie maksymalnej liczby wierszy {} jaka moze byc wogole pobrana z wyniku.",
-								new Object[]
-									{ param.getMsgLabel(), cursorOfPage, pageSize, maxCount });
+				logger.error(
+						"[{}] Zle ustawione stronicowanie. Nie moge ustawic parametrow strony. "
+								+ "CursorOfPage ma wartosc: {}, pageSize: {}. Zbudowanie strony powoduje"
+								+ " przekroczenie maksymalnej liczby wierszy {} jaka moze byc wogole pobrana z wyniku.",
+						new Object[] { param.getMsgLabel(), cursorOfPage,
+								pageSize, maxCount });
 				valid = false;
 				return false;
 			}
 			break;
 		case offset:
 			if (value < 0 || value >= maxCount) {
-				logger
-						.error(
-								"[{}] Zle ustawione stronicowanie. Parametr 'offset' musi zawierac sie w [0,{})! Ma warosc {}",
-								new Object[]
-									{ param.getMsgLabel(), maxCount, cursorOfPage });
+				logger.error(
+						"[{}] Zle ustawione stronicowanie. Parametr 'offset' musi zawierac sie w [0,{})! Ma warosc {}",
+						new Object[] { param.getMsgLabel(), maxCount,
+								cursorOfPage });
 				valid = false;
 				return false;
 			}
 			break;
 		case cursorOfPage:
 			if (value < offset || value >= maxCount) {
-				logger
-						.error(
-								"[{}] Zle ustawione stronicowanie. Parametr 'cursorOfPage' musi zawierac sie w [{},{})! Ma warosc {}",
-								new Object[]
-									{ param.getMsgLabel(), offset, maxCount, cursorOfPage });
+				logger.error(
+						"[{}] Zle ustawione stronicowanie. Parametr 'cursorOfPage' musi zawierac sie w [{},{})! Ma warosc {}",
+						new Object[] { param.getMsgLabel(), offset, maxCount,
+								cursorOfPage });
 				valid = false;
 				return false;
 			}
 			if (value + pageSize > maxCount) {
-				logger
-						.error(
-								"[{}] Zle ustawione stronicowanie. Nie moge ustawic parametrow strony. "
-										+
-										"CursorOfPage ma wartosc: {}, pageSize: {}. Zbudowanie strony powoduje"
-										+
-										" przekroczenie maksymalnej liczby wierszy {} jaka moze byc wogole pobrana z wyniku.",
-								new Object[]
-									{ param.getMsgLabel(), cursorOfPage, pageSize, maxCount });
+				logger.error(
+						"[{}] Zle ustawione stronicowanie. Nie moge ustawic parametrow strony. "
+								+ "CursorOfPage ma wartosc: {}, pageSize: {}. Zbudowanie strony powoduje"
+								+ " przekroczenie maksymalnej liczby wierszy {} jaka moze byc wogole pobrana z wyniku.",
+						new Object[] { param.getMsgLabel(), cursorOfPage,
+								pageSize, maxCount });
 				valid = false;
 				return false;
 			}
@@ -740,15 +729,10 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	 */
 	@Override
 	public String toString() {
-		return "PagingParams ["
-				+ "offset=" + offset
-				+ ", cursorOfPage=" + cursorOfPage
-				+ ", pageSize=" + pageSize
-				+ ", maxCount=" + maxCount
-				+ ", maxPageSize=" + maxPageSize
-				+ ", page=" + page
-				+ ", valid=" + valid
-				+ "]";
+		return "PagingParams [" + "offset=" + offset + ", cursorOfPage="
+				+ cursorOfPage + ", pageSize=" + pageSize + ", maxCount="
+				+ maxCount + ", maxPageSize=" + maxPageSize + ", page=" + page
+				+ ", valid=" + valid + "]";
 	}
 
 	/*
@@ -774,7 +758,8 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 		this.maxPageSize = source.getMaxPageSize();
 		this.maxCount = source.getMaxCount();
 		this.pageSize = source.getPageSize();
-		this.page = new Page(source.getPage().getSize(), source.getPage().getNumber());
+		this.page = new Page(source.getPage().getSize(), source.getPage()
+				.getNumber());
 		this.offset = source.getOffset();
 		this.valid = source.isValid();
 		return this;
@@ -799,7 +784,7 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	/**
 	 * 
 	 * @param offset
-	 *           the {@link #offset} to set
+	 *            the {@link #offset} to set
 	 * @return {@code true}, jeżeli wszystko jest OK.
 	 */
 	public boolean setOffset(int offset) {
@@ -808,14 +793,14 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 
 	/**
 	 * @param offset
-	 *           the {@link #offset} to set
+	 *            the {@link #offset} to set
 	 * @param changePage
-	 *           czy ma być zmieniony obiekt strony ({@link #page})?
+	 *            czy ma być zmieniony obiekt strony ({@link #page})?
 	 * @return {@code true}, jeżeli wszystko jest OK.
 	 */
 	private boolean setOffset(int offset, boolean changePage) {
-		Param paramInfo =
-				Param.offset.checkAccessibilityOperation(this.offset, offset, isReadOnly);
+		Param paramInfo = Param.offset.checkAccessibilityOperation(this.offset,
+				offset, isReadOnly);
 		if (checkRestrictions(paramInfo, offset, changePage)) {
 			if (this.cursorOfPage < offset) {
 				this.cursorOfPage = offset;
