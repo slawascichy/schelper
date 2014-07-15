@@ -19,12 +19,12 @@ package pl.slawas.entities;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Id;
 
 import pl.slawas.helpers.PrimitiveType;
 import pl.slawas.twl4j.Logger;
 import pl.slawas.twl4j.LoggerFactory;
-
 
 /**
  * 
@@ -39,18 +39,19 @@ public class IDUtils {
 	private static Logger logger = LoggerFactory.getLogger(IDUtils.class);
 
 	/**
-	 * W miarę uniwersalna metoda konwertująca wartośc identyfikatora podaną jako
-	 * string do odpowiedniego obiektu (z odpowiednią wartością) na podstwie
-	 * klasy endji.
+	 * W miarę uniwersalna metoda konwertująca wartość identyfikatora podaną
+	 * jako string do odpowiedniego obiektu (z odpowiednią wartością) na
+	 * podstawie klasy encji.
 	 * 
 	 * @param singleClass
-	 *           klasa encji
+	 *            klasa encji
 	 * @param str
-	 *           wartość identyfikatora w postaci string-a
-	 * @return odpowiedni obiekt identyfikatora z odpowiednią wartośćią
+	 *            wartość identyfikatora w postaci string-a
+	 * @return odpowiedni obiekt identyfikatora z odpowiednią wartością
 	 * @throws IDUtilsErrorException
 	 */
-	public static Object stringToId(Class<?> singleClass, String str) throws IDUtilsErrorException {
+	public static Object stringToId(Class<?> singleClass, String str)
+			throws IDUtilsErrorException {
 		logger.debug("[stringToId] Otrzymałem wartość '{}'", str);
 		Field[] fields = singleClass.getDeclaredFields();
 		for (Field field : fields) {
@@ -67,8 +68,9 @@ public class IDUtils {
 						parTypes[0] = String.class;
 						Method method = type.getMethod("valueOf", parTypes);
 						return method.invoke(type, str);
-					} else
+					} else {
 						throw new IDCantGetValueOfIdFieldException();
+					}
 				} catch (Exception e) {
 					throw new IDUtilsErrorException(e);
 				}
@@ -78,23 +80,26 @@ public class IDUtils {
 	}
 
 	/**
-	 * Pobranie wartości identyfikatore na podstawie obiektu encji
+	 * Pobranie wartości identyfikatora na podstawie obiektu encji
 	 * 
 	 * @param single
-	 *           obiekt encji z polem identyfikatora (oznaczonym annotacją
-	 *           {@link Id})
+	 *            obiekt encji z polem identyfikatora (oznaczonym adnotacją
+	 *            {@link Id}) lub {@link EmbeddedId} (dla kluczy złożonych)
 	 * @return wartość identyfikatora
 	 * @throws IDUtilsErrorException
 	 */
-	public static Object getObjectId(Object single) throws IDUtilsErrorException {
+	public static Object getObjectId(Object single)
+			throws IDUtilsErrorException {
 		Field[] fields = single.getClass().getDeclaredFields();
 		for (Field field : fields) {
-			if (field.isAnnotationPresent(Id.class)) {
+			if (field.isAnnotationPresent(Id.class)
+					|| field.isAnnotationPresent(EmbeddedId.class)) {
 				try {
 					String methodName = "get"
 							+ field.getName().substring(0, 1).toUpperCase()
 							+ field.getName().substring(1);
-					return single.getClass().getMethod(methodName).invoke(single);
+					return single.getClass().getMethod(methodName)
+							.invoke(single);
 				} catch (Exception e) {
 					throw new IDUtilsErrorException(e);
 				}
@@ -107,29 +112,32 @@ public class IDUtils {
 	 * Ustawianie wartości identyfikatora dla obiektu
 	 * 
 	 * @param single
-	 *           obiekt encji z polem identyfikatora (oznaczonym annotacją
-	 *           {@link Id})
+	 *            obiekt encji z polem identyfikatora (oznaczonym adnotacją
+	 *            {@link Id}) lub {@link EmbeddedId} (dla kluczy złożonych)
 	 * @param id
-	 *           wartość identyfikatora jaka ma być ustawiona
+	 *            wartość identyfikatora jaka ma być ustawiona
 	 * @return zmieniony obiekt encji
 	 * @throws IDUtilsErrorException
 	 */
-	public static Object setObjectId(Object single, Object id) throws IDUtilsErrorException {
+	public static Object setObjectId(Object single, Object id)
+			throws IDUtilsErrorException {
 		Field[] fields = single.getClass().getDeclaredFields();
 		for (Field field : fields) {
-			if (field.isAnnotationPresent(Id.class)) {
-				Class<?> parTypes[] = new Class[]
-					{ field.getType() };
+			if (field.isAnnotationPresent(Id.class)
+					|| field.isAnnotationPresent(EmbeddedId.class)) {
+				Class<?> parTypes[] = new Class[] { field.getType() };
 				try {
-					Object idValue = single.getClass().getClassLoader().loadClass(
-							field.getType().getCanonicalName()).cast(id);
+					Object idValue = single.getClass().getClassLoader()
+							.loadClass(field.getType().getCanonicalName())
+							.cast(id);
 					String methodName = "set"
 							+ field.getName().substring(0, 1).toUpperCase()
 							+ field.getName().substring(1);
-					single.getClass().getMethod(methodName, parTypes).invoke(single, idValue);
+					single.getClass().getMethod(methodName, parTypes)
+							.invoke(single, idValue);
 					return single;
 				} catch (Exception e) {
-					logger.error("Blad ustawienia identyfikatora: ",e);
+					logger.error("Blad ustawienia identyfikatora: ", e);
 					throw new IDUtilsErrorException(e);
 				}
 			}
@@ -141,14 +149,16 @@ public class IDUtils {
 	 * Pobieranie nazwy pola z identyfikatorem dla podanej klasy encji
 	 * 
 	 * @param entityClass
-	 *           klasa encji
+	 *            klasa encji
 	 * @return nazwa pola z identyfikatorem
 	 * @throws IDUtilsErrorException
 	 */
-	public static String getIdFieldName(Class<?> entityClass) throws IDUtilsErrorException {
+	public static String getIdFieldName(Class<?> entityClass)
+			throws IDUtilsErrorException {
 		Field[] fields = entityClass.getDeclaredFields();
 		for (Field field : fields) {
-			if (field.isAnnotationPresent(Id.class)) {
+			if (field.isAnnotationPresent(Id.class)
+					|| field.isAnnotationPresent(EmbeddedId.class)) {
 				return field.getName();
 			}
 		}
