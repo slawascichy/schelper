@@ -21,17 +21,17 @@ public interface _IResultInfo {
 	/**
 	 * @return numer pierwszej pozycji na stronie
 	 */
-	int getStartPosition();
+	Long getStartPosition();
 
 	/**
 	 * @return numer ostatniej pozycji na stronie
 	 */
-	int getEndPosition();
+	Long getEndPosition();
 
 	/**
 	 * @return rozmiar rezultatu
 	 */
-	int getResultSize();
+	Long getResultSize();
 
 	/**
 	 * @return komunikat związany z rezultatem ({@link ResultMessage})
@@ -46,22 +46,22 @@ public interface _IResultInfo {
 	/**
 	 * @return ostatnia pozycja rezultatu
 	 */
-	Integer getLastRowPosition();
+	Long getLastRowPosition();
 
 	/**
 	 * @return pierwsza pozycja rezultatu
 	 */
-	int getFirstRowPosition();
+	Long getFirstRowPosition();
 
 	/**
 	 * @return predefiniowana maksymalna liczba stron w rezultacie
 	 */
-	int getResultMaxPages();
+	Integer getResultMaxPages();
 
 	/**
 	 * @return absolutny pierwszy numer wiersza w wyniku zapytania
 	 */
-	int getAbsoluteFirstRowPosition();
+	Long getAbsoluteFirstRowPosition();
 
 	/**
 	 * @return czas wykonania zapytania (w milisekundach)

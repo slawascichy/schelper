@@ -98,7 +98,7 @@ public interface _IPagingInfo extends Serializable {
 	 * 
 	 * @return liczba wierszy
 	 */
-	int getResultSize();
+	Long getResultSize();
 
 	/**
 	 * Metode można wykożystać do badania czy został przekroczony zakres liczby
@@ -129,9 +129,9 @@ public interface _IPagingInfo extends Serializable {
 	boolean hasMoreResultRows();
 
 	/**
-	 * Implementacja biblioteki pozwala na pobranie kolejnej czesci wyników
+	 * Implementacja biblioteki pozwala na pobranie kolejnej części wyników
 	 * zapytania w przypadku gdy {@link #hasMoreResultRows()} zwraca
-	 * {@code true} . Dla takiego stronicowanego wyniku istotna jest infomacja
+	 * {@code true} . Dla takiego stronicowanego wyniku istotna jest informacja
 	 * czy posiada ona poprzednia część rezultatu.
 	 * 
 	 * @return {@code true} oznacza, że dany wynik jest wynikiem rozszerzonym
@@ -143,7 +143,7 @@ public interface _IPagingInfo extends Serializable {
 	/**
 	 * @return ostatnia pozycja wiersza w stronicowanym wyniku zapytania.
 	 */
-	Integer getLastRowPosition();
+	Long getLastRowPosition();
 
 	/**
 	 * @see #hasPreviousResultRows()
@@ -153,7 +153,7 @@ public interface _IPagingInfo extends Serializable {
 	 *         poprzenia paczka nie istnieje (zobacz
 	 *         {@link #hasPreviousResultRows()}), zwraca {@code null}.
 	 */
-	Integer getFirstRowPositionOfPreviousResultRows();
+	Long getFirstRowPositionOfPreviousResultRows();
 
 	/**
 	 * Na skróty: Pobieranie rozmiaru obecnej strony.

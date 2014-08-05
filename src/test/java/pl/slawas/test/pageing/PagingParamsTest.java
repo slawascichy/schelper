@@ -27,10 +27,10 @@ import pl.slawas.paging.PaginigParamsException;
 import pl.slawas.twl4j.Logger;
 import pl.slawas.twl4j.LoggerFactory;
 
-
 public class PagingParamsTest extends TestCase {
 
-	final protected static Logger logger = LoggerFactory.getLogger(PagingParamsTest.class);
+	final protected static Logger logger = LoggerFactory
+			.getLogger(PagingParamsTest.class);
 
 	@Test
 	public void testPagingParams() {
@@ -39,13 +39,13 @@ public class PagingParamsTest extends TestCase {
 
 		Page page = new Page();
 		PagingParams testedPagingParams = new PagingParams(page);
-		assertEquals("Bledny offset", 0, testedPagingParams.getCursorOfPage());
-		assertEquals("Bledny pageSize", page.getSize(), testedPagingParams.getPageSize());
+		assertEquals("Bledny offset", 0, testedPagingParams.getCursorOfPage()
+				.intValue());
+		assertEquals("Bledny pageSize", page.getSize(),
+				testedPagingParams.getPageSize());
 
-		testedPagingParams = new PagingParams(200, 2000);
-		assertEquals(
-				"Bledne ustawienie parametru stronicowania pageSize",
-				200,
+		testedPagingParams = new PagingParams(200, 2000L);
+		assertEquals("Bledne ustawienie parametru stronicowania pageSize", 200,
 				testedPagingParams.getPageSize());
 
 		page = testedPagingParams.getPage();
@@ -61,7 +61,7 @@ public class PagingParamsTest extends TestCase {
 			assertFalse("Nie powinno sie udac: " + e.getMessage(), false);
 		}
 
-		testedPagingParams = new PagingParams(200, 0);
+		testedPagingParams = new PagingParams(200, 0L);
 		page = testedPagingParams.getFirstPage();
 		assertEquals("Bledny numer strony", Page.MIN_PAGE_NR, page.getNumber());
 		assertEquals("Bledny count", 200, page.getSize());
@@ -84,68 +84,86 @@ public class PagingParamsTest extends TestCase {
 		assertEquals("Bledny numer strony", Page.MIN_PAGE_NR, page.getNumber());
 		assertEquals("Bledny count", 200, page.getSize());
 
-		testedPagingParams = new PagingParams(10, 0, 10, 50);
-		logger.debug("Powodzenie ustawienia strony nr 2: {}", testedPagingParams.setPage(2));
+		testedPagingParams = new PagingParams(10, 0L, 10, 50L);
+		logger.debug("Powodzenie ustawienia strony nr 2: {}",
+				testedPagingParams.setPage(2));
 
 		page = testedPagingParams.getPage();
 		assertEquals("Bledny numer strony", 2, page.getNumber());
 		assertEquals("Bledny count", 10, page.getSize());
 
 		testedPagingParams = new PagingParams(new Page());
-		testedPagingParams.setMaxCount(966);
-		logger.debug("Maksymalna liczba stron: {}", testedPagingParams.getMaxPages());
-		assertEquals("Bledna oczekiwana liczba stron", 17, testedPagingParams.getMaxPages());
+		testedPagingParams.setMaxCount(966L);
+		logger.debug("Maksymalna liczba stron: {}",
+				testedPagingParams.getMaxPages());
+		assertEquals("Bledna oczekiwana liczba stron", 17,
+				testedPagingParams.getMaxPages());
 
 		testedPagingParams.setPage(new Page(20, 3));
-		logger.debug("Maksymalna liczba stron: {}", testedPagingParams.getMaxPages());
-		assertEquals("Bledna oczekiwana liczba stron", 49, testedPagingParams.getMaxPages());
-		assertEquals("Bledna oczekiwana numer strony", 3, testedPagingParams.getPage().getNumber());
+		logger.debug("Maksymalna liczba stron: {}",
+				testedPagingParams.getMaxPages());
+		assertEquals("Bledna oczekiwana liczba stron", 49,
+				testedPagingParams.getMaxPages());
+		assertEquals("Bledna oczekiwana numer strony", 3, testedPagingParams
+				.getPage().getNumber());
 		logger.debug("Offset: {}", testedPagingParams.getCursorOfPage());
-		assertEquals("Bledny oczekiwany offset", 40, testedPagingParams.getCursorOfPage());
+		assertEquals("Bledny oczekiwany offset", 40, testedPagingParams
+				.getCursorOfPage().intValue());
 		testedPagingParams.setPageSize(30);
-		logger.debug("Numer strony: {}", testedPagingParams.getPage().getNumber());
-		logger.debug("Maksymalna liczba stron: {}", testedPagingParams.getMaxPages());
-		assertEquals("Bledna oczekiwana liczba stron", 33, testedPagingParams.getMaxPages());
-		assertEquals("Bledna oczekiwana numer strony", 2, testedPagingParams.getPage().getNumber());
+		logger.debug("Numer strony: {}", testedPagingParams.getPage()
+				.getNumber());
+		logger.debug("Maksymalna liczba stron: {}",
+				testedPagingParams.getMaxPages());
+		assertEquals("Bledna oczekiwana liczba stron", 33,
+				testedPagingParams.getMaxPages());
+		assertEquals("Bledna oczekiwana numer strony", 2, testedPagingParams
+				.getPage().getNumber());
 		logger.debug("Offset: {}", testedPagingParams.getCursorOfPage());
-		assertEquals("Bledny oczekiwany offset", 30, testedPagingParams.getCursorOfPage());
+		assertEquals("Bledny oczekiwany offset", 30, testedPagingParams
+				.getCursorOfPage().intValue());
 
 		testedPagingParams.setPage(testedPagingParams.getMinimalPage());
 		PagingParams readOnly = new PagingParamsReadOnly(testedPagingParams);
-		logger.debug("Parametry stronicowania tylko do odczytu: {}", readOnly.toString());
+		logger.debug("Parametry stronicowania tylko do odczytu: {}",
+				readOnly.toString());
 		try {
-			readOnly.setOffset(200);
+			readOnly.setOffset(200L);
 			assertFalse("Nie powinno sie udac", true);
 		} catch (PaginigParamsException ignore) {
-			logger.debug("Operacja nie powinna sie udac: {}", ignore.getMessage());
+			logger.debug("Operacja nie powinna sie udac: {}",
+					ignore.getMessage());
 		}
 		try {
 			readOnly.setPage(new Page(20, 3));
 			assertFalse("Nie powinno sie udac", true);
 		} catch (PaginigParamsException ignore) {
-			logger.debug("Operacja nie powinna sie udac: {}", ignore.getMessage());
+			logger.debug("Operacja nie powinna sie udac: {}",
+					ignore.getMessage());
 		}
 		try {
 			readOnly.setPage(new Page(30, 3));
 			assertFalse("Nie powinno sie udac", true);
 		} catch (PaginigParamsException ignore) {
-			logger.debug("Operacja nie powinna sie udac: {}", ignore.getMessage());
+			logger.debug("Operacja nie powinna sie udac: {}",
+					ignore.getMessage());
 		}
 		try {
-			readOnly.setMaxCount(1000);
+			readOnly.setMaxCount(1000L);
 			assertFalse("Nie powinno sie udac", true);
 		} catch (PaginigParamsException ignore) {
-			logger.debug("Operacja nie powinna sie udac: {}", ignore.getMessage());
+			logger.debug("Operacja nie powinna sie udac: {}",
+					ignore.getMessage());
 		}
 		try {
 			readOnly.setMaxPageSize(2000);
 			assertFalse("Nie powinno sie udac", true);
 		} catch (PaginigParamsException ignore) {
-			logger.debug("Operacja nie powinna sie udac: {}", ignore.getMessage());
+			logger.debug("Operacja nie powinna sie udac: {}",
+					ignore.getMessage());
 		}
 		testedPagingParams = readOnly.copy();
 		try {
-			testedPagingParams.setMaxCount(1000);
+			testedPagingParams.setMaxCount(1000L);
 			assertTrue("Powinno sie udac", true);
 		} catch (PaginigParamsException ignore) {
 			logger.debug("Operacja powinna sie udac: {}", ignore.getMessage());
@@ -154,7 +172,8 @@ public class PagingParamsTest extends TestCase {
 		try {
 			readOnly.copy(testedPagingParams);
 		} catch (PaginigParamsException ignore) {
-			logger.debug("Operacja nie powinna sie udac: {}", ignore.getMessage());
+			logger.debug("Operacja nie powinna sie udac: {}",
+					ignore.getMessage());
 		}
 
 		assert result.equals("OK") : "Test zakonczyl sie porazka";

@@ -32,11 +32,11 @@ import java.util.Collection;
 @SuppressWarnings("serial")
 public abstract class ResultSupport<Obj> implements Serializable, _IResultInfo {
 
-	private final int startPosition;
+	private final Long startPosition;
 
-	private final int endPosition;
+	private final Long endPosition;
 
-	private final int resultSize;
+	private final Long resultSize;
 
 	private final Collection<Obj> result;
 
@@ -44,13 +44,13 @@ public abstract class ResultSupport<Obj> implements Serializable, _IResultInfo {
 
 	private boolean hasMoreResultRows = false;
 
-	private final Integer lastRowPosition;
+	private final Long lastRowPosition;
 
-	private final Integer firstRowPosition;
+	private final Long firstRowPosition;
 
-	private final int resultMaxPages;
+	private final Integer resultMaxPages;
 
-	private final int absoluteFirstRowPosition;
+	private final Long absoluteFirstRowPosition;
 
 	/** Czas wykonania zapytania (w milisekundach) */
 	private final Long executionTime;
@@ -77,10 +77,11 @@ public abstract class ResultSupport<Obj> implements Serializable, _IResultInfo {
 	 * @param executionTime
 	 *            czas wykonania zapytania (w milisekundach)
 	 */
-	protected ResultSupport(int startPosition, int endPosition,
-			Integer firstRowPosition, int resultSize, Integer lastRowPosition,
+	protected ResultSupport(Long startPosition, Long endPosition,
+			Long firstRowPosition, Long resultSize, Long lastRowPosition,
 			Collection<Obj> result, ResultMessage message,
-			int absoluteFirstRowPosition, int resultMaxPages, Long executionTime) {
+			Long absoluteFirstRowPosition, Integer resultMaxPages,
+			Long executionTime) {
 		super();
 		this.startPosition = startPosition;
 		this.endPosition = endPosition;
@@ -94,15 +95,15 @@ public abstract class ResultSupport<Obj> implements Serializable, _IResultInfo {
 		this.executionTime = executionTime;
 	}
 
-	public int getStartPosition() {
+	public Long getStartPosition() {
 		return startPosition;
 	}
 
-	public int getEndPosition() {
+	public Long getEndPosition() {
 		return endPosition;
 	}
 
-	public int getResultSize() {
+	public Long getResultSize() {
 		return resultSize;
 	}
 
@@ -136,19 +137,19 @@ public abstract class ResultSupport<Obj> implements Serializable, _IResultInfo {
 		this.hasMoreResultRows = hasMoreResultRows;
 	}
 
-	public Integer getLastRowPosition() {
+	public Long getLastRowPosition() {
 		return lastRowPosition;
 	}
 
-	public int getFirstRowPosition() {
+	public Long getFirstRowPosition() {
 		return firstRowPosition;
 	}
 
-	public int getResultMaxPages() {
+	public Integer getResultMaxPages() {
 		return resultMaxPages;
 	}
 
-	public int getAbsoluteFirstRowPosition() {
+	public Long getAbsoluteFirstRowPosition() {
 		return absoluteFirstRowPosition;
 	}
 

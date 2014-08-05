@@ -33,7 +33,7 @@ public class Page implements Serializable {
 	private static final long serialVersionUID = -5210221106589109534L;
 
 	/**
-	 * Domyślny rozmiar storny, czyli liczba wierszy przezentowana w
+	 * Domyślny rozmiar storny, czyli liczba wierszy prezentowana w
 	 * stronicowanym wyniku zapytania
 	 */
 	public static final int DEFAULT_PAGE_SIZE = 60;
@@ -42,6 +42,10 @@ public class Page implements Serializable {
 	 * Domyślny numer strony stronicowanego wyniku zapytania.
 	 */
 	public static final int DEFAULT_PAGE_NR = 1;
+	/** Domyślny numer pierwszego wiersza */
+	public static final Long DEFAULT_FIRST_ROW_NUMBER = 0L + DEFAULT_PAGE_NR;
+	/** Domyślny numer ostatniego wiersza */
+	public static final Long DEFAULT_LAST_ROW_NUMBER = 0L + DEFAULT_PAGE_SIZE;
 
 	/**
 	 * Minimalny numer strony stronicowanego wyniku zapytania.
@@ -61,17 +65,17 @@ public class Page implements Serializable {
 	/**
 	 * Nr strony jaką chcemy pobrać jako wynik zapytania
 	 */
-	private int number = DEFAULT_PAGE_NR;
+	private Integer number = DEFAULT_PAGE_NR;
 
 	/**
 	 * numer pierwszego wiersza na stronie
 	 */
-	private int firstRowNumber = DEFAULT_PAGE_NR;
+	private Long firstRowNumber = DEFAULT_FIRST_ROW_NUMBER;
 
 	/**
 	 * numer ostatniego wiersza na stronie
 	 */
-	private int lastRowNumber = DEFAULT_PAGE_SIZE;
+	private Long lastRowNumber = DEFAULT_LAST_ROW_NUMBER;
 
 	public Page() {
 		super();
@@ -79,7 +83,7 @@ public class Page implements Serializable {
 
 	/**
 	 * @param number
-	 *           nr strony
+	 *            nr strony
 	 */
 	public Page(int number) {
 		this(DEFAULT_PAGE_SIZE, number);
@@ -87,16 +91,17 @@ public class Page implements Serializable {
 
 	/**
 	 * @param size
-	 *           rozmiar strony, czyli maksymalna liczba wyników zapytania na
-	 *           stronie
+	 *            rozmiar strony, czyli maksymalna liczba wyników zapytania na
+	 *            stronie
 	 * @param number
-	 *           nr strony
+	 *            nr strony
 	 */
 	public Page(int size, int number) {
 		super();
 		this.size = size;
 		this.number = number;
-		this.firstRowNumber = ((this.number - 1) * this.size) + 1;
+		/** Niejawna konwersja do Long'a */
+		this.firstRowNumber = 0L + ((this.number - 1) * this.size) + 1;
 		this.lastRowNumber = this.firstRowNumber + this.size - 1;
 	}
 
@@ -111,30 +116,30 @@ public class Page implements Serializable {
 	/**
 	 * @return the firstRowNumber
 	 */
-	public int getFirstRowNumber() {
+	public Long getFirstRowNumber() {
 		return firstRowNumber;
 	}
 
 	/**
 	 * @return the endPosition
 	 */
-	public int getLastRowNumber() {
+	public Long getLastRowNumber() {
 		return lastRowNumber;
 	}
 
 	/**
 	 * @param firstRowNumber
-	 *           the firstRowNumber to set
+	 *            the firstRowNumber to set
 	 */
-	void setFirstRowNumber(int firstRowNumber) {
+	void setFirstRowNumber(Long firstRowNumber) {
 		this.firstRowNumber = firstRowNumber;
 	}
 
 	/**
 	 * @param lastRowNumber
-	 *           the lastRowNumber to set
+	 *            the lastRowNumber to set
 	 */
-	void setLastRowNumber(int lastRowNumber) {
+	void setLastRowNumber(Long lastRowNumber) {
 		this.lastRowNumber = lastRowNumber;
 	}
 
@@ -145,9 +150,10 @@ public class Page implements Serializable {
 	 *         {@link #lastRowNumber} oraz {@link #firstRowNumber}
 	 */
 	public int getNumberOfRowsOnThePage() {
-		return (this.lastRowNumber > this.firstRowNumber
-				? (this.lastRowNumber - this.firstRowNumber + 1)
-				: 0);
+		Long numberOfRowsOnThePage = this.lastRowNumber - this.firstRowNumber
+				+ 1L;
+		return (this.lastRowNumber > this.firstRowNumber ? numberOfRowsOnThePage
+				.intValue() : 0);
 	}
 
 	/*
@@ -157,13 +163,10 @@ public class Page implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "Page ["
-				+ "number=" + number
-				+ ", size=" + size
-				+ ", firstRowNumber=" + firstRowNumber
-				+ ", lastRowNumber=" + lastRowNumber
-				+ ", numberOfRowsOnThePage=" + getNumberOfRowsOnThePage()
-				+ "]";
+		return "Page [" + "number=" + number + ", size=" + size
+				+ ", firstRowNumber=" + firstRowNumber + ", lastRowNumber="
+				+ lastRowNumber + ", numberOfRowsOnThePage="
+				+ getNumberOfRowsOnThePage() + "]";
 	}
 
 }
