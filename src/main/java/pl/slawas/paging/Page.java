@@ -169,4 +169,48 @@ public class Page implements Serializable {
 				+ getNumberOfRowsOnThePage() + "]";
 	}
 
+	/* Overridden (non-Javadoc) */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((firstRowNumber == null) ? 0 : firstRowNumber.hashCode());
+		result = prime * result
+				+ ((lastRowNumber == null) ? 0 : lastRowNumber.hashCode());
+		result = prime * result + ((number == null) ? 0 : number.hashCode());
+		result = prime * result + size;
+		return result;
+	}
+
+	/* Overridden (non-Javadoc) */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Page other = (Page) obj;
+		if (firstRowNumber == null) {
+			if (other.firstRowNumber != null)
+				return false;
+		} else if (!firstRowNumber.equals(other.firstRowNumber))
+			return false;
+		if (lastRowNumber == null) {
+			if (other.lastRowNumber != null)
+				return false;
+		} else if (!lastRowNumber.equals(other.lastRowNumber))
+			return false;
+		if (number == null) {
+			if (other.number != null)
+				return false;
+		} else if (!number.equals(other.number))
+			return false;
+		if (size != other.size)
+			return false;
+		return true;
+	}
+
 }

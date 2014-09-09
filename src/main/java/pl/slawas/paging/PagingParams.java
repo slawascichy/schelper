@@ -121,7 +121,7 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	 * Domyslna maksymalna liczba dokumentów offsetu (maksymalna liczba na
 	 * stronie)
 	 */
-	public static final int MAX_PAGE_SIZE = 500;
+	public static final int MAX_PAGE_SIZE = 1000;
 
 	/**
 	 * <b>Prametr stronicowania:</b> Dynamicznie ustawiane ograniczenia na
@@ -689,7 +689,7 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 		case offset:
 			if (value < 0 || value >= maxCount) {
 				logger.error(
-						"[{}] Zle ustawione stronicowanie. Parametr 'offset' musi zawierac sie w [0,{})! Ma warosc {}",
+						"[{}] Zle ustawione stronicowanie. Parametr 'offset' musi zawierac sie w [0,{})! Obecna warosc to {}",
 						new Object[] { param.getMsgLabel(), maxCount,
 								cursorOfPage });
 				valid = false;
@@ -699,7 +699,7 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 		case cursorOfPage:
 			if (value < offset || value >= maxCount) {
 				logger.error(
-						"[{}] Zle ustawione stronicowanie. Parametr 'cursorOfPage' musi zawierac sie w [{},{})! Ma warosc {}",
+						"[{}] Zle ustawione stronicowanie. Parametr 'cursorOfPage' musi zawierac sie w [{},{})! Obecna warosc to {}",
 						new Object[] { param.getMsgLabel(), offset, maxCount,
 								cursorOfPage });
 				valid = false;

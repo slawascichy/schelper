@@ -67,17 +67,14 @@ public class NameValuePairUrilsTest extends TestCase {
 		testList.add(val);
 		val = NameValuePairUtils.createNewInstance("Lalka", "10");
 		testList.add(val);
-		val = NameValuePairUtils.createNewInstance("Łódź", "11");
+		val = NameValuePairUtils.createNewInstance("Lodź", "11");
 		testList.add(val);
 	}
-
-
-
 
 	static final Comparator<NameValuePair> NAME_ORDER = new Comparator<NameValuePair>() {
 		public int compare(NameValuePair e1, NameValuePair e2) {
 
-			return Strings.compare4Sort(e1.getName(),e2.getName());
+			return Strings.compare4Sort(e1.getName(), e2.getName());
 		}
 	};
 
@@ -88,14 +85,19 @@ public class NameValuePairUrilsTest extends TestCase {
 		int i = 0;
 		Collections.sort(testList, NAME_ORDER);
 		for (NameValuePair test : testList) {
-			log.debug(" - {} ({})",
+			log.info(" - {} ({})",
 					new Object[] { test.getName(), test.getValue() });
-			if (i == 0)
-				Assert.assertTrue(test.getName().equals("Aleksandra")
-						&& test.getValue().equals("8"));
-			if (i == 7)
-				Assert.assertTrue(test.getName().equals("Majka")
-						&& test.getValue().equals("6"));
+			if (i == 0) {
+				assertEquals("Oczekiwano innej wartości", "8", test.getValue());
+				assertEquals("Oczekiwano innej wartości", "Aleksandra",
+						test.getName());
+			}
+			if (i == 7) {
+				assertEquals("Oczekiwano innej wartości", "Majka",
+						test.getName());
+				assertEquals("Oczekiwano innej wartości", "6", test.getValue());
+
+			}
 			i++;
 		}
 
