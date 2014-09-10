@@ -105,7 +105,19 @@ public abstract class PagedResultSupport<Obj> implements Serializable,
 			firstRowNumber = startPosition;
 			lastRowNumber = this.result.getEndPosition();
 			if (this.result.getAbsoluteFirstRowPosition() != firstRowNumber) {
-				Long pNumber = 1L + (startPosition / pagingParams.getPageSize());
+				/**
+				 * Problem z ustawieniem numeru strony gdy jej rozmiar jest
+				 * równy 1:
+				 * 
+				 * <pre>
+				 * pl.slawas.paging.PaginigParamsException: Problem z ustwieniem strony o numerze 2: PagingParams [offset=0, cursorOfPage=0, pageSize=1, maxCount=1, maxPageSize=1, page=Page [number=1, size=1, firstRowNumber=1, lastRowNumber=1, numberOfRowsOnThePage=0], valid=false]
+				 * 	at pl.slawas.paging.PagedResultSupport.<init>(PagedResultSupport.java:113)
+				 * </pre>
+				 * 
+				 * Dalego też, gdy strona jest równa 1, dodaję 0.
+				 */
+				Long pNumber = 1L + (pagingParams.getPageSize() != 1 ? (startPosition / pagingParams
+						.getPageSize()) : 0);
 				pageNumber = pNumber.intValue();
 			}
 			if (checkPagingParamRestrictions) {
