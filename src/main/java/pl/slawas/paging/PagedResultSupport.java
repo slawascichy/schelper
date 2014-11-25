@@ -6,7 +6,7 @@
  * THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN
- * NO EVENT SHALL SŁAWOMIR CICHY BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * NO EVENT SHALL SĹ�AWOMIR CICHY BE LIABLE FOR ANY DIRECT, INDIRECT,
  * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
  * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
  * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
@@ -33,7 +33,7 @@ import pl.slawas.twl4j.LoggerFactory;
  * @version $Revision: 1.6.2.1 $
  * 
  * @param <Obj>
- *            klasa obiektu na liscie rezultatów
+ *            klasa obiektu na liscie rezultatĂłw
  */
 @SuppressWarnings("serial")
 public abstract class PagedResultSupport<Obj> implements Serializable,
@@ -57,30 +57,32 @@ public abstract class PagedResultSupport<Obj> implements Serializable,
 	 * @param pagingParams
 	 *            parametry stronicowania
 	 * @param result
-	 *            obiektu rezultatu "pierwotnego", który jest podstwą do
+	 *            obiektu rezultatu "pierwotnego", ktĂłry jest podstwÄ… do
 	 *            zbudowania stronicowanego rezultatu
 	 * @param query
-	 *            zapytanie, na podstwie, którego został zbudowany rezultat
-	 *            "pierwotny". Obiekt ten potrzebny jest aby bez konieczności
-	 *            odwoływania się do manager-ów zarządzajacych zapytaniami,
-	 *            można było pobrać kolejną stronę, czy też odświeżyć wynik.
+	 *            zapytanie, na podstwie, ktĂłrego zostaĹ‚ zbudowany rezultat
+	 *            "pierwotny". Obiekt ten potrzebny jest aby bez koniecznoĹ›ci
+	 *            odwoĹ‚ywania siÄ™ do manager-Ăłw zarzÄ…dzajacych zapytaniami,
+	 *            moĹĽna byĹ‚o pobraÄ‡ kolejnÄ… stronÄ™, czy teĹĽ odĹ›wieĹĽyÄ‡
+	 *            wynik.
 	 * @param checkPagingParamRestrictions
-	 *            czy mają być przestrzegane parametry stronicowania. Niektóre
-	 *            systemy dają możliwość pobrania kolejnej "paczki" danych w
-	 *            systuacji, kiedy wynik ogólny (liczba zwracanych
-	 *            dokumentów/wierszy) nie spełnia warunków związnych z
-	 *            ograniczeniami np. ograniczenia pozwalają na pobranie
-	 *            maksymalnie {@code 5} stron i całość rezultatu nie mieści sie
-	 *            na nich. Gdy parametr ustawimy parametr na {@code true}, to
-	 *            wtedy nie bedziemy mogli pobrać kolejnej strony np. 6 wyniku,
-	 *            trzeba zmienic kryteria stronicowania. Jeżeli jednak ustawimy
-	 *            na {@code false}, parametry stronicowania zostaną zignorowane
-	 *            i stronicowany obiekt pozwoli na utworzenie kolejnej paczki
-	 *            stron np. {@code 6,7,8,9,10}. O tym czy wynik ma kolejną
-	 *            paczkę informuje nas metoda {@link #hasMoreResultRows()}, a o
-	 *            tym czy jesteśmy w "paczce rozszerzonej" (w kolejnej paczce)
-	 *            możemy rozpoznać po tym, że pierwsza strona paczki ma numer
-	 *            różny od {@link Page#MIN_PAGE_NR}, albo używając metody
+	 *            czy majÄ… byÄ‡ przestrzegane parametry stronicowania.
+	 *            NiektĂłre systemy dajÄ… moĹĽliwoĹ›Ä‡ pobrania kolejnej
+	 *            "paczki" danych w systuacji, kiedy wynik ogĂłlny (liczba
+	 *            zwracanych dokumentĂłw/wierszy) nie speĹ‚nia warunkĂłw
+	 *            zwiÄ…znych z ograniczeniami np. ograniczenia pozwalajÄ… na
+	 *            pobranie maksymalnie {@code 5} stron i caĹ‚oĹ›Ä‡ rezultatu nie
+	 *            mieĹ›ci sie na nich. Gdy parametr ustawimy parametr na
+	 *            {@code true}, to wtedy nie bedziemy mogli pobraÄ‡ kolejnej
+	 *            strony np. 6 wyniku, trzeba zmienic kryteria stronicowania.
+	 *            JeĹĽeli jednak ustawimy na {@code false}, parametry
+	 *            stronicowania zostanÄ… zignorowane i stronicowany obiekt
+	 *            pozwoli na utworzenie kolejnej paczki stron np.
+	 *            {@code 6,7,8,9,10}. O tym czy wynik ma kolejnÄ… paczkÄ™
+	 *            informuje nas metoda {@link #hasMoreResultRows()}, a o tym czy
+	 *            jesteĹ›my w "paczce rozszerzonej" (w kolejnej paczce) moĹĽemy
+	 *            rozpoznaÄ‡ po tym, ĹĽe pierwsza strona paczki ma numer rĂłĹĽny
+	 *            od {@link Page#MIN_PAGE_NR}, albo uĹĽywajÄ…c metody
 	 *            {@link #hasPreviousResultRows()}.
 	 */
 	public PagedResultSupport(PagingParams pagingParams,
@@ -105,7 +107,33 @@ public abstract class PagedResultSupport<Obj> implements Serializable,
 			firstRowNumber = startPosition;
 			lastRowNumber = this.result.getEndPosition();
 			if (this.result.getAbsoluteFirstRowPosition() != firstRowNumber) {
+				/*
+				 * TODO co oznaczna powyzszy warunek
+				 * (this.result.getAbsoluteFirstRowPosition() != firstRowNumber)
+				 * ?
+				 */
+				/*
+				 * Niżej algorytm obliczania numeru strony na podstawie
+				 * zwróconej kolekcji wierszy oraz zaplanowanego rozmiaru
+				 * strony.
+				 */
+				/* Numer ostatniej strony. */
+				Long lastPageNumber = (lastRowNumber % pagingParams
+						.getPageSize()) > 0 ? ((lastRowNumber / pagingParams
+						.getPageSize()) + 1) : (lastRowNumber / pagingParams
+						.getPageSize());
+				/* Numer obecnej ( żądanej) strony */
 				Long pNumber = 1L + (startPosition / pagingParams.getPageSize());
+
+				/*
+				 * Ograniczenie: numer zwróconej strony nie może być
+				 * większy od umeru ostatnej strony. W p.p. zwrócona będzie
+				 * ostatnia strona.
+				 */
+				if (pNumber > lastPageNumber) {
+					pNumber = lastPageNumber;
+				}
+
 				pageNumber = pNumber.intValue();
 			}
 			if (checkPagingParamRestrictions) {
@@ -239,13 +267,13 @@ public abstract class PagedResultSupport<Obj> implements Serializable,
 	}
 
 	/**
-	 * Metoda pomocnicza wyznaczająca kolejna strone dla podanej w argumencie
+	 * Metoda pomocnicza wyznaczajÄ…ca kolejna strone dla podanej w argumencie
 	 * strony
 	 * 
 	 * @param page
-	 *            strona dla której wyznaczona zostanie strona następna
-	 * @return następna strona dla argumentu 'page', jeżeli następna strona nie
-	 *         istnieje wynikiem jest {@code null}
+	 *            strona dla ktĂłrej wyznaczona zostanie strona nastÄ™pna
+	 * @return nastÄ™pna strona dla argumentu 'page', jeĹĽeli nastÄ™pna strona
+	 *         nie istnieje wynikiem jest {@code null}
 	 */
 	private Page getNextPageInfo(Page page) {
 
@@ -438,11 +466,11 @@ public abstract class PagedResultSupport<Obj> implements Serializable,
 	}
 
 	/**
-	 * Pobieranie obiektu rezultatu "pierwotnego", który jest podstwą do
+	 * Pobieranie obiektu rezultatu "pierwotnego", ktĂłry jest podstwÄ… do
 	 * zbudowania stronicowanego rezultatu. Obiekt ten jest ustawiany w
 	 * konstruktorze
 	 * {@link #PagedResultSupport(PagingParams, ResultSupport, _IPagedQuery, boolean)}
-	 * i nie raz może być potrzebny do dalszego przetwarzania.
+	 * i nie raz moĹĽe byÄ‡ potrzebny do dalszego przetwarzania.
 	 * 
 	 * @return obiekt rezultatu "pierwotnego"
 	 */
