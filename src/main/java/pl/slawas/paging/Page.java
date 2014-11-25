@@ -6,7 +6,7 @@
  * THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN
- * NO EVENT SHALL SŁAWOMIR CICHY BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * NO EVENT SHALL SĹ�AWOMIR CICHY BE LIABLE FOR ANY DIRECT, INDIRECT,
  * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
  * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
  * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
@@ -20,7 +20,7 @@ import java.io.Serializable;
 
 /**
  * 
- * Page - definicja strony wyników. Implementację zaczerpnąłem z projektu
+ * Page - definicja strony wynikĂłw. ImplementacjÄ™ zaczerpnÄ…Ĺ‚em z projektu
  * WPLucene.
  * 
  * @author Slawomir Cichy &lt;slawas@slawas.pl&gt;
@@ -33,18 +33,18 @@ public class Page implements Serializable {
 	private static final long serialVersionUID = -5210221106589109534L;
 
 	/**
-	 * Domyślny rozmiar storny, czyli liczba wierszy prezentowana w
+	 * DomyĹ›lny rozmiar storny, czyli liczba wierszy prezentowana w
 	 * stronicowanym wyniku zapytania
 	 */
 	public static final int DEFAULT_PAGE_SIZE = 60;
 
 	/**
-	 * Domyślny numer strony stronicowanego wyniku zapytania.
+	 * DomyĹ›lny numer strony stronicowanego wyniku zapytania.
 	 */
 	public static final int DEFAULT_PAGE_NR = 1;
-	/** Domyślny numer pierwszego wiersza */
+	/** DomyĹ›lny numer pierwszego wiersza */
 	public static final Long DEFAULT_FIRST_ROW_NUMBER = 0L + DEFAULT_PAGE_NR;
-	/** Domyślny numer ostatniego wiersza */
+	/** DomyĹ›lny numer ostatniego wiersza */
 	public static final Long DEFAULT_LAST_ROW_NUMBER = 0L + DEFAULT_PAGE_SIZE;
 
 	/**
@@ -53,7 +53,7 @@ public class Page implements Serializable {
 	public static final int MIN_PAGE_NR = 1;
 
 	/**
-	 * Domyślna maksymalna liczba stron wyników zapytania SQL
+	 * DomyĹ›lna maksymalna liczba stron wynikĂłw zapytania SQL
 	 */
 	public static int DEFAULT_MAX_PAGES = 300;
 
@@ -63,7 +63,7 @@ public class Page implements Serializable {
 	private int size = DEFAULT_PAGE_SIZE;
 
 	/**
-	 * Nr strony jaką chcemy pobrać jako wynik zapytania
+	 * Nr strony jakÄ… chcemy pobraÄ‡ jako wynik zapytania
 	 */
 	private Integer number = DEFAULT_PAGE_NR;
 
@@ -91,7 +91,7 @@ public class Page implements Serializable {
 
 	/**
 	 * @param size
-	 *            rozmiar strony, czyli maksymalna liczba wyników zapytania na
+	 *            rozmiar strony, czyli maksymalna liczba wynikĂłw zapytania na
 	 *            stronie
 	 * @param number
 	 *            nr strony
@@ -146,13 +146,13 @@ public class Page implements Serializable {
 	/**
 	 * Liczba wierszy na stronie
 	 * 
-	 * @return liczba wierszy na stronie wyznaczoną poprzez różnicę pomiędzy
+	 * @return liczba wierszy na stronie wyznaczonÄ… poprzez rĂłĹĽnicÄ™ pomiÄ™dzy
 	 *         {@link #lastRowNumber} oraz {@link #firstRowNumber}
 	 */
 	public int getNumberOfRowsOnThePage() {
 		Long numberOfRowsOnThePage = this.lastRowNumber - this.firstRowNumber
 				+ 1L;
-		return (this.lastRowNumber > this.firstRowNumber ? numberOfRowsOnThePage
+		return (this.lastRowNumber >= this.firstRowNumber ? numberOfRowsOnThePage
 				.intValue() : 0);
 	}
 
