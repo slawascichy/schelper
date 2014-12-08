@@ -20,17 +20,17 @@ import javax.naming.Context;
 
 /**
  * 
- * JndiParametersUtils klasa z metodami analizy parametrów ustwień kontekstu
+ * JndiParametersUtils klasa z metodami analizy parametrów ustawień kontekstu
  * JNDI
  * 
- * @author Slawomir Cichy &lt;slawas@slawas.pl&gt;
+ * @author Sławomir Cichy &lt;slawas@slawas.pl&gt;
  * @version $Revision: 1.2 $
  * 
  */
 public class JndiParametersUtils {
 
 	/**
-	 * Metoda analizy ustwienia właściwości jnpDisableDiscovery
+	 * Metoda analizy ustawienia właściwości jnpDisableDiscovery
 	 * 
 	 * @see JndiParameters#JNP_DISABLEDISCOVERY
 	 * 
@@ -38,16 +38,18 @@ public class JndiParametersUtils {
 	 * @return wartość parametru
 	 */
 	public static String getJnpDisableDiscovery(String jnpDisableDiscovery) {
-		String sysProperty = System.getProperty(JndiParameters.ANDRO_JNP_DISABLEDISCOVERY);
-		String jnpProperty = System.getProperty(JndiParameters.JNP_DISABLEDISCOVERY);
+		String sysProperty = System
+				.getProperty(JndiParameters.SCHELPER_JNP_DISABLEDISCOVERY);
+		String jnpProperty = System
+				.getProperty(JndiParameters.JNP_DISABLEDISCOVERY);
 		return (jnpDisableDiscovery != null ? jnpDisableDiscovery
 				: (sysProperty != null ? sysProperty
-				: (jnpProperty != null ? jnpProperty
-				: JndiParameters.DEFAULT_JNP_DISABLEDISCOVERY)));
+						: (jnpProperty != null ? jnpProperty
+								: JndiParameters.DEFAULT_JNP_DISABLEDISCOVERY)));
 	}
 
 	/**
-	 * Metoda analizy ustwienia właściwości providerUrl.
+	 * Metoda analizy ustawienia właściwości providerUrl.
 	 * 
 	 * @see Context#PROVIDER_URL
 	 * 
@@ -55,16 +57,17 @@ public class JndiParametersUtils {
 	 * @return wartość parametru
 	 */
 	public static String getProviderUrl(String providerUrl) {
-		String sysProperty = System.getProperty(JndiParameters.ANDRO_PROVIDER_URL);
+		String sysProperty = System
+				.getProperty(JndiParameters.SCHELPER_PROVIDER_URL);
 		String jndiProperty = System.getProperty(Context.PROVIDER_URL);
 		return (providerUrl != null ? providerUrl
 				: (sysProperty != null ? sysProperty
-				: (jndiProperty != null ? jndiProperty
-				: JndiParameters.DEFAULT_PROVIDER_URL)));
+						: (jndiProperty != null ? jndiProperty
+								: JndiParameters.DEFAULT_PROVIDER_URL)));
 	}
 
 	/**
-	 * Metoda analizy ustwienia właściwości urlPkgPrefixes.
+	 * Metoda analizy ustawienia właściwości urlPkgPrefixes.
 	 * 
 	 * @see Context#URL_PKG_PREFIXES
 	 * 
@@ -72,16 +75,17 @@ public class JndiParametersUtils {
 	 * @return wartość parametru
 	 */
 	public static String getUrlPkgPrefixes(String urlPkgPrefixes) {
-		String sysProperty = System.getProperty(JndiParameters.ANDRO_URL_PKG_PRFIXES);
+		String sysProperty = System
+				.getProperty(JndiParameters.SCHELPER_URL_PKG_PRFIXES);
 		String jndiProperty = System.getProperty(Context.URL_PKG_PREFIXES);
 		return (urlPkgPrefixes != null ? urlPkgPrefixes
 				: (sysProperty != null ? sysProperty
-				: (jndiProperty != null ? jndiProperty
-				: JndiParameters.DEFAULT_URL_PKG_PRFIXES)));
+						: (jndiProperty != null ? jndiProperty
+								: JndiParameters.DEFAULT_URL_PKG_PRFIXES)));
 	}
 
 	/**
-	 * Metoda analizy ustwienia właściwości initialContextFactory.
+	 * Metoda analizy ustawienia właściwości initialContextFactory.
 	 * 
 	 * @see Context#INITIAL_CONTEXT_FACTORY
 	 * 
@@ -89,13 +93,14 @@ public class JndiParametersUtils {
 	 * @return wartość parametru
 	 */
 	public static String getInitialContextFactory(String initialContextFactory) {
-		String sysProperty = System.getProperty(JndiParameters.ANDRO_INITIAL_CONTEXT_FACTORY);
+		String sysProperty = System
+				.getProperty(JndiParameters.SCHELPER_INITIAL_CONTEXT_FACTORY);
 		String jndiProperty = System
 				.getProperty(Context.INITIAL_CONTEXT_FACTORY);
 		return (initialContextFactory != null ? initialContextFactory
 				: (sysProperty != null ? sysProperty
-				: (jndiProperty != null ? jndiProperty
-				: JndiParameters.DEFAULT_INITIAL_CONTEXT_FACTORY)));
+						: (jndiProperty != null ? jndiProperty
+								: JndiParameters.DEFAULT_INITIAL_CONTEXT_FACTORY)));
 	}
 
 }
