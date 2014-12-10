@@ -8,16 +8,16 @@ import javax.naming.Reference;
 import javax.naming.Referenceable;
 import javax.naming.StringRefAddr;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import pl.slawas.twl4j.Logger;
+import pl.slawas.twl4j.LoggerFactory;
 
 /**
  * 
  * TObjectReference
- *
+ * 
  * @author Sławomir Cichy &lt;slawas@slawas.pl&gt;
- * @version $Revision: 1.1 $ 
- *
+ * @version $Revision: 1.1 $
+ * 
  */
 public class TObjectReference implements Referenceable, Serializable {
 

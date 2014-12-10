@@ -28,7 +28,6 @@ import pl.slawas.twl4j.Logger;
 import pl.slawas.twl4j.LoggerFactory;
 import pl.slawas.xml.XMLNameValuePairUtils;
 
-
 /**
  * 
  * NameValuePairUtils - klasa narzędziowa obsługująca typy spełniające interface
@@ -40,7 +39,8 @@ import pl.slawas.xml.XMLNameValuePairUtils;
  */
 public class NameValuePairUtils {
 
-	private static Logger logger = LoggerFactory.getLogger(NameValuePairUtils.class);
+	private static Logger logger = LoggerFactory
+			.getLogger(NameValuePairUtils.class);
 
 	/**
 	 * SortBy metoda sortowania wykorzystywana podczas wyszukiwania
@@ -52,19 +52,19 @@ public class NameValuePairUtils {
 	public enum SortBy {
 		/** Sortowanie obiektów {@link NameValuePair} po nazwie */
 		NAME,
-				/** Sortowanie obiektów {@link NameValuePair} po wartości */
+		/** Sortowanie obiektów {@link NameValuePair} po wartości */
 		VALUE;
 	}
 
 	static final Comparator<NameValuePair> NAME_ORDER = new Comparator<NameValuePair>() {
 		public int compare(NameValuePair e1, NameValuePair e2) {
-			return Strings.compare4Sort(e1.getName(),e2.getName());
+			return Strings.compare4Sort(e1.getName(), e2.getName());
 		}
 	};
-	
+
 	static final Comparator<NameValuePair> VALUE_ORDER = new Comparator<NameValuePair>() {
 		public int compare(NameValuePair e1, NameValuePair e2) {
-			return Strings.compare4Sort(e1.getValue(),e2.getValue());
+			return Strings.compare4Sort(e1.getValue(), e2.getValue());
 		}
 	};
 
@@ -72,11 +72,12 @@ public class NameValuePairUtils {
 	 * Procedura sortowania kolekcji typu List<?> po polu Name.
 	 * 
 	 * @param a
-	 *           kolekcja
+	 *            kolekcja
 	 * @throws Exception
 	 * @throws Exception
 	 */
-	public static void sortByName(List<? extends NameValuePair> a) throws Exception {
+	public static void sortByName(List<? extends NameValuePair> a)
+			throws Exception {
 		Collections.sort(a, NAME_ORDER);
 	}
 
@@ -84,18 +85,18 @@ public class NameValuePairUtils {
 	 * Procedura sortowania kolekcji typu List<NameValuePair> po polu Name.
 	 * 
 	 * @param source
-	 *           kolekcja
+	 *            kolekcja
 	 * @param lo0
-	 *           pozycja, od ktorej ma byc rozpoczete sortowanie, zazwyczaj 0
+	 *            pozycja, od ktorej ma byc rozpoczete sortowanie, zazwyczaj 0
 	 * @param hi0
-	 *           pozycja, na ktorej ma byc zakonczone sortowanie, zazwyczaj
-	 *           a.length -1
+	 *            pozycja, na ktorej ma byc zakonczone sortowanie, zazwyczaj
+	 *            a.length -1
 	 * @throws Exception
 	 */
 	@Deprecated
 	@SuppressWarnings("unchecked")
-	public static void sortByName(List<? extends NameValuePair> source, int lo0, int hi0)
-			throws Exception {
+	public static void sortByName(List<? extends NameValuePair> source,
+			int lo0, int hi0) throws Exception {
 
 		List<NameValuePair> a = (List<NameValuePair>) source;
 		int lo = lo0;
@@ -104,7 +105,7 @@ public class NameValuePairUtils {
 		if (lo >= hi) {
 			return;
 		} else if (lo == hi - 1) {
-			/*                           * sort a two element list by swapping if necessary */
+			/* * sort a two element list by swapping if necessary */
 			if (a.get(lo).getName().compareTo(a.get(hi).getName()) > 0) {
 				NameValuePair T = a.get(lo);
 				a.set(lo, a.get(hi));
@@ -112,7 +113,7 @@ public class NameValuePairUtils {
 			}
 			return;
 		}
-		/*                           * Pick a pivot and move it out of the way */
+		/* * Pick a pivot and move it out of the way */
 		NameValuePair pivot = a.get((lo + hi) / 2);
 		a.set(((lo + hi) / 2), a.get(hi));
 		a.set(hi, pivot);
@@ -121,29 +122,31 @@ public class NameValuePairUtils {
 			 * * Search forward from a[lo] until an element is found that * is
 			 * greater than the pivot or lo >= hi
 			 */
-			while ((a.get(lo).getName().compareTo(pivot.getName()) <= 0) && (lo < hi)) {
+			while ((a.get(lo).getName().compareTo(pivot.getName()) <= 0)
+					&& (lo < hi)) {
 				lo++;
 			}
 			/*
-			 * * Search backward from a[hi] until element is found that * is less
-			 * than the pivot, or lo >= hi
+			 * * Search backward from a[hi] until element is found that * is
+			 * less than the pivot, or lo >= hi
 			 */
-			while ((a.get(hi).getName().compareTo(pivot.getName()) >= 0) && (lo < hi)) {
+			while ((a.get(hi).getName().compareTo(pivot.getName()) >= 0)
+					&& (lo < hi)) {
 				hi--;
 			}
-			/*                           * Swap elements a[lo] and a[hi] */
+			/* * Swap elements a[lo] and a[hi] */
 			if (lo < hi) {
 				NameValuePair T = a.get(lo);
 				a.set(lo, a.get(hi));
 				a.set(hi, T);
 			}
 		}
-		/*                           * Put the median in the "center" of the list */
+		/* * Put the median in the "center" of the list */
 		a.set(hi0, a.get(hi));
 		a.set(hi, pivot);
 		/*
-		 * * Recursive calls, elements a[lo0] to a[lo-1] are less than or * equal
-		 * to pivot, elements a[hi+1] to a[hi0] are greater than * pivot.
+		 * * Recursive calls, elements a[lo0] to a[lo-1] are less than or *
+		 * equal to pivot, elements a[hi+1] to a[hi0] are greater than * pivot.
 		 */
 		sortByName(a, lo0, lo - 1);
 		sortByName(a, hi + 1, hi0);
@@ -153,11 +156,12 @@ public class NameValuePairUtils {
 	 * Procedura sortowania kolekcji typu List<NameValuePair> po polu Value.
 	 * 
 	 * @param a
-	 *           kolekcja
+	 *            kolekcja
 	 * @throws Exception
 	 * @throws Exception
 	 */
-	public static void sortByValue(List<? extends NameValuePair> a) throws Exception {
+	public static void sortByValue(List<? extends NameValuePair> a)
+			throws Exception {
 		Collections.sort(a, VALUE_ORDER);
 	}
 
@@ -165,18 +169,18 @@ public class NameValuePairUtils {
 	 * Procedura sortowania kolekcji typu List<NameValuePair> po polu Name.
 	 * 
 	 * @param a
-	 *           kolekcja
+	 *            kolekcja
 	 * @param lo0
-	 *           pozycja, od ktorej ma byc rozpoczete sortowanie, zazwyczaj 0
+	 *            pozycja, od ktorej ma byc rozpoczete sortowanie, zazwyczaj 0
 	 * @param hi0
-	 *           pozycja, na ktorej ma byc zakonczone sortowanie, zazwyczaj
-	 *           a.length -1
+	 *            pozycja, na ktorej ma byc zakonczone sortowanie, zazwyczaj
+	 *            a.length -1
 	 * @throws Exception
 	 */
 	@Deprecated
 	@SuppressWarnings("unchecked")
-	public static void sortByValue(List<? extends NameValuePair> source, int lo0, int hi0)
-			throws Exception {
+	public static void sortByValue(List<? extends NameValuePair> source,
+			int lo0, int hi0) throws Exception {
 
 		List<NameValuePair> a = (List<NameValuePair>) source;
 		int lo = lo0;
@@ -185,7 +189,7 @@ public class NameValuePairUtils {
 		if (lo >= hi) {
 			return;
 		} else if (lo == hi - 1) {
-			/*                           * sort a two element list by swapping if necessary */
+			/* * sort a two element list by swapping if necessary */
 			if (a.get(lo).getValue().compareTo(a.get(hi).getValue()) > 0) {
 				NameValuePair T = a.get(lo);
 				a.set(lo, a.get(hi));
@@ -193,7 +197,7 @@ public class NameValuePairUtils {
 			}
 			return;
 		}
-		/*                           * Pick a pivot and move it out of the way */
+		/* * Pick a pivot and move it out of the way */
 		NameValuePair pivot = a.get((lo + hi) / 2);
 		a.set(((lo + hi) / 2), a.get(hi));
 		a.set(hi, pivot);
@@ -202,29 +206,31 @@ public class NameValuePairUtils {
 			 * * Search forward from a[lo] until an element is found that * is
 			 * greater than the pivot or lo >= hi
 			 */
-			while ((a.get(lo).getValue().compareTo(pivot.getValue()) <= 0) && (lo < hi)) {
+			while ((a.get(lo).getValue().compareTo(pivot.getValue()) <= 0)
+					&& (lo < hi)) {
 				lo++;
 			}
 			/*
-			 * * Search backward from a[hi] until element is found that * is less
-			 * than the pivot, or lo >= hi
+			 * * Search backward from a[hi] until element is found that * is
+			 * less than the pivot, or lo >= hi
 			 */
-			while ((a.get(hi).getValue().compareTo(pivot.getValue()) >= 0) && (lo < hi)) {
+			while ((a.get(hi).getValue().compareTo(pivot.getValue()) >= 0)
+					&& (lo < hi)) {
 				hi--;
 			}
-			/*                           * Swap elements a[lo] and a[hi] */
+			/* * Swap elements a[lo] and a[hi] */
 			if (lo < hi) {
 				NameValuePair T = a.get(lo);
 				a.set(lo, a.get(hi));
 				a.set(hi, T);
 			}
 		}
-		/*                           * Put the median in the "center" of the list */
+		/* * Put the median in the "center" of the list */
 		a.set(hi0, a.get(hi));
 		a.set(hi, pivot);
 		/*
-		 * * Recursive calls, elements a[lo0] to a[lo-1] are less than or * equal
-		 * to pivot, elements a[hi+1] to a[hi0] are greater than * pivot.
+		 * * Recursive calls, elements a[lo0] to a[lo-1] are less than or *
+		 * equal to pivot, elements a[hi+1] to a[hi0] are greater than * pivot.
 		 */
 		sortByValue(a, lo0, lo - 1);
 		sortByValue(a, hi + 1, hi0);
@@ -232,21 +238,20 @@ public class NameValuePairUtils {
 
 	/**
 	 * Metoda przeszukiwania listy obiektów spełniających interface
-	 * {@link NameValuePair} po nazwie. Jest ustawiane domyślne sortowanie wyniku
-	 * po nazwie.
+	 * {@link NameValuePair} po nazwie. Jest ustawiane domyślne sortowanie
+	 * wyniku po nazwie.
 	 * 
 	 * @see #searchByName(List, String, SortBy)
 	 * 
 	 * @param source
-	 *           lista obiektów spełniających interface {@link NameValuePair}
+	 *            lista obiektów spełniających interface {@link NameValuePair}
 	 * @param searchCredentials
-	 *           słowo kluczowe jakie ma być wyszukane
+	 *            słowo kluczowe jakie ma być wyszukane
 	 * @return przefiltrowana lista obiektów spełniających interface
 	 *         {@link NameValuePair}
 	 */
 	public static List<? extends NameValuePair> searchByName(
-			List<? extends NameValuePair> source,
-			String searchCredentials) {
+			List<? extends NameValuePair> source, String searchCredentials) {
 		return searchByName(source, searchCredentials, SortBy.NAME);
 	}
 
@@ -255,17 +260,16 @@ public class NameValuePairUtils {
 	 * {@link NameValuePair} po nazwie.
 	 * 
 	 * @param source
-	 *           lista obiektów spełniających interface {@link NameValuePair}
+	 *            lista obiektów spełniających interface {@link NameValuePair}
 	 * @param searchCredentials
-	 *           słowo kluczowe jakie ma być wyszukane
+	 *            słowo kluczowe jakie ma być wyszukane
 	 * @param sortBy
-	 *           kryterium sortowania wyniku.
+	 *            kryterium sortowania wyniku.
 	 * @return przefiltrowana lista obiektów spełniających interface
 	 *         {@link NameValuePair}
 	 */
 	public static List<? extends NameValuePair> searchByName(
-			List<? extends NameValuePair> source,
-			String searchCredentials,
+			List<? extends NameValuePair> source, String searchCredentials,
 			SortBy sortBy) {
 
 		if (StringUtils.isBlank(searchCredentials)) {
@@ -285,10 +289,10 @@ public class NameValuePairUtils {
 				}
 				logger.trace(
 						"[I] Nazwa: '{}' : {}",
-						new Object[]
-					{
-							item.getName(),
-							item.getName().toLowerCase().indexOf(searchCredentials) >= 0 });
+						new Object[] {
+								item.getName(),
+								item.getName().toLowerCase()
+										.indexOf(searchCredentials) >= 0 });
 			}
 			if (sortBy != null) {
 				switch (sortBy) {
@@ -311,9 +315,9 @@ public class NameValuePairUtils {
 	 * Tworzenie nowej implemplementacji i instancje {@link NameValuePair}
 	 * 
 	 * @param name
-	 *           wartość odpowiadająca nazwie
+	 *            wartość odpowiadająca nazwie
 	 * @param value
-	 *           wartość odpowiadająca wartości
+	 *            wartość odpowiadająca wartości
 	 * @return nowa instancja obiektu {@link NameValuePair}
 	 */
 	public static NameValuePair createNewInstance(String name, String value) {
@@ -339,7 +343,7 @@ public class NameValuePairUtils {
 
 			/**
 			 * @param name
-			 *           the name to set
+			 *            the name to set
 			 */
 			public void setName(String name) {
 				this.name = name;
@@ -354,15 +358,16 @@ public class NameValuePairUtils {
 
 			/**
 			 * @param value
-			 *           the value to set
+			 *            the value to set
 			 */
 			public void setValue(String value) {
 				this.value = value;
 			}
-			
+
 			@Override
 			public String toString() {
-				return "NameValuePair ['" + getName() + "','" + getValue() + "']";
+				return "NameValuePair ['" + getName() + "','" + getValue()
+						+ "']";
 			}
 
 		};
@@ -370,6 +375,62 @@ public class NameValuePairUtils {
 		nameValuePair.setName(name);
 		nameValuePair.setValue(value);
 		return nameValuePair;
+	}
+
+	/**
+	 * Pobieranie nowej instancji obiektu {@link NameValuePair}
+	 * 
+	 * @param name
+	 *            nazwa
+	 * @param value
+	 *            wartość
+	 * @return nowa instancja obiektu implementująca {@link NameValuePair} z
+	 *         ustawionymi wartościami.
+	 */
+	public static NameValuePair getNewInstanceNVP(String name, String value) {
+		NameValuePair nvp = getNewInstanceNVP();
+		nvp.setName(name);
+		nvp.setValue(value);
+		return nvp;
+	}
+
+	/**
+	 * Pobieranie nowej instancji obiektu {@link NameValuePair}
+	 * 
+	 * @return nowa instancja obiektu implementująca {@link NameValuePair}
+	 */
+	public static NameValuePair getNewInstanceNVP() {
+		return new NameValuePair() {
+
+			private static final long serialVersionUID = 2338163915296338261L;
+			private String name;
+			private String value;
+
+			@Override
+			public String toXMLItem() {
+				return XMLNameValuePairUtils.toXMLItem(this).toString();
+			}
+
+			@Override
+			public void setValue(String value) {
+				this.value = value;
+			}
+
+			@Override
+			public void setName(String name) {
+				this.name = name;
+			}
+
+			@Override
+			public String getValue() {
+				return this.value;
+			}
+
+			@Override
+			public String getName() {
+				return this.name;
+			}
+		};
 	}
 
 }

@@ -31,7 +31,7 @@ import pl.slawas.twl4j.LoggerFactory;
 
 public class Configurations {
 
-	private static Logger log = LoggerFactory.getLogger(Configurations.class);
+	private static Logger log = LoggerFactory.getSystemLogger(Configurations.class);
 
 	private static final int MAX_DEBUG_LINE_PRESENTATION = 3;
 

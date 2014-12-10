@@ -14,7 +14,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package pl.slawas.twl4j;
+package pl.slawas.twl4j.logger;
 
 import java.util.Hashtable;
 import java.util.Properties;
@@ -30,7 +30,7 @@ public class LoggerTest {
 	final private static Logger log = LoggerFactory.getLogger(LoggerTest.class
 			.getName());
 
-	final private static pl.slawas.twl4j.Logger twlog = pl.slawas.twl4j.LoggerFactory
+	final private static pl.slawas.twl4j.logger.LoggerImplementation twlog = (LoggerImplementation) pl.slawas.twl4j.LoggerFactory
 			.getLogger(LoggerTest.class.getName());
 
 	/**
@@ -54,26 +54,26 @@ public class LoggerTest {
 		String message = twlog.buildMessage(testMsg, arg1).toString();
 		log.info("message='{}'", message);
 		twlog.info(testMsg, arg1);
-		assert "1 Slawas Cichy jest bardzo super. :) ".equals(message) : "zle wygenerowany komunikat bledu";
+		assert "[LoggerTest.java:54] : 1 Slawas Cichy jest bardzo super. :) ".equals(message) : "zle wygenerowany komunikat bledu";
 
 		arg1 = new Object[] { 1, "Cichy", "bardzo" };
 		message = twlog.buildMessage(testMsg, arg1).toString();
 		twlog.info(testMsg, arg1);
 		log.info("message='{}'", message);
-		assert "1 Slawas Cichy jest bardzo super. {} ".equals(message) : "zle wygenerowany komunikat bledu";
+		assert "[LoggerTest.java:60] : 1 Slawas Cichy jest bardzo super. {} ".equals(message) : "zle wygenerowany komunikat bledu";
 
 		arg1 = new Object[] { 1, "Cichy", "bardzo", "Wiecej...", "Wiecej..." };
 		message = twlog.buildMessage(testMsg, arg1).toString();
 		twlog.info(testMsg, arg1);
 		log.info("message='{}'", message);
-		assert "1 Slawas Cichy jest bardzo super. Wiecej... ".equals(message) : "zle wygenerowany komunikat bledu";
+		assert "[LoggerTest.java:66] : 1 Slawas Cichy jest bardzo super. Wiecej... ".equals(message) : "zle wygenerowany komunikat bledu";
 
 		testMsg = "Slawas jest super";
 		arg1 = new Object[] { 1, "Cichy", "bardzo", "Wiecej...", "Wiecej..." };
 		message = twlog.buildMessage(testMsg, arg1).toString();
 		twlog.info(testMsg, arg1);
 		log.info("message='{}'", message);
-		assert "Slawas jest super ".equals(message) : "zle wygenerowany komunikat bledu";
+		assert "[LoggerTest.java:73] : Slawas jest super ".equals(message) : "zle wygenerowany komunikat bledu";
 
 		twlog.info(testMsg);
 

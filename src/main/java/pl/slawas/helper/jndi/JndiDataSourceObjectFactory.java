@@ -9,8 +9,8 @@ import javax.naming.RefAddr;
 import javax.naming.Reference;
 import javax.naming.spi.ObjectFactory;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import pl.slawas.twl4j.Logger;
+import pl.slawas.twl4j.LoggerFactory;
 
 public class JndiDataSourceObjectFactory implements ObjectFactory {
 

@@ -39,6 +39,42 @@ public class Strings implements Serializable {
 
 	private static final long serialVersionUID = -8981008883411945666L;
 
+	/** Otwarcie nawiasu (ze spacją na początku) */
+	public static final String OPEN_BRACKED = " (";
+	/** Otwarcie nawiasu kwadratowego */
+	public static final String OPEN_SQUARE_BRACKED = "[";
+	/** Zamknięcie nawiasu */
+	public static final String CLOSE_BRACKED = ")";
+	/** Zamknięcie nawiasu kwadratowego (ze spacją na końcu) */
+	public static final String CLOSE_SQUARE_BRACKED = "] ";
+	/** Wartość reprezentująca brak dostępu do wartości */
+	public static final String NOT_ALLOWED_VALUE = "n/a";
+	/** Wartość reprezentująca spację */
+	public static final String SPACE = " ";
+	/** Reprezentacja związku pomiędzy dwoma obiektami */
+	public static final String RELATIONSHIP = " -> ";
+	/** Reprezentacja znaku podkreślenia */
+	public static final String UNDERSCORE = "_";
+	/** Reprezentacja kropki */
+	public static final String DOT = ".";
+	public static final char DOTChar = '.';
+	/** Reprezentacja dwukropka (sam) */
+	public static final String DOUBLE_DOT_ALONE = ":";
+	/** Reprezentacja dwukropka (ze spacją na końcu) */
+	public static final String DOUBLE_DOT = ": ";
+	/** Reprezentacja przecinka (ze spacją na końcu) */
+	public static final String COMMA = ", ";
+	/** Reprezentacja znaku równości */
+	public static final String EQUALS = "=";
+	/** cudzysłów pojedynczy */
+	public static final String SINGLE_QUOTATION_MARK = "'";
+	/** cudzysłów podwójny */
+	public static final String DOUBLE_QUOTATION_MARK = "\"";
+	/** cyfra zero */
+	public static final String ZERO = "0";
+	/** liczba zero */
+	public static final Long ZEROL = 0L;
+
 	/**
 	 * Metoda zamieniajaca wszystkie wystapienia podanego lancucha znakowego na
 	 * inny w danym lancuchu.

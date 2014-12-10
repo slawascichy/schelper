@@ -5,7 +5,7 @@ import java.util.Hashtable;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import org.slf4j.Logger;
+import pl.slawas.twl4j.Logger;
 
 /**
  * 

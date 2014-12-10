@@ -16,24 +16,67 @@
  */
 package pl.slawas.twl4j;
 
+import pl.slawas.twl4j.appenders.LogAppender;
+import pl.slawas.twl4j.config.LoggerConfig;
+import pl.slawas.twl4j.logger.LogLevel;
+import pl.slawas.twl4j.logger.LoggerAppender;
+import pl.slawas.twl4j.logger.LoggerImplementation;
+
+/**
+ * LoggerFactory
+ * 
+ * @author Sławomir Cichy &lt;slawas@slawas.pl&gt;
+ * @version $Revision: 1.1 $
+ * 
+ */
 public class LoggerFactory {
 
-	public static org.apache.log4j.Logger getRootLogger() {
-		return org.apache.log4j.LogManager.getLoggerRepository()
-				.getRootLogger();
-	}
-
 	public static Logger getLogger(String name) {
-		return new Logger(name);
+		LogLevel ll;
+		LogAppender logAppender;
+		LoggerAppender appender;
+		try {
+			ll = LoggerConfig.getLogLevel();
+			logAppender = LoggerConfig.getLogAppender();
+		} catch (Exception e) {
+			System.err.println("Issue of logger inicjalization: \n" + e);
+			ll = LogLevel.NONE;
+			logAppender = LogAppender.SYSTEMOUT;
+		}
+		appender = logAppender.getAppenderInstance(name, ll);
+		return new LoggerImplementation(name, appender,
+				LoggerConfig.getDateLoggerFormat(),
+				LoggerConfig.getLoggerAddDate());
 	}
 
 	public static Logger getLogger(Class<?> clazz) {
-		return new Logger(clazz);
+		LogLevel ll;
+		LogAppender logAppender;
+		LoggerAppender appender;
+		try {
+			ll = LoggerConfig.getLogLevel();
+			logAppender = LoggerConfig.getLogAppender();
+		} catch (Exception e) {
+			System.err.println("Issue of logger inicjalization: \n" + e);
+			ll = LogLevel.NONE;
+			logAppender = LogAppender.SYSTEMOUT;
+		}
+		appender = logAppender.getAppenderInstance(clazz, ll);
+		return new LoggerImplementation(clazz.getName(), appender,
+				LoggerConfig.getDateLoggerFormat(),
+				LoggerConfig.getLoggerAddDate());
 	}
 
-	public static Logger getLogger(String name,
-			org.apache.log4j.spi.LoggerFactory factory) {
-		return new Logger(name, factory);
+	public static Logger getSystemLogger(String name) {
+		LogLevel ll = LogLevel.INFO;
+		LogAppender logAppender = LogAppender.SYSTEMOUT;
+		LoggerAppender appender = logAppender.getAppenderInstance(name, ll);
+		return new LoggerImplementation(name, appender,
+				LoggerConfig.DEFAULT_DATE_LOGGER_FORMAT,
+				LoggerConfig.DEFAULT_LOGGER_ADD_DATE);
 	}
 
+	public static Logger getSystemLogger(Class<?> clazz) {
+		return getSystemLogger(clazz.getName());
+	}
 }
