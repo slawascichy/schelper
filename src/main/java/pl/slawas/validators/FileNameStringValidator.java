@@ -8,7 +8,7 @@ public class FileNameStringValidator {
 	/**
 	 * Zwraca true jeśli znak c jest nieprawidłowy w nazwie pliku.
 	 */
-	public static boolean isInValidChar(int c) {
+	public static boolean isInvalidChar(int c) {
 		return (
 		/* invalid filename characters */
 		(c < 0x20) || ((c > 0x7E) && (c < 0xA0)) || (c == 0x5C) || (c == 0x2F)
@@ -35,7 +35,7 @@ public class FileNameStringValidator {
 		int i = 0, k = input.length(), c;
 		while (i < k) {
 			c = input.codePointAt(i);
-			if (FileNameStringValidator.isInValidChar(c)) {
+			if (FileNameStringValidator.isInvalidChar(c)) {
 				ret[0] = i;
 				ret[1] = c;
 				return ret;
@@ -60,7 +60,7 @@ public class FileNameStringValidator {
 		k--;
 		while (i < k) {
 			c = StringBuilder.codePointAt(i);
-			if (!FileNameStringValidator.isInValidChar(c))
+			if (!FileNameStringValidator.isInvalidChar(c))
 				i++;
 			else {
 				StringBuilder.deleteCharAt(i);
@@ -83,7 +83,7 @@ public class FileNameStringValidator {
 		char r = FileNameStringValidator.charReplacement();
 		chars[i++] = r;
 		while (i < k) {
-			if (FileNameStringValidator.isInValidChar(chars[i]))
+			if (FileNameStringValidator.isInvalidChar(chars[i]))
 				chars[i] = r;
 			i++;
 		}
