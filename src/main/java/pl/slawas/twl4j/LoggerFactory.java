@@ -38,6 +38,8 @@ public class LoggerFactory {
 		try {
 			ll = LoggerConfig.getLogLevel();
 			logAppender = LoggerConfig.getLogAppender();
+			System.out.println(name + " : logAppender=" + logAppender
+					+ " : logLevel=" + ll.name());
 		} catch (Exception e) {
 			System.err.println("Issue of logger inicjalization: \n" + e);
 			ll = LogLevel.NONE;
@@ -67,8 +69,7 @@ public class LoggerFactory {
 				LoggerConfig.getLoggerAddDate());
 	}
 
-	public static Logger getSystemLogger(String name) {
-		LogLevel ll = LogLevel.INFO;
+	public static Logger getSystemLogger(String name, LogLevel ll) {
 		LogAppender logAppender = LogAppender.SYSTEMOUT;
 		LoggerAppender appender = logAppender.getAppenderInstance(name, ll);
 		return new LoggerImplementation(name, appender,
@@ -77,6 +78,10 @@ public class LoggerFactory {
 	}
 
 	public static Logger getSystemLogger(Class<?> clazz) {
-		return getSystemLogger(clazz.getName());
+		return getSystemLogger(clazz.getName(), LogLevel.INFO);
+	}
+
+	public static Logger getSystemLogger(Class<?> clazz, LogLevel ll) {
+		return getSystemLogger(clazz.getName(), ll);
 	}
 }

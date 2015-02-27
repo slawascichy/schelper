@@ -26,6 +26,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import pl.slawas.twl4j.Logger;
 import pl.slawas.twl4j.LoggerFactory;
 
@@ -33,29 +35,29 @@ public class MockLoader {
 
 	private static Logger log = LoggerFactory.getLogger(MockLoader.class);
 
-	public static String RESERVED_CHARACTER ="~";
-	
+	public static String RESERVED_CHARACTER = "~";
+
 	/**
-	 * Ladowanie pliku w formacie (separatorem jest srednik ';').
-	 * Przykładowy format linni
-	 * <field1>;<field2>;<field3>;<field4>;<field5>
+	 * Ladowanie pliku w formacie (separatorem jest srednik ';'). Przykładowy
+	 * format linni <field1>;<field2>;<field3>;<field4>;<field5>
 	 * 
 	 * @param clazz
 	 * @param fileName
 	 * @return
 	 */
-	public static List<String[]> loadCSV(Class<?> clazz,
-			String fileName) {
+	public static List<String[]> loadCSV(Class<?> clazz, String fileName) {
 
-		 List<String[]> rows = new ArrayList<String[]>();
+		List<String[]> rows = new ArrayList<String[]>();
 
 		try {
 			BufferedReader d = getBufferedReader(clazz, fileName);
 			String inputLine;
 			while ((inputLine = d.readLine()) != null) {
 				log.debug("{}", inputLine);
-				if (!inputLine.startsWith("#") && inputLine.length() > 0) {
-					inputLine = inputLine.replaceAll("([^\\\\;])([;])", "$1" + RESERVED_CHARACTER);
+				if (!inputLine.startsWith("#")
+						&& StringUtils.isNotBlank(inputLine)) {
+					inputLine = inputLine.replaceAll("([^\\\\;])([;])", "$1"
+							+ RESERVED_CHARACTER);
 					rows.add(inputLine.split("\\" + RESERVED_CHARACTER));
 				}
 			}
@@ -79,8 +81,8 @@ public class MockLoader {
 			}
 		} else {
 			try {
-				d = new BufferedReader(new InputStreamReader(clazz
-						.getResourceAsStream(fileName), "UTF-8"));
+				d = new BufferedReader(new InputStreamReader(
+						clazz.getResourceAsStream(fileName), "UTF-8"));
 			} catch (UnsupportedEncodingException e) {
 			}
 		}

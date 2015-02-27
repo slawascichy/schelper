@@ -56,7 +56,6 @@ public class LoggerConfig implements LoggerConfigConstants {
 	 *            ścieżka do dodatkowego pliku z konfiguracją
 	 */
 	private LoggerConfig(Class<?> resourceClass, String externalConfigFileName) {
-		loadPropertiesFromFile();
 		loadPropertiesFromFile(resourceClass, externalConfigFileName);
 		init();
 
@@ -78,7 +77,8 @@ public class LoggerConfig implements LoggerConfigConstants {
 	private void loadPropertiesFromFile(Class<?> resourceClass,
 			String externalConfigFileName) {
 		synchronized (lockObject) {
-			System.out.println("Loading external configuration....");
+			System.out.println("Loading configuration from file:"
+					+ externalConfigFileName + "...");
 			if (_Properties == null) {
 				_Properties = new Hashtable<String, String>();
 			} else {
@@ -87,6 +87,9 @@ public class LoggerConfig implements LoggerConfigConstants {
 			Map<String, String> externalParam = Configurations.loadHashtable(
 					resourceClass, externalConfigFileName);
 			_Properties.putAll(externalParam);
+			System.out.println("[LoggerConfig] logger.level="
+					+ _Properties.get(PROP_LOGGER_LEVEL));
+			isInvalid = true;
 		}
 	}
 
@@ -96,17 +99,7 @@ public class LoggerConfig implements LoggerConfigConstants {
 	 * @throws Exception
 	 */
 	private void loadPropertiesFromFile() {
-		synchronized (lockObject) {
-
-			System.out.println("[LoggerConfig] Loading configuration from "
-					+ configFileName + "...");
-
-			if (_Properties != null) {
-				_Properties.clear();
-			}
-			_Properties = Configurations.loadHashtable(LoggerConfig.class,
-					configFileName);
-		}
+		loadPropertiesFromFile(LoggerConfig.class, configFileName);
 	}
 
 	private ImmutableList<NameValuePair> generatePropertyList() {
@@ -208,6 +201,7 @@ public class LoggerConfig implements LoggerConfigConstants {
 		String logLevelParam = LoggerConfig.getInstance().get(
 				LoggerConfig.PROP_LOGGER_LEVEL);
 		LogLevel logLevel = LogLevel.NONE;
+		// System.out.println("[LoggerConfig] logLevelParam=" + logLevelParam);
 		if (StringUtils.isNotBlank(logLevelParam)) {
 			logLevel = LogLevel.valueOf(logLevelParam.toUpperCase());
 		}

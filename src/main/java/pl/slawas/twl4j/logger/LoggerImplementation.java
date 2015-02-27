@@ -18,11 +18,14 @@ package pl.slawas.twl4j.logger;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 
 import pl.slawas.helpers.Strings;
 import pl.slawas.twl4j.Logger;
+import pl.slawas.twl4j.LoggerFactory;
 import pl.slawas.twl4j.config.LoggerConfig;
 
 /**
@@ -42,12 +45,14 @@ public class LoggerImplementation implements Logger {
 
 	private final LoggerAppender appender;
 
+	private final Set<String> trackCategoryNames = new HashSet<String>();
+
+	@SuppressWarnings("static-access")
 	public LoggerImplementation(String name, LoggerAppender appender,
 			String dateLoggerFormat, Boolean addDate) {
 		boolean aDate = (addDate == null ? LoggerConfig.getLoggerAddDate()
 				: addDate);
 		SimpleDateFormat sdf;
-
 		try {
 			sdf = new SimpleDateFormat(
 					StringUtils.isBlank(dateLoggerFormat) ? LoggerConfig
@@ -61,6 +66,33 @@ public class LoggerImplementation implements Logger {
 		this.sdf = sdf;
 		this.categoryName = name;
 		this.addDate = aDate;
+		boolean isClass = false;
+		try {
+			LoggerImplementation.class.forName(name);
+			isClass = true;
+		} catch (ClassNotFoundException e) {
+			System.err
+					.println("[LoggerImplementation] Don't use category name, that is not class name: '"
+							+ name + "'");
+		}
+
+		StackTraceElement[] els = Thread.currentThread().getStackTrace();
+		for (int i = 0; i < els.length; i++) {
+			String className = els[i].getClassName();
+			if (className.equals(Thread.class.getName())
+					|| className.equals(LoggerImplementation.class.getName())
+					|| className.equals(LoggerFactory.class.getName())) {
+				continue;
+			}
+			trackCategoryNames.add(className);
+			if (!isClass) {
+				break;
+			}
+			if (className.equals(categoryName)) {
+				break;
+			}
+		}
+
 	}
 
 	StringBuilder buildMessage(String arg0, Object[] arg1) {
@@ -69,7 +101,7 @@ public class LoggerImplementation implements Logger {
 		StackTraceElement[] els = Thread.currentThread().getStackTrace();
 		for (int i = 0; i < els.length; i++) {
 			String className = els[i].getClassName();
-			if (className.equals(categoryName)) {
+			if (trackCategoryNames.contains(className)) {
 				String[] nameElements = className.split("\\.");
 				String classSimpleName = nameElements[nameElements.length - 1];
 				message = new StringBuilder(Strings.OPEN_SQUARE_BRACKED)
@@ -214,6 +246,9 @@ public class LoggerImplementation implements Logger {
 	/* Overridden (non-Javadoc) */
 	@Override
 	public void trace(String arg0) {
+		// System.out.println(categoryName + " ---------> appender="
+		// + appender.getClass() + " : isTraceEnabled="
+		// + appender.isTraceEnabled());
 		if (appender.isTraceEnabled()) {
 			Object[] args = new Object[] {};
 			appender.trace(getCurrentDate(), buildMessage(arg0, args)
@@ -225,6 +260,9 @@ public class LoggerImplementation implements Logger {
 	/* Overridden (non-Javadoc) */
 	@Override
 	public void trace(String arg0, Object arg1) {
+		// System.out.println(categoryName + " ---------> appender="
+		// + appender.getClass() + " : isTraceEnabled="
+		// + appender.isTraceEnabled());
 		if (appender.isTraceEnabled()) {
 			Object[] args = new Object[] { arg1 };
 			appender.trace(getCurrentDate(), buildMessage(arg0, args)
@@ -236,6 +274,9 @@ public class LoggerImplementation implements Logger {
 	/* Overridden (non-Javadoc) */
 	@Override
 	public void trace(String arg0, Object[] arg1) {
+		// System.out.println(categoryName + " ---------> appender="
+		// + appender.getClass() + " : isTraceEnabled="
+		// + appender.isTraceEnabled());
 		if (appender.isTraceEnabled()) {
 			Object[] args = arg1;
 			appender.trace(getCurrentDate(), buildMessage(arg0, args)
@@ -247,6 +288,9 @@ public class LoggerImplementation implements Logger {
 	/* Overridden (non-Javadoc) */
 	@Override
 	public void trace(String arg0, Throwable arg1) {
+		// System.out.println(categoryName + " ---------> appender="
+		// + appender.getClass() + " : isTraceEnabled="
+		// + appender.isTraceEnabled());
 		if (appender.isTraceEnabled()) {
 			Object[] args = new Object[] {};
 			appender.trace(getCurrentDate(), buildMessage(arg0, args)
