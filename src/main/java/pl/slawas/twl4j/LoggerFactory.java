@@ -38,8 +38,6 @@ public class LoggerFactory {
 		try {
 			ll = LoggerConfig.getLogLevel();
 			logAppender = LoggerConfig.getLogAppender();
-			System.out.println(name + " : logAppender=" + logAppender
-					+ " : logLevel=" + ll.name());
 		} catch (Exception e) {
 			System.err.println("Issue of logger inicjalization: \n" + e);
 			ll = LogLevel.NONE;

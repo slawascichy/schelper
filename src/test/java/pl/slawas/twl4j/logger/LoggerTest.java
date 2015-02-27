@@ -54,26 +54,30 @@ public class LoggerTest {
 		String message = twlog.buildMessage(testMsg, arg1).toString();
 		log.info("message='{}'", message);
 		twlog.info(testMsg, arg1);
-		assert "[LoggerTest.java:54] : 1 Slawas Cichy jest bardzo super. :) ".equals(message) : "zle wygenerowany komunikat bledu";
+		assert "[LoggerTest -> pl.slawas.twl4j.logger.LoggerTest.java:54] : 1 Slawas Cichy jest bardzo super. :) "
+				.equals(message) : "zle wygenerowany komunikat bledu";
 
 		arg1 = new Object[] { 1, "Cichy", "bardzo" };
 		message = twlog.buildMessage(testMsg, arg1).toString();
 		twlog.info(testMsg, arg1);
 		log.info("message='{}'", message);
-		assert "[LoggerTest.java:60] : 1 Slawas Cichy jest bardzo super. {} ".equals(message) : "zle wygenerowany komunikat bledu";
+		assert "[LoggerTest -> pl.slawas.twl4j.logger.LoggerTest.java:61] : 1 Slawas Cichy jest bardzo super. {} "
+				.equals(message) : "zle wygenerowany komunikat bledu";
 
 		arg1 = new Object[] { 1, "Cichy", "bardzo", "Wiecej...", "Wiecej..." };
 		message = twlog.buildMessage(testMsg, arg1).toString();
 		twlog.info(testMsg, arg1);
 		log.info("message='{}'", message);
-		assert "[LoggerTest.java:66] : 1 Slawas Cichy jest bardzo super. Wiecej... ".equals(message) : "zle wygenerowany komunikat bledu";
+		assert "[LoggerTest -> pl.slawas.twl4j.logger.LoggerTest.java:68] : 1 Slawas Cichy jest bardzo super. Wiecej... "
+				.equals(message) : "zle wygenerowany komunikat bledu";
 
 		testMsg = "Slawas jest super";
 		arg1 = new Object[] { 1, "Cichy", "bardzo", "Wiecej...", "Wiecej..." };
 		message = twlog.buildMessage(testMsg, arg1).toString();
 		twlog.info(testMsg, arg1);
 		log.info("message='{}'", message);
-		assert "[LoggerTest.java:73] : Slawas jest super ".equals(message) : "zle wygenerowany komunikat bledu";
+		assert "[LoggerTest -> pl.slawas.twl4j.logger.LoggerTest.java:76] : Slawas jest super "
+				.equals(message) : "zle wygenerowany komunikat bledu";
 
 		twlog.info(testMsg);
 

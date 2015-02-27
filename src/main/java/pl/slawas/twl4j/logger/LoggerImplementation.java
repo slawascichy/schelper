@@ -102,10 +102,12 @@ public class LoggerImplementation implements Logger {
 		for (int i = 0; i < els.length; i++) {
 			String className = els[i].getClassName();
 			if (trackCategoryNames.contains(className)) {
-				String[] nameElements = className.split("\\.");
-				String classSimpleName = nameElements[nameElements.length - 1];
+				String[] nameElements = categoryName.split("\\.");
+				String categoryNameSimpleName = nameElements[nameElements.length - 1];
 				message = new StringBuilder(Strings.OPEN_SQUARE_BRACKED)
-						.append(classSimpleName).append(JAVA_FILE_EXTENTION)
+						.append(categoryNameSimpleName)
+						.append(Strings.RELATIONSHIP).append(className)
+						.append(JAVA_FILE_EXTENTION)
 						.append(Strings.DOUBLE_DOT_ALONE)
 						.append(els[i].getLineNumber())
 						.append(Strings.CLOSE_SQUARE_BRACKED);
