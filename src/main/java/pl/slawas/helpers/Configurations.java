@@ -37,7 +37,7 @@ public class Configurations {
 	private static Logger log = LoggerFactory.getSystemLogger(
 			Configurations.class, logLevel);
 
-	private static final int MAX_DEBUG_LINE_PRESENTATION = 3;
+	public static final int MAX_DEBUG_LINE_PRESENTATION = 3;
 
 	/**
 	 * Metoda ladujaca czytajaca zmienne srodowiskowe konsoli systemu (shell-a,
