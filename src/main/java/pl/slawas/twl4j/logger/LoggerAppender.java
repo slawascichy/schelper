@@ -2,6 +2,8 @@ package pl.slawas.twl4j.logger;
 
 public interface LoggerAppender {
 
+	LogLevel level();
+	
 	boolean isDebugEnabled();
 
 	boolean isErrorEnabled();

@@ -16,6 +16,12 @@
  */
 package pl.slawas.twl4j;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
+
+import pl.slawas.entities.NameValuePair;
 import pl.slawas.twl4j.appenders.LogAppender;
 import pl.slawas.twl4j.config.LoggerConfig;
 import pl.slawas.twl4j.logger.LogLevel;
@@ -31,40 +37,89 @@ import pl.slawas.twl4j.logger.LoggerImplementation;
  */
 public class LoggerFactory {
 
+	private static Map<String, Logger> loggers = new HashMap<String, Logger>();
+	private static Object loggerLock = new Object();
+
 	public static Logger getLogger(String name) {
-		LogLevel ll;
-		LogAppender logAppender;
-		LoggerAppender appender;
-		try {
-			ll = LoggerConfig.getLogLevel();
-			logAppender = LoggerConfig.getLogAppender();
-		} catch (Exception e) {
-			System.err.println("Issue of logger inicjalization: \n" + e);
-			ll = LogLevel.NONE;
-			logAppender = LogAppender.SYSTEMOUT;
+
+		synchronized (loggerLock) {
+			Logger logger = loggers.get(name);
+			if (logger == null) {
+				LogLevel ll;
+				String classLevelStr = null;
+				String packageLevelStr = null;
+				LogLevel classLevel = null;
+				LogLevel packageLevel = null;
+				int pLevel = 0;
+				LogAppender logAppender;
+				LoggerAppender appender;
+				try {
+					ll = LoggerConfig.getLogLevel();
+					logAppender = LoggerConfig.getLogAppender();
+					/** ustawianie niedomyślnego logowania */
+					for (NameValuePair nvp : LoggerConfig.getInstance()
+							.getPropertyList()) {
+						String propName = nvp.getName();
+						if (name.equals(propName)) {
+							classLevelStr = nvp.getValue();
+							break;
+						}
+						if (name.startsWith(propName)) {
+							int dots = propName.split("\\.").length;
+							if (pLevel < dots) {
+								packageLevelStr = nvp.getValue();
+								pLevel = dots;
+							}
+						}
+					}
+					if (StringUtils.isNotBlank(classLevelStr)) {
+						try {
+							classLevel = LogLevel.valueOf(classLevelStr
+									.toUpperCase());
+						} catch (Exception e) {
+							System.err
+									.println("["
+											+ name
+											+ "] Issue of custom logger inicjalization: \n"
+											+ e);
+
+						}
+					} else if (StringUtils.isNotBlank(packageLevelStr)) {
+						try {
+							packageLevel = LogLevel.valueOf(packageLevelStr
+									.toUpperCase());
+						} catch (Exception e) {
+							System.err
+									.println("["
+											+ packageLevelStr
+											+ "] Issue of custom logger inicjalization: \n"
+											+ e);
+
+						}
+					}
+					if (classLevel != null) {
+						ll = classLevel;
+					} else if (packageLevel != null) {
+						ll = packageLevel;
+					}
+				} catch (Exception e) {
+					System.err.println("[" + name
+							+ "]Issue of logger inicjalization: \n" + e);
+					ll = LogLevel.NONE;
+					logAppender = LogAppender.SYSTEMOUT;
+				}
+				appender = logAppender.getAppenderInstance(name, ll);
+				logger = new LoggerImplementation(name, appender,
+						LoggerConfig.getDateLoggerFormat(),
+						LoggerConfig.getLoggerAddDate());
+				loggers.put(name, logger);
+			}
+			return logger;
 		}
-		appender = logAppender.getAppenderInstance(name, ll);
-		return new LoggerImplementation(name, appender,
-				LoggerConfig.getDateLoggerFormat(),
-				LoggerConfig.getLoggerAddDate());
 	}
 
 	public static Logger getLogger(Class<?> clazz) {
-		LogLevel ll;
-		LogAppender logAppender;
-		LoggerAppender appender;
-		try {
-			ll = LoggerConfig.getLogLevel();
-			logAppender = LoggerConfig.getLogAppender();
-		} catch (Exception e) {
-			System.err.println("Issue of logger inicjalization: \n" + e);
-			ll = LogLevel.NONE;
-			logAppender = LogAppender.SYSTEMOUT;
-		}
-		appender = logAppender.getAppenderInstance(clazz, ll);
-		return new LoggerImplementation(clazz.getName(), appender,
-				LoggerConfig.getDateLoggerFormat(),
-				LoggerConfig.getLoggerAddDate());
+		return getLogger(clazz.getName());
 	}
 
 	public static Logger getSystemLogger(String name, LogLevel ll) {

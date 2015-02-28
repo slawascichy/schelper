@@ -19,13 +19,15 @@ package pl.slawas.twl4j.logger;
 import java.util.Hashtable;
 import java.util.Properties;
 
+import junit.framework.TestCase;
+
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pl.slawas.helpers.Configurations;
 
-public class LoggerTest {
+public class LoggerTest extends TestCase {
 
 	final private static Logger log = LoggerFactory.getLogger(LoggerTest.class
 			.getName());
@@ -49,35 +51,43 @@ public class LoggerTest {
 
 	@Test
 	public void testWSPasswordEncoder() throws Exception {
+
 		String testMsg = "{} Slawas {} jest {} super. {}";
 		Object[] arg1 = new Object[] { 1, "Cichy", "bardzo", ":)" };
 		String message = twlog.buildMessage(testMsg, arg1).toString();
 		log.info("message='{}'", message);
 		twlog.info(testMsg, arg1);
-		assert "[LoggerTest -> pl.slawas.twl4j.logger.LoggerTest.java:54] : 1 Slawas Cichy jest bardzo super. :) "
-				.equals(message) : "zle wygenerowany komunikat bledu";
+		assertEquals(
+				"zle wygenerowany komunikat bledu",
+				"[LoggerTest -> pl.slawas.twl4j.logger.LoggerTest.java:57] : 1 Slawas Cichy jest bardzo super. :) ",
+				message);
 
 		arg1 = new Object[] { 1, "Cichy", "bardzo" };
 		message = twlog.buildMessage(testMsg, arg1).toString();
 		twlog.info(testMsg, arg1);
 		log.info("message='{}'", message);
-		assert "[LoggerTest -> pl.slawas.twl4j.logger.LoggerTest.java:61] : 1 Slawas Cichy jest bardzo super. {} "
-				.equals(message) : "zle wygenerowany komunikat bledu";
-
+		assertEquals(
+				"zle wygenerowany komunikat bledu",
+				"[LoggerTest -> pl.slawas.twl4j.logger.LoggerTest.java:66] : 1 Slawas Cichy jest bardzo super. {} ",
+				message);
 		arg1 = new Object[] { 1, "Cichy", "bardzo", "Wiecej...", "Wiecej..." };
 		message = twlog.buildMessage(testMsg, arg1).toString();
 		twlog.info(testMsg, arg1);
 		log.info("message='{}'", message);
-		assert "[LoggerTest -> pl.slawas.twl4j.logger.LoggerTest.java:68] : 1 Slawas Cichy jest bardzo super. Wiecej... "
-				.equals(message) : "zle wygenerowany komunikat bledu";
+		assertEquals(
+				"zle wygenerowany komunikat bledu",
+				"[LoggerTest -> pl.slawas.twl4j.logger.LoggerTest.java:74] : 1 Slawas Cichy jest bardzo super. Wiecej... ",
+				message);
 
 		testMsg = "Slawas jest super";
 		arg1 = new Object[] { 1, "Cichy", "bardzo", "Wiecej...", "Wiecej..." };
 		message = twlog.buildMessage(testMsg, arg1).toString();
 		twlog.info(testMsg, arg1);
 		log.info("message='{}'", message);
-		assert "[LoggerTest -> pl.slawas.twl4j.logger.LoggerTest.java:76] : Slawas jest super "
-				.equals(message) : "zle wygenerowany komunikat bledu";
+		assertEquals(
+				"zle wygenerowany komunikat bledu",
+				"[LoggerTest -> pl.slawas.twl4j.logger.LoggerTest.java:84] : Slawas jest super ",
+				message);
 
 		twlog.info(testMsg);
 
@@ -86,6 +96,32 @@ public class LoggerTest {
 		} catch (Exception e) {
 			twlog.error("Testowa prezentacja bledu", e);
 		}
+
+		pl.slawas.twl4j.Logger tested;
+
+		tested = pl.slawas.twl4j.LoggerFactory
+				.getLogger("pro.ibpm.mercury.config.MercuryConfig");
+		assertFalse("TRACE", tested.isTraceEnabled());
+		assertFalse("DEBUG", tested.isDebugEnabled());
+		assertTrue("INFO", tested.isInfoEnabled());
+
+		tested = pl.slawas.twl4j.LoggerFactory
+				.getLogger("net.sf.ehcache.hibernate.TestOwaKlawa");
+		assertFalse("TRACE", tested.isTraceEnabled());
+		assertFalse("DEBUG", tested.isDebugEnabled());
+		assertTrue("INFO", tested.isInfoEnabled());
+
+		tested = pl.slawas.twl4j.LoggerFactory
+				.getLogger("pro.ibpm.mercury.values.moje.TestOwaKlawa");
+		assertFalse("TRACE", tested.isTraceEnabled());
+		assertTrue("DEBUG", tested.isDebugEnabled());
+		assertTrue("INFO", tested.isInfoEnabled());
+
+		tested = pl.slawas.twl4j.LoggerFactory
+				.getLogger("pro.ibpm.mercury.values.niemoje.TestOwaKlawa");
+		assertFalse("TRACE", tested.isTraceEnabled());
+		assertFalse("DEBUG", tested.isDebugEnabled());
+		assertTrue("INFO", tested.isInfoEnabled());
 	}
 
 	static class Error {

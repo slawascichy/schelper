@@ -424,4 +424,10 @@ public class LoggerImplementation implements Logger {
 		return appender.isInfoEnabled();
 	}
 
+	/* Overridden (non-Javadoc) */
+	@Override
+	public LogLevel level() {
+		return appender.level();
+	}
+
 }

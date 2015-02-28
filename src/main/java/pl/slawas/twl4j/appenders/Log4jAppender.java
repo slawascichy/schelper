@@ -3,6 +3,7 @@ package pl.slawas.twl4j.appenders;
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggerFactory;
 
+import pl.slawas.twl4j.logger.LogLevel;
 import pl.slawas.twl4j.logger.LoggerAppender;
 
 public class Log4jAppender implements LoggerAppender {
@@ -89,6 +90,13 @@ public class Log4jAppender implements LoggerAppender {
 	@Override
 	public void debug(String currentDate, String message, Throwable arg1) {
 		this.logCat.debug(message, arg1);
+	}
+
+	/* Overridden (non-Javadoc) */
+	@Override
+	public LogLevel level() {
+		Level l = this.logCat.getLevel();
+		return LogLevel.valueOf(l.toString());
 	}
 
 }

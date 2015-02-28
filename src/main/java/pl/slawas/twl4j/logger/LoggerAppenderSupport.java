@@ -30,7 +30,11 @@ public abstract class LoggerAppenderSupport implements LoggerAppender {
 				|| logLevel.equals(LogLevel.DEBUG)
 				|| logLevel.equals(LogLevel.TRACE);
 	}
-	
-	
-	
+
+	/* Overridden (non-Javadoc) */
+	@Override
+	public LogLevel level() {
+		return this.logLevel;
+	}
+
 }
