@@ -25,9 +25,9 @@ package pl.slawas.twl4j.logger;
  */
 public enum LogLevel {
 
-	INFO, DEBUG, TRACE, NONE;
+	INFO, DEBUG, TRACE, NONE, ERROR;
 
 	public static final String WARNING_LABEL = "WARN";
-	public static final String ERROR_LABEL = "WARN";
+	public static final String ERROR_LABEL = "ERROR";
 
 }
