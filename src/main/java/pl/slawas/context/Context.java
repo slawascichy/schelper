@@ -19,9 +19,10 @@ public class Context {
 	/**
 	 * Parametry kontekstu
 	 */
-	private String userName;
 	private String appName;
 	private String appVersion;
+	private String userName;
+	private String comment;
 	private int queryTimeout;
 	private String locale;
 	private String timeZone;
@@ -31,8 +32,8 @@ public class Context {
 	 */
 	@Override
 	public String toString() {
-		return "Context[" + userName + ' ' + appName + ' ' + appVersion + ' '
-				+ queryTimeout + ' ' + locale + ' ' + timeZone + ']';
+		return "Context[" + appName + ' ' + appVersion + ' ' +userName + ' '
+			+ comment + ' ' + queryTimeout + ' ' + locale + ' ' + timeZone + ']';
 	}
 
 	/**
@@ -48,21 +49,24 @@ public class Context {
 				property = properties[i++];
 				switch (i) {
 				case 1:
-					userName = property;
-					break;
-				case 2:
 					appName = property;
 					break;
-				case 3:
+				case 2:
 					appVersion = property;
 					break;
+				case 3:
+					userName = property;
+					break;
 				case 4:
-					queryTimeout = Integer.parseInt(property);
+					comment = property;
 					break;
 				case 5:
-					locale = property;
+					queryTimeout = Integer.parseInt(property);
 					break;
 				case 6:
+					locale = property;
+					break;
+				case 7:
 					timeZone = property;
 					break;
 				}
@@ -70,6 +74,37 @@ public class Context {
 		}
 	}
 
+	/**
+	 * Tworzy nowy obiekt będący kopią bieżącego i ustawia nowe parametry
+	 */
+	public Context copy(final String... newProperties) {
+		Context newContext=new Context(this.appName, this.appVersion);
+		if (newProperties != null) {
+			int i = 0;
+			String newProperty;
+			while (i < newProperties.length) {
+				newProperty = newProperties[i++];
+				switch (i) {
+				case 1:
+					newContext.setUserName(newProperty);
+					break;
+				case 2:
+					newContext.setComment(newProperty);
+					break;
+				case 3:
+					newContext.setQueryTimeout(Integer.parseInt(newProperty));
+					break;
+				case 4:
+					newContext.setLocale(newProperty);
+					break;
+				case 5:
+					newContext.setTimeZone(newProperty);
+					break;
+				}
+			}
+		}
+		return newContext;
+	}
 
 	/**
 	 * Nazwa użytkownika usługi
@@ -86,6 +121,23 @@ public class Context {
 	 */
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	/**
+	 * Komentarz do wykonania usługi
+	 * 
+	 * @return Komentarz do wykonania usługi
+	 */
+	public String getComment() {
+		return comment;
+	}
+
+	/**
+	 * @param comment
+	 *			 Komentarz do wykonania usługi
+	 */
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 	/**
