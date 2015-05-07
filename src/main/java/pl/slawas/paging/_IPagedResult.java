@@ -42,7 +42,7 @@ public interface _IPagedResult<Obj> extends _IPagingInfo {
 	 * 
 	 * 
 	 * @param page
-	 *            obiekt strony, której wyniki nas integersują
+	 *            obiekt strony, której wyniki nas interesują
 	 * @return lista wierszy na zadanej stronie
 	 */
 	public Collection<Obj> getResult(Page page);

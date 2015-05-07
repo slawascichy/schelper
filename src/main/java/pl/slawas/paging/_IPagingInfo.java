@@ -59,7 +59,7 @@ public interface _IPagingInfo extends Serializable {
 	 * @return informacje o następnej stronie
 	 * @throws PagedResultException
 	 *             zwraca błąd gdy obecna strona {@link #getCurrentPageInfo()}
-	 *             jest stroną ostatnią. Nastepna nie istnieje.
+	 *             jest stroną ostatnią. Następna nie istnieje.
 	 */
 	Page getNextPageInfo() throws PagedResultException;
 
