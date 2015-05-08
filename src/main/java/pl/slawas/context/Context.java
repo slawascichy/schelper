@@ -23,6 +23,7 @@ public class Context {
 	private String appVersion;
 	private String userName;
 	private String comment;
+	private Integer maxResult;
 	private int queryTimeout;
 	private String locale;
 	private String timeZone;
@@ -32,8 +33,9 @@ public class Context {
 	 */
 	@Override
 	public String toString() {
-		return "Context[" + appName + ' ' + appVersion + ' ' +userName + ' '
-			+ comment + ' ' + queryTimeout + ' ' + locale + ' ' + timeZone + ']';
+		return "Context[" + appName + ' ' + appVersion + ' ' + userName + ' '
+				+ comment + ' ' + maxResult + ' ' + queryTimeout + ' ' + locale
+				+ ' ' + timeZone + ']';
 	}
 
 	/**
@@ -61,12 +63,15 @@ public class Context {
 					comment = property;
 					break;
 				case 5:
-					queryTimeout = Integer.parseInt(property);
+					maxResult = Integer.getInteger(property);
 					break;
 				case 6:
-					locale = property;
+					queryTimeout = Integer.parseInt(property);
 					break;
 				case 7:
+					locale = property;
+					break;
+				case 8:
 					timeZone = property;
 					break;
 				}
@@ -78,7 +83,7 @@ public class Context {
 	 * Tworzy nowy obiekt będący kopią bieżącego i ustawia nowe parametry
 	 */
 	public Context copy(final String... newProperties) {
-		Context newContext=new Context(this.appName, this.appVersion);
+		Context newContext = new Context(this.appName, this.appVersion);
 		if (newProperties != null) {
 			int i = 0;
 			String newProperty;
@@ -92,12 +97,15 @@ public class Context {
 					newContext.setComment(newProperty);
 					break;
 				case 3:
-					newContext.setQueryTimeout(Integer.parseInt(newProperty));
+					newContext.setMaxResults(Integer.getInteger(newProperty));
 					break;
 				case 4:
-					newContext.setLocale(newProperty);
+					newContext.setQueryTimeout(Integer.parseInt(newProperty));
 					break;
 				case 5:
+					newContext.setLocale(newProperty);
+					break;
+				case 6:
 					newContext.setTimeZone(newProperty);
 					break;
 				}
@@ -134,7 +142,7 @@ public class Context {
 
 	/**
 	 * @param comment
-	 *			 Komentarz do wykonania usługi
+	 *            Komentarz do wykonania usługi
 	 */
 	public void setComment(String comment) {
 		this.comment = comment;
@@ -236,5 +244,23 @@ public class Context {
 	 */
 	public void setQueryTimeout(int queryTimeout) {
 		this.queryTimeout = queryTimeout;
+	}
+
+	/**
+	 * Maksymalna liczba zwracanych wierszy
+	 * 
+	 * @return Maksymalna liczba zwracanych wierszy
+	 */
+	public Integer getMaxResults() {
+		return maxResult;
+	}
+
+	/**
+	 * Ustawia maksymalną liczbę zwracanych wierszy
+	 * 
+	 * @return Maksymalna liczba zwracanych wierszy
+	 */
+	public void setMaxResults(Integer maxResult) {
+		this.maxResult = maxResult;
 	}
 }
