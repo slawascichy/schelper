@@ -23,7 +23,7 @@ public class Context {
 	private String appVersion;
 	private String userName;
 	private String comment;
-	private Integer maxResult;
+	private Integer maxResults;
 	private int queryTimeout;
 	private String locale;
 	private String timeZone;
@@ -34,7 +34,7 @@ public class Context {
 	@Override
 	public String toString() {
 		return "Context[" + appName + ' ' + appVersion + ' ' + userName + ' '
-				+ comment + ' ' + maxResult + ' ' + queryTimeout + ' ' + locale
+				+ comment + ' ' + maxResults + ' ' + queryTimeout + ' ' + locale
 				+ ' ' + timeZone + ']';
 	}
 
@@ -63,7 +63,7 @@ public class Context {
 					comment = property;
 					break;
 				case 5:
-					maxResult = Integer.getInteger(property);
+					maxResults = Integer.getInteger(property);
 					break;
 				case 6:
 					queryTimeout = Integer.parseInt(property);
@@ -252,7 +252,7 @@ public class Context {
 	 * @return Maksymalna liczba zwracanych wierszy
 	 */
 	public Integer getMaxResults() {
-		return maxResult;
+		return maxResults;
 	}
 
 	/**
@@ -260,7 +260,7 @@ public class Context {
 	 * 
 	 * @return Maksymalna liczba zwracanych wierszy
 	 */
-	public void setMaxResults(Integer maxResult) {
-		this.maxResult = maxResult;
+	public void setMaxResults(Integer maxResults) {
+		this.maxResults = maxResults;
 	}
 }
