@@ -3,6 +3,8 @@
  */
 package pl.slawas.context;
 
+import java.util.TimeZone;
+
 /**
  * Context.java podstawowe metody obsługi wejścia do metod
  * 
@@ -34,8 +36,8 @@ public class Context {
 	@Override
 	public String toString() {
 		return "Context[" + appName + ' ' + appVersion + ' ' + userName + ' '
-				+ comment + ' ' + maxResults + ' ' + queryTimeout + ' ' + locale
-				+ ' ' + timeZone + ']';
+				+ comment + ' ' + maxResults + ' ' + queryTimeout + ' '
+				+ locale + ' ' + timeZone + ']';
 	}
 
 	/**
