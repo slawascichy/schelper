@@ -18,6 +18,8 @@ package pl.slawas.paging;
 
 import java.io.Serializable;
 
+import org.apache.cxf.aegis.type.java5.IgnoreProperty;
+
 /**
  * 
  * Page - definicja strony wyników. Implementację zaczerpnąłem z projektu
@@ -33,7 +35,7 @@ public class Page implements Serializable {
 	private static final long serialVersionUID = -5210221106589109534L;
 
 	/**
-	 * Domyślny rozmiar storny, czyli liczba wierszy prezentowana w
+	 * Domyślny rozmiar strony, czyli liczba wierszy prezentowana w
 	 * stronicowanym wyniku zapytania
 	 */
 	public static final int DEFAULT_PAGE_SIZE = 60;
@@ -109,38 +111,68 @@ public class Page implements Serializable {
 		return size;
 	}
 
+	public void setSize(int size) {
+		this.size = size;
+	}
+
 	public int getNumber() {
 		return number;
+	}
+
+	public void setNumber(int number) {
+		this.number = number;
 	}
 
 	/**
 	 * @return the firstRowNumber
 	 */
+	@IgnoreProperty
 	public Long getFirstRowNumber() {
 		return firstRowNumber;
+	}
+
+	public String getFirstRowNumberByString() {
+		return (firstRowNumber == null) ? null : firstRowNumber.toString();
 	}
 
 	/**
 	 * @return the endPosition
 	 */
+	@IgnoreProperty
 	public Long getLastRowNumber() {
 		return lastRowNumber;
+	}
+
+	public String getLastRowNumberByString() {
+		return (lastRowNumber == null) ? null : lastRowNumber.toString();
 	}
 
 	/**
 	 * @param firstRowNumber
 	 *            the firstRowNumber to set
 	 */
+	@IgnoreProperty
 	void setFirstRowNumber(Long firstRowNumber) {
 		this.firstRowNumber = firstRowNumber;
+	}
+
+	void setFirstRowNumberByString(String firstRowNumber) {
+		this.firstRowNumber = (firstRowNumber == null) ? null : Long
+				.valueOf(firstRowNumber);
 	}
 
 	/**
 	 * @param lastRowNumber
 	 *            the lastRowNumber to set
 	 */
+	@IgnoreProperty
 	void setLastRowNumber(Long lastRowNumber) {
 		this.lastRowNumber = lastRowNumber;
+	}
+
+	void setLastRowNumberByString(String lastRowNumber) {
+		this.lastRowNumber = (lastRowNumber == null) ? null : Long
+				.valueOf(lastRowNumber);
 	}
 
 	/**
