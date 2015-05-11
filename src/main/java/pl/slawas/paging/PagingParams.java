@@ -18,8 +18,6 @@ package pl.slawas.paging;
 
 import java.io.Serializable;
 
-import org.apache.cxf.aegis.type.java5.IgnoreProperty;
-
 import pl.slawas.entities._ICopyable;
 import pl.slawas.twl4j.Logger;
 import pl.slawas.twl4j.LoggerFactory;
@@ -370,13 +368,8 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	/**
 	 * @return {@link #cursorOfPage}
 	 */
-	@IgnoreProperty
 	public Long getCursorOfPage() {
 		return cursorOfPage;
-	}
-
-	public String getCursorOfPageByString() {
-		return (cursorOfPage == null) ? null : cursorOfPage.toString();
 	}
 
 	/**
@@ -387,15 +380,8 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	 *            wartość parametru
 	 * @return {@code true}, jeżeli wszystko jest OK.
 	 */
-	@IgnoreProperty
 	public boolean setCursorOfPage(Long cursorOfPage) {
 		return setCursorOfPage(cursorOfPage, true);
-	}
-
-	public void setCursorOfPageByString(String cursorOfPage) {
-		setCursorOfPage(
-				(cursorOfPage == null) ? null : Long.valueOf(cursorOfPage),
-				true);
 	}
 
 	private boolean setCursorOfPage(Long cursorOfPage, boolean changePage) {
@@ -449,7 +435,6 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	 *            definicja strony
 	 * @return {@code true}, jeżeli wszystko jest OK.
 	 */
-	@IgnoreProperty
 	public boolean setPage(Page page) {
 
 		if (checkRestrictinsOfPage(page)) {
@@ -503,7 +488,6 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	 *            numer strony
 	 * @return {@code true}, jeżeli wszystko jest OK.
 	 */
-	@IgnoreProperty
 	public boolean setPage(int pageNumber) {
 		Page newPage = new Page(this.getPageSize(), pageNumber);
 		return setPage(newPage);
@@ -602,13 +586,8 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	 * 
 	 * @return {@link PagingParams#maxCount}
 	 */
-	@IgnoreProperty
 	public Long getMaxCount() {
 		return maxCount;
-	}
-
-	public String getMaxCountByString() {
-		return (maxCount == null) ? null : maxCount.toString();
 	}
 
 	/**
@@ -632,13 +611,8 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	 * @param maxCount
 	 *            nowa wartość ograniczeń
 	 */
-	@IgnoreProperty
 	public void setMaxCount(Long maxCount) {
 		this.setMaxCount(maxCount, true);
-	}
-
-	public void setMaxCountByString(String maxCount) {
-		setMaxCount((maxCount == null) ? null : Long.valueOf(maxCount));
 	}
 
 	/**
@@ -752,10 +726,6 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 		return valid;
 	}
 
-	public void setIsValid(boolean valid) {
-		this.valid = valid;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -811,13 +781,8 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	/**
 	 * @return the {@link #offset}
 	 */
-	@IgnoreProperty
 	public Long getOffset() {
 		return offset;
-	}
-
-	public String getOffsetByString() {
-		return (offset == null) ? null : offset.toString();
 	}
 
 	/**
@@ -826,13 +791,8 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	 *            the {@link #offset} to set
 	 * @return {@code true}, jeżeli wszystko jest OK.
 	 */
-	@IgnoreProperty
 	public boolean setOffset(Long offset) {
 		return setOffset(offset, true);
-	}
-
-	public void setOffsetByString(String offset) {
-		setOffset((offset == null) ? null : Long.valueOf(offset));
 	}
 
 	/**
@@ -922,10 +882,6 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	 */
 	public boolean isReadOnly() {
 		return isReadOnly;
-	}
-
-	public void setIsReadOnly(boolean isReadOnly) {
-		this.isReadOnly = isReadOnly;
 	}
 
 }

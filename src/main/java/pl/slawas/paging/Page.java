@@ -18,8 +18,6 @@ package pl.slawas.paging;
 
 import java.io.Serializable;
 
-import org.apache.cxf.aegis.type.java5.IgnoreProperty;
-
 /**
  * 
  * Page - definicja strony wyników. Implementację zaczerpnąłem z projektu
@@ -111,68 +109,38 @@ public class Page implements Serializable {
 		return size;
 	}
 
-	public void setSize(int size) {
-		this.size = size;
-	}
-
 	public int getNumber() {
 		return number;
-	}
-
-	public void setNumber(int number) {
-		this.number = number;
 	}
 
 	/**
 	 * @return the firstRowNumber
 	 */
-	@IgnoreProperty
 	public Long getFirstRowNumber() {
 		return firstRowNumber;
-	}
-
-	public String getFirstRowNumberByString() {
-		return (firstRowNumber == null) ? null : firstRowNumber.toString();
 	}
 
 	/**
 	 * @return the endPosition
 	 */
-	@IgnoreProperty
 	public Long getLastRowNumber() {
 		return lastRowNumber;
-	}
-
-	public String getLastRowNumberByString() {
-		return (lastRowNumber == null) ? null : lastRowNumber.toString();
 	}
 
 	/**
 	 * @param firstRowNumber
 	 *            the firstRowNumber to set
 	 */
-	@IgnoreProperty
 	void setFirstRowNumber(Long firstRowNumber) {
 		this.firstRowNumber = firstRowNumber;
-	}
-
-	void setFirstRowNumberByString(String firstRowNumber) {
-		this.firstRowNumber = (firstRowNumber == null) ? null : Long
-				.valueOf(firstRowNumber);
 	}
 
 	/**
 	 * @param lastRowNumber
 	 *            the lastRowNumber to set
 	 */
-	@IgnoreProperty
 	void setLastRowNumber(Long lastRowNumber) {
 		this.lastRowNumber = lastRowNumber;
-	}
-
-	void setLastRowNumberByString(String lastRowNumber) {
-		this.lastRowNumber = (lastRowNumber == null) ? null : Long
-				.valueOf(lastRowNumber);
 	}
 
 	/**

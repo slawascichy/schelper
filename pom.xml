@@ -26,7 +26,6 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<cxf.version>2.7.15</cxf.version>
 	</properties>
 
 	<licenses>
@@ -227,28 +226,5 @@
 			<artifactId>tools</artifactId>
 			<version>1.6.0_37</version>
 		</dependency>
-
-		<dependency>
-			<!-- tylko dla adnotacji do wyłączania zbędnych setterów/getterów dla
-					 cxf -->
-      <groupId>org.apache.cxf</groupId>
-      <artifactId>cxf-rt-databinding-aegis</artifactId>
-      <version>${cxf.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.apache.cxf</groupId>
-					<artifactId>cxf-api</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.apache.cxf</groupId>
-					<artifactId>cxf-rt-core</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.apache.cxf</groupId>
-					<artifactId>cxf-rt-frontend-simple</artifactId>
-				</exclusion>
-			</exclusions>
-    </dependency>
-
 	</dependencies>
 </project>
