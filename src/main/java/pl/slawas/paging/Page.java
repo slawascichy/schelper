@@ -132,6 +132,7 @@ public class Page implements Serializable {
 	}
 
 	public String getFirstRowNumberByString() {
+		final Long firstRowNumber=getFirstRowNumber();
 		return (firstRowNumber == null) ? null : firstRowNumber.toString();
 	}
 
@@ -144,6 +145,7 @@ public class Page implements Serializable {
 	}
 
 	public String getLastRowNumberByString() {
+		final Long lastRowNumber=getLastRowNumber();
 		return (lastRowNumber == null) ? null : lastRowNumber.toString();
 	}
 
@@ -151,28 +153,26 @@ public class Page implements Serializable {
 	 * @param firstRowNumber
 	 *            the firstRowNumber to set
 	 */
-	@IgnoreProperty
 	void setFirstRowNumber(Long firstRowNumber) {
 		this.firstRowNumber = firstRowNumber;
 	}
 
-	void setFirstRowNumberByString(String firstRowNumber) {
-		this.firstRowNumber = (firstRowNumber == null) ? null : Long
-				.valueOf(firstRowNumber);
+	public void setFirstRowNumberByString(String firstRowNumber) {
+		setFirstRowNumber((firstRowNumber == null) ? null : Long
+				.valueOf(firstRowNumber));
 	}
 
 	/**
 	 * @param lastRowNumber
 	 *            the lastRowNumber to set
 	 */
-	@IgnoreProperty
 	void setLastRowNumber(Long lastRowNumber) {
 		this.lastRowNumber = lastRowNumber;
 	}
 
-	void setLastRowNumberByString(String lastRowNumber) {
-		this.lastRowNumber = (lastRowNumber == null) ? null : Long
-				.valueOf(lastRowNumber);
+	public void setLastRowNumberByString(String lastRowNumber) {
+		setLastRowNumber((lastRowNumber == null) ? null : Long
+				.valueOf(lastRowNumber));
 	}
 
 	/**
@@ -186,6 +186,9 @@ public class Page implements Serializable {
 				+ 1L;
 		return (this.lastRowNumber > this.firstRowNumber ? numberOfRowsOnThePage
 				.intValue() : 0);
+	}
+
+	public void setNumberOfRowsOnThePage(int a) {
 	}
 
 	/*

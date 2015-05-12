@@ -171,7 +171,7 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	 */
 	private boolean valid = true;
 
-	protected PagingParams() {
+	public PagingParams() {
 	}
 
 	/**
@@ -376,6 +376,7 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	}
 
 	public String getCursorOfPageByString() {
+		final Long cursorOfPage=getCursorOfPage();
 		return (cursorOfPage == null) ? null : cursorOfPage.toString();
 	}
 
@@ -387,7 +388,6 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	 *            wartość parametru
 	 * @return {@code true}, jeżeli wszystko jest OK.
 	 */
-	@IgnoreProperty
 	public boolean setCursorOfPage(Long cursorOfPage) {
 		return setCursorOfPage(cursorOfPage, true);
 	}
@@ -527,6 +527,9 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 		return firstPage;
 	}
 
+	public void setFirstPage(Page a) {
+	}
+
 	/**
 	 * Pobieranie definicji strony o minimalnie możliwym numerze na podstwawie
 	 * parametrów stronicowania. Numer strony zdefiniowany jest przez
@@ -542,6 +545,9 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 					"Definicja minimalnej strony nie spelnia warunkow ograniczen stronicowania");
 		}
 		return minimalPage;
+	}
+
+	public void setMinimalPage(Page a) {
 	}
 
 	/**
@@ -608,6 +614,7 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	}
 
 	public String getMaxCountByString() {
+		final Long maxCount=getMaxCount();
 		return (maxCount == null) ? null : maxCount.toString();
 	}
 
@@ -625,6 +632,9 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 		return maxPages.intValue();
 	}
 
+	public void setMaxPages(int a) {
+	}
+
 	/**
 	 * Zmiana ograniczeń związanych z maksymalną liczbą dokumentów w wyniku
 	 * zapytania {@link #maxCount}
@@ -632,7 +642,6 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	 * @param maxCount
 	 *            nowa wartość ograniczeń
 	 */
-	@IgnoreProperty
 	public void setMaxCount(Long maxCount) {
 		this.setMaxCount(maxCount, true);
 	}
@@ -752,7 +761,7 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 		return valid;
 	}
 
-	public void setIsValid(boolean valid) {
+	public void setValid(boolean valid) {
 		this.valid = valid;
 	}
 
@@ -817,6 +826,7 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	}
 
 	public String getOffsetByString() {
+		final Long offset=getOffset();
 		return (offset == null) ? null : offset.toString();
 	}
 
@@ -826,7 +836,6 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 	 *            the {@link #offset} to set
 	 * @return {@code true}, jeżeli wszystko jest OK.
 	 */
-	@IgnoreProperty
 	public boolean setOffset(Long offset) {
 		return setOffset(offset, true);
 	}
@@ -924,7 +933,7 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 		return isReadOnly;
 	}
 
-	public void setIsReadOnly(boolean isReadOnly) {
+	public void setReadOnly(boolean isReadOnly) {
 		this.isReadOnly = isReadOnly;
 	}
 

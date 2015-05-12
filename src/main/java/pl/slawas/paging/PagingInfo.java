@@ -69,28 +69,47 @@ public class PagingInfo implements _IPagingInfo {
 	private Page firstPageInfo;
 
 	@Override
+	@IgnoreProperty
 	public Page getPreviousPageInfo() throws PagedResultException {
+		final Page previousPageInfo=getPreviousPageInfoDto();
+		if ( previousPageInfo==null ) {
+			throw new PagedResultException("Nie ma poprzedniej strony");
+		}
 		return previousPageInfo;
 	}
 
-	public void setPreviousPageInfo(Page previousPageInfo) {
+	public Page getPreviousPageInfoDto() {
+		return previousPageInfo;
+	}
+
+	public void setPreviousPageInfoDto(Page previousPageInfo) {
 		this.previousPageInfo = previousPageInfo;
 	}
 
 	private Page previousPageInfo;
 
 	@Override
+	@IgnoreProperty
 	public Page getNextPageInfo() throws PagedResultException {
+		final Page nextPageInfo=getNextPageInfoDto();
+		if ( nextPageInfo==null ) {
+			throw new PagedResultException("Nie ma kolejnej strony");
+		}
 		return nextPageInfo;
 	}
 
-	public void setNextPageInfo(Page nextPageInfo) {
+	public Page getNextPageInfoDto() {
+		return nextPageInfo;
+	}
+
+	public void setNextPageInfoDto(Page nextPageInfo) {
 		this.nextPageInfo = nextPageInfo;
 	}
 
 	private Page nextPageInfo;
 
 	@Override
+	@IgnoreProperty
 	public Page getPageInfo(Integer pageNumber) throws PagedResultException {
 		try {
 			return pages.get(pageNumber.intValue());
@@ -128,18 +147,12 @@ public class PagingInfo implements _IPagingInfo {
 	private List<Page> pages;
 
 	@Override
-	@IgnoreProperty
 	public ResultMessage getMessage() {
 		return message;
 	}
 
-	public String getMessageByString() {
-		return (message == null) ? null : message.toString();
-	}
-
-	public void setMessageByString(String message) {
-		this.message = (message == null) ? null : ResultMessage
-				.valueOf(message);
+	public void setMessage(ResultMessage message) {
+		this.message = message;
 	}
 
 	private ResultMessage message;
@@ -153,6 +166,7 @@ public class PagingInfo implements _IPagingInfo {
 	private Long resultSize;
 
 	public String getResultSizeByString() {
+		final Long resultSize=getResultSize();
 		return (resultSize == null) ? null : resultSize.toString();
 	}
 
@@ -192,6 +206,7 @@ public class PagingInfo implements _IPagingInfo {
 	private Long lastRowPosition;
 
 	public String getLastRowPositionByString() {
+		final Long lastRowPosition=getLastRowPosition();
 		return (lastRowPosition == null) ? null : lastRowPosition.toString();
 	}
 
@@ -209,6 +224,8 @@ public class PagingInfo implements _IPagingInfo {
 	private Long firstRowPositionOfPreviousResultRows;
 
 	public String getFirstRowPositionOfPreviousResultRowsByString() {
+		final Long firstRowPositionOfPreviousResultRows
+			=getFirstRowPositionOfPreviousResultRows();
 		return (firstRowPositionOfPreviousResultRows == null) ? null
 				: firstRowPositionOfPreviousResultRows.toString();
 	}
