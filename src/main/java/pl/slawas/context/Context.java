@@ -4,13 +4,16 @@
 package pl.slawas.context;
 
 import java.util.TimeZone;
+import java.io.Serializable;
 
 /**
  * Context.java podstawowe metody obsługi wejścia do metod
  * 
  * @author Karol Kowalczyk
  */
-public class Context {
+public class Context implements Serializable {
+
+	private static final long serialVersionUID = -2755058896817320793L;
 
 	/**
 	 * Domyślny konstruktor
