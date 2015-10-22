@@ -87,21 +87,33 @@ public class ClassCreator implements Serializable {
 
 	public Class<?> generate(String className, StringBuffer source)
 			throws IOException, ClassNotFoundException {
-		/* utworzenie pliku ĹşrĂłdĹ‚a */
-		FileWriter aWriter = new FileWriter(classesDir + "/" + className
-				+ ".java", true);
-		aWriter.write(source.toString());
-		aWriter.flush();
-		aWriter.close();
-		/* kompilacja ĹşrĂłdĹ‚a */
+		/* utworzenie pliku źródła */
+		FileWriter aWriter = null;
+		try {
+			aWriter = new FileWriter(classesDir + "/" + className + ".java",
+					true);
+			aWriter.write(source.toString());
+			aWriter.flush();
+		} finally {
+			if (aWriter != null) {
+				aWriter.close();
+			}
+		}
+		/* kompilacja źródła */
 		String[] sourceFile = { (new StringBuffer()).append(classesDir)
 				.append("/").append(className).append(".java").toString() };
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-		com.sun.tools.javac.Main.compile(sourceFile);
-		if (!(baos.toString().indexOf("error") == -1)) {
-			logger.error("Blad kompilacji:\n{}", baos.toString());
-			throw new CompilerError("Blad kompilacji zrodla danych");
+		ByteArrayOutputStream baos = null;
+		try {
+			baos = new ByteArrayOutputStream();
+			com.sun.tools.javac.Main.compile(sourceFile);
+			if (!(baos.toString().indexOf("error") == -1)) {
+				logger.error("Blad kompilacji:\n{}", baos.toString());
+				throw new CompilerError("Blad kompilacji zrodla danych");
+			}
+		} finally {
+			if (baos != null) {
+				baos.close();
+			}
 		}
 		return this.classLoader.loadClass(className);
 	}
