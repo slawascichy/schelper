@@ -24,6 +24,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.Hashtable;
+import java.util.Map;
 import java.util.Properties;
 
 import pl.slawas.twl4j.Logger;
@@ -151,10 +152,10 @@ public class Configurations {
 	 *            pelna (z ewentyalna sciezka) nazwa pliku
 	 * @return wlasciwosci przeczyczate z pliku w postaci Map
 	 */
-	public static Hashtable<String, String> loadHashtable(Class<?> clazz,
+	public static Map<String, String> loadHashtable(Class<?> clazz,
 			String fileName) {
 
-		Hashtable<String, String> envVars = new Hashtable<String, String>();
+		Map<String, String> envVars = new Hashtable<String, String>();
 
 		try {
 			BufferedReader d = getBufferedReader(clazz, fileName);

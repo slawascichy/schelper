@@ -16,7 +16,7 @@
  */
 package pl.slawas.twl4j.logger;
 
-import java.util.Hashtable;
+import java.util.Map;
 import java.util.Properties;
 
 import junit.framework.TestCase;
@@ -44,7 +44,7 @@ public class LoggerTest extends TestCase {
 		final String mockFileName = "/test.properties";
 		System.out.println("Loading test properties from " + mockFileName
 				+ "....");
-		Hashtable<String, String> _Properties = Configurations.loadHashtable(
+		Map<String, String> _Properties = Configurations.loadHashtable(
 				LoggerTest.class, mockFileName);
 		props.putAll(_Properties);
 	}

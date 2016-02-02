@@ -1,9 +1,10 @@
 package pl.slawas.twl4j.config;
 
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -18,7 +19,7 @@ public class LoggerConfig implements LoggerConfigConstants {
 
 	private transient Object lockObject = new Object();
 
-	private static Hashtable<String, String> _Properties = null;
+	private static Map<String, String> _Properties = null;
 
 	private static LoggerConfig _Instance;
 	private static Object _InstanceLock = new Object();
@@ -112,10 +113,10 @@ public class LoggerConfig implements LoggerConfigConstants {
 			}
 			StringBuilder sb = new StringBuilder(
 					"\n-------- Logger properties --------");
-			Enumeration<String> props = _Properties.keys();
-			while (props.hasMoreElements()) {
-				String key = props.nextElement();
-				String value = _Properties.get(key);
+			Set<Entry<String, String>> propEntrySet = _Properties.entrySet();
+			for (Entry<String, String> propEntry : propEntrySet) {
+				String key = propEntry.getKey();
+				String value = propEntry.getValue();
 				sb.append("\n ").append(key).append(" = ").append(value);
 				NameValuePair currValue = NameValuePairUtils.getNewInstanceNVP(
 						key, value);

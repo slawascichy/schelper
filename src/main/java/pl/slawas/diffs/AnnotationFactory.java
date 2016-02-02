@@ -18,7 +18,7 @@ package pl.slawas.diffs;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.util.Hashtable;
+import java.util.Map;
 
 /**
  * 
@@ -58,7 +58,7 @@ public interface AnnotationFactory {
 	 * @return etykieta pola
 	 */
 	String getLabel(
-			Hashtable<String, String> labelList,
+			Map<String, String> labelList,
 			String parentLabel,
 			Field field);
 

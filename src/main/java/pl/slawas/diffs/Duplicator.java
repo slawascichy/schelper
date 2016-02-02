@@ -25,9 +25,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.TimeZone;
 import java.util.Vector;
 
@@ -37,7 +39,6 @@ import pl.slawas.helpers.PrimitiveType;
 import pl.slawas.helpers.Strings;
 import pl.slawas.twl4j.Logger;
 import pl.slawas.twl4j.LoggerFactory;
-
 
 /**
  * 
@@ -55,7 +56,8 @@ import pl.slawas.twl4j.LoggerFactory;
  */
 public class Duplicator {
 
-	final protected static Logger log = LoggerFactory.getLogger(Duplicator.class);
+	final protected static Logger log = LoggerFactory
+			.getLogger(Duplicator.class);
 
 	static final TimeZone timeZone = Calendar.getInstance().getTimeZone();
 
@@ -96,10 +98,10 @@ public class Duplicator {
 	 * zagniezdzenia.
 	 * 
 	 * @param annotation
-	 *           klasa annotacji wystepujaca przy polach
+	 *            klasa annotacji wystepujaca przy polach
 	 * @param source
-	 *           obiekt, ktory ma zostac skopiowany do nowego obiektu (ma byc
-	 *           sklonowany)
+	 *            obiekt, ktory ma zostac skopiowany do nowego obiektu (ma byc
+	 *            sklonowany)
 	 * @return nowy (sklonowany) obiekt
 	 * @throws InstantiationException
 	 * @throws IllegalAccessException
@@ -109,12 +111,9 @@ public class Duplicator {
 	 * @throws NoSuchMethodException
 	 */
 	static Object copy(Class<? extends Annotation> annotation, Object source)
-			throws InstantiationException,
-			IllegalAccessException,
-			IllegalArgumentException,
-			SecurityException,
-			InvocationTargetException,
-			NoSuchMethodException {
+			throws InstantiationException, IllegalAccessException,
+			IllegalArgumentException, SecurityException,
+			InvocationTargetException, NoSuchMethodException {
 
 		Object target = source.getClass().newInstance();
 		log.debug("target is new instance of {}", source.getClass());
@@ -128,13 +127,13 @@ public class Duplicator {
 	 * zagniezdzenia.
 	 * 
 	 * @param annotation
-	 *           klasa annotacji wystepujaca przy polach
+	 *            klasa annotacji wystepujaca przy polach
 	 * @param source
-	 *           obiekt, ktory ma zostac skopiowany do nowego obiektu (ma byc
-	 *           sklonowany)
+	 *            obiekt, ktory ma zostac skopiowany do nowego obiektu (ma byc
+	 *            sklonowany)
 	 * @param level
-	 *           aktualny poziom zagniezdzenia. Na poczatku (jezeli jet to
-	 *           pierwsze wywolanie) level powinien miec wartosc 0
+	 *            aktualny poziom zagniezdzenia. Na poczatku (jezeli jet to
+	 *            pierwsze wywolanie) level powinien miec wartosc 0
 	 * @return nowy (sklonowany) obiekt
 	 * @throws InstantiationException
 	 * @throws IllegalAccessException
@@ -143,13 +142,10 @@ public class Duplicator {
 	 * @throws InvocationTargetException
 	 * @throws NoSuchMethodException
 	 */
-	private static Object copy(Class<? extends Annotation> annotation, Object source, int level)
-			throws InstantiationException,
-			IllegalAccessException,
-			IllegalArgumentException,
-			SecurityException,
-			InvocationTargetException,
-			NoSuchMethodException {
+	private static Object copy(Class<? extends Annotation> annotation,
+			Object source, int level) throws InstantiationException,
+			IllegalAccessException, IllegalArgumentException,
+			SecurityException, InvocationTargetException, NoSuchMethodException {
 
 		Object target = source.getClass().newInstance();
 		log.debug("target is new instance of {}", source.getClass());
@@ -159,15 +155,16 @@ public class Duplicator {
 	/**
 	 * Kopiowanie wartosci pol z jednego obiektu do drugiego. Powstaly obiekt ma
 	 * skopiowane tylko te pola, dla ktorych ustwiona zostala odpowiednia
-	 * annotacja. Metoda nie nadaje sie do kopiowania zawartosci calych obiektow,
-	 * chyba ze wszystkie pola zostana oznaczone wczesniej wymieniona annotacja.
+	 * annotacja. Metoda nie nadaje sie do kopiowania zawartosci calych
+	 * obiektow, chyba ze wszystkie pola zostana oznaczone wczesniej wymieniona
+	 * annotacja.
 	 * 
 	 * @param annotation
-	 *           annotacja ustawiana przy polach, ktore mają byc kopiowane
+	 *            annotacja ustawiana przy polach, ktore mają byc kopiowane
 	 * @param target
-	 *           obiekt, do ktorego sa kopiowane wartosci
+	 *            obiekt, do ktorego sa kopiowane wartosci
 	 * @param source
-	 *           obiekt, z ktorego sa kopiowane wartosci
+	 *            obiekt, z ktorego sa kopiowane wartosci
 	 * @return obiekt, do ktorego sa kopiowane wartosci
 	 * @throws InstantiationException
 	 * @throws IllegalAccessException
@@ -176,35 +173,30 @@ public class Duplicator {
 	 * @throws InvocationTargetException
 	 * @throws NoSuchMethodException
 	 */
-	static Object copy(
-			Class<? extends Annotation> annotation,
-			Object target,
-			Object source)
-			throws InstantiationException,
-			IllegalAccessException,
-			IllegalArgumentException,
-			SecurityException,
-			InvocationTargetException,
-			NoSuchMethodException {
+	static Object copy(Class<? extends Annotation> annotation, Object target,
+			Object source) throws InstantiationException,
+			IllegalAccessException, IllegalArgumentException,
+			SecurityException, InvocationTargetException, NoSuchMethodException {
 		return copy(annotation, target, source, 0);
 	}
 
 	/**
 	 * Kopiowanie wartosci pol z jednego obiektu do drugiego. Powstaly obiekt ma
 	 * skopiowane tylko te pola, dla ktorych ustwiona zostala odpowiednia
-	 * annotacja. Metoda nie nadaje sie do kopiowania zawartosci calych obiektow,
-	 * chyba ze wszystkie pola zostana oznaczone wczesniej wymieniona annotacja.
+	 * annotacja. Metoda nie nadaje sie do kopiowania zawartosci calych
+	 * obiektow, chyba ze wszystkie pola zostana oznaczone wczesniej wymieniona
+	 * annotacja.
 	 * 
 	 * @param annotation
-	 *           annotacja ustawiana przy polach, ktore mają byc kopiowane
+	 *            annotacja ustawiana przy polach, ktore mają byc kopiowane
 	 * @param target
-	 *           obiekt, do ktorego sa kopiowane wartosci
+	 *            obiekt, do ktorego sa kopiowane wartosci
 	 * @param source
-	 *           obiekt, z ktorego sa kopiowane wartosci
+	 *            obiekt, z ktorego sa kopiowane wartosci
 	 * @param level
-	 *           metoda wywolywana jest rekurencyjnie dlatego, dla zabezpieczenia
-	 *           przed zapetleniem sie operacji podaje sie poziom, dla ktorego
-	 *           jest aktualnie wykonywana operacja
+	 *            metoda wywolywana jest rekurencyjnie dlatego, dla
+	 *            zabezpieczenia przed zapetleniem sie operacji podaje sie
+	 *            poziom, dla ktorego jest aktualnie wykonywana operacja
 	 * @return obiekt, do ktorego sa kopiowane wartosci
 	 * @throws InstantiationException
 	 * @throws IllegalAccessException
@@ -214,29 +206,22 @@ public class Duplicator {
 	 * @throws NoSuchMethodException
 	 */
 	@SuppressWarnings("unchecked")
-	private static Object copy(
-			Class<? extends Annotation> annotation,
-			Object target,
-			Object source,
-			int level)
-			throws InstantiationException,
-			IllegalAccessException,
-			IllegalArgumentException,
-			SecurityException,
-			InvocationTargetException,
-			NoSuchMethodException {
+	private static Object copy(Class<? extends Annotation> annotation,
+			Object target, Object source, int level)
+			throws InstantiationException, IllegalAccessException,
+			IllegalArgumentException, SecurityException,
+			InvocationTargetException, NoSuchMethodException {
 
 		level++;
 
 		if (!target.getClass().equals(source.getClass()))
 			throw new IllegalArgumentException(
 					"Expect the same classes but have source at "
-					+ source.toString()
-					+ " and target at "
-					+ target.toString());
+							+ source.toString() + " and target at "
+							+ target.toString());
 
-		log.debug("Copy objects (LEVEL={}): {}", new Object[]
-			{ level, source.getClass() });
+		log.debug("Copy objects (LEVEL={}): {}",
+				new Object[] { level, source.getClass() });
 
 		Field[] fields = getFields(source);
 		for (Field field : fields) {
@@ -251,75 +236,85 @@ public class Duplicator {
 				Class<?> parTypes[] = new Class[1];
 				parTypes[0] = field.getType();
 
-				Object targetValue = (Object)
-						source.getClass().getMethod(getterMethodName).invoke(source);
+				Object targetValue = (Object) source.getClass()
+						.getMethod(getterMethodName).invoke(source);
 
-				log.trace("Copy field {} of type {}, {}", new Object[]
-					{ field.getName(), field.getType(), targetValue });
+				log.trace("Copy field {} of type {}, {}",
+						new Object[] { field.getName(), field.getType(),
+								targetValue });
 
 				if (targetValue != null) {
-					if (field.getType().toString().equals(List.class.toString())) {
-						log.trace("Field {} is list: {}", new Object[]
-							{ field.getName(), field.getType() });
+					if (field.getType().toString()
+							.equals(List.class.toString())) {
+						log.trace(
+								"Field {} is list: {}",
+								new Object[] { field.getName(), field.getType() });
 
 						targetValue = new ArrayList<Object>();
-						for (Object object : (List<Object>) source.getClass().getMethod(getterMethodName)
-								.invoke(source))
-						{
-							((List<Object>) targetValue).add(copy(annotation, object, level));
+						for (Object object : (List<Object>) source.getClass()
+								.getMethod(getterMethodName).invoke(source)) {
+							((List<Object>) targetValue).add(copy(annotation,
+									object, level));
 						}
-					} else if (field.getType().toString().equals(Hashtable.class.toString())) {
-						log.trace("Field {} is hashtable: {}", new Object[]
-							{ field.getName(), field.getType() });
+					} else if (field.getType().toString()
+							.equals(Hashtable.class.toString())) {
+						log.trace("Field {} is hashtable: {}", new Object[] {
+								field.getName(), field.getType() });
 
 						targetValue = new Hashtable<Object, Object>();
-						Hashtable<Object, Object> surceValues =
-								(Hashtable<Object, Object>) source.getClass().getMethod(getterMethodName)
+						Map<Object, Object> surceValues = (Hashtable<Object, Object>) source
+								.getClass().getMethod(getterMethodName)
 								.invoke(source);
 
-						Enumeration<Object> sourceKeys = surceValues.keys();
-						while (sourceKeys.hasMoreElements()) {
-							Object key = sourceKeys.nextElement();
-							Object value = surceValues.get(key);
-							((Hashtable<Object, Object>) targetValue).put(key, copy(
-									annotation,
-									value,
-									level));
+						Set<Entry<Object, Object>> sourceEntrySet = surceValues
+								.entrySet();
+						for (Entry<Object, Object> sourceEntry : sourceEntrySet) {
+							Object key = sourceEntry.getKey();
+							Object value = sourceEntry.getValue();
+							((Map<Object, Object>) targetValue).put(key,
+									copy(annotation, value, level));
 						}
 
-					} else if (field.getType().toString().equals(Vector.class.toString())) {
-						log.trace("Field {} is vector: {}", new Object[]
-							{ field.getName(), field.getType() });
+					} else if (field.getType().toString()
+							.equals(Vector.class.toString())) {
+						log.trace("Field {} is vector: {}", new Object[] {
+								field.getName(), field.getType() });
 
 						targetValue = new Vector<Object>();
-						for (Object object : (List<Object>) source.getClass().getMethod(getterMethodName)
-								.invoke(source))
-						{
-							((Vector<Object>) targetValue).add(copy(annotation, object, level));
+						for (Object object : (List<Object>) source.getClass()
+								.getMethod(getterMethodName).invoke(source)) {
+							((Vector<Object>) targetValue).add(copy(annotation,
+									object, level));
 						}
 					} else if (field.getType().isArray()) {
-						log.trace("Field {} is array: {}", new Object[]
-							{ field.getName(), field.getType() });
-						Class<?> componentType = field.getType().getComponentType();
+						log.trace(
+								"Field {} is array: {}",
+								new Object[] { field.getName(), field.getType() });
+						Class<?> componentType = field.getType()
+								.getComponentType();
 
 						if (!componentType.isPrimitive()) {
-							log.trace("componentType {} is not primitive", new Object[]
-								{ componentType.getName() });
+							log.trace("componentType {} is not primitive",
+									new Object[] { componentType.getName() });
 							int arrayLen = ((Object[]) targetValue).length;
-							Object copyArrayValue = Arrays.copyOf((Object[]) targetValue, arrayLen);
+							Object copyArrayValue = Arrays.copyOf(
+									(Object[]) targetValue, arrayLen);
 							targetValue = copyArrayValue;
 						} else {
 							String component = "" + componentType;
-							targetValue = PrimitiveType.get(component).copyOf(targetValue);
+							targetValue = PrimitiveType.get(component).copyOf(
+									targetValue);
 						}
 
-					} else if (!targetValue.getClass().toString().contains("java.")) {
+					} else if (!targetValue.getClass().toString()
+							.contains("java.")) {
 						if (level < REQURENCY_LEVEL)
 							targetValue = copy(annotation, targetValue, level);
 					}
 				}
 
-				Method method = target.getClass().getMethod(setterMethodName, parTypes);
+				Method method = target.getClass().getMethod(setterMethodName,
+						parTypes);
 				method.invoke(target, targetValue);
 
 			}
@@ -343,81 +338,72 @@ public class Duplicator {
 	 * zrobimy moga zostać zwrócone nieoczekiwane wyniki.
 	 * 
 	 * @param annotationFactory
-	 *           bean zarzadzajacy argumentami sledzoenj annotacji
+	 *            bean zarzadzajacy argumentami sledzoenj annotacji
 	 * @param target
-	 *           nowa wartosc
+	 *            nowa wartosc
 	 * @param source
-	 *           stara wartosc
+	 *            stara wartosc
 	 * @return lista zarejestrowanych zmian
 	 * @throws Exception
 	 */
-	static List<ObjectsDifference> diff(
-			AnnotationFactory annotationFactory,
-			Object target,
-			Object source)
-			throws Exception {
+	static List<ObjectsDifference> diff(AnnotationFactory annotationFactory,
+			Object target, Object source) throws Exception {
 		return diff(annotationFactory, target, source, null, null, 0);
 	}
 
 	/**
-	 * Wlasciwa metoda porownania, pozwalajaca na wstrzykniecie dynamicznej listy
-	 * etykiet dla porownywanych pol.
+	 * Wlasciwa metoda porownania, pozwalajaca na wstrzykniecie dynamicznej
+	 * listy etykiet dla porownywanych pol.
 	 * 
 	 * @param annotationFactory
-	 *           bean zarzadzajacy argumentami sledzoenj annotacji
+	 *            bean zarzadzajacy argumentami sledzoenj annotacji
 	 * @param target
-	 *           nowa wartosc
+	 *            nowa wartosc
 	 * @param source
-	 *           stara wartosc
+	 *            stara wartosc
 	 * @param labelList
-	 *           hashtable z etykietami zmian pol
+	 *            hashtable z etykietami zmian pol
 	 * @return lista zarejestrowanych zmian
 	 * @throws Exception
 	 */
-	static List<ObjectsDifference> diff(
-			AnnotationFactory annotationFactory,
-			Object target,
-			Object source,
-			Hashtable<String, String> labelList)
+	static List<ObjectsDifference> diff(AnnotationFactory annotationFactory,
+			Object target, Object source, Map<String, String> labelList)
 			throws Exception {
 		return diff(annotationFactory, target, source, labelList, null, 0);
 	}
 
 	/**
 	 * Wlasciwa metoda porownania, dla list wywolywana rekurencyjnie. Metoda
-	 * stara sie być niewrażliwa na różny 'characterset' porownywanych String-ów.
+	 * stara sie być niewrażliwa na różny 'characterset' porownywanych
+	 * String-ów.
 	 * 
 	 * @param annotationFactory
-	 *           bean zarzadzajacy argumentami sledzoenj annotacji
+	 *            bean zarzadzajacy argumentami sledzoenj annotacji
 	 * @param target
-	 *           nowa wartosc
+	 *            nowa wartosc
 	 * @param source
-	 *           stara wartosc
+	 *            stara wartosc
 	 * @param labelList
-	 *           hashtable z etykietami zmian pol
+	 *            hashtable z etykietami zmian pol
 	 * @param parentLabel
-	 *           jezeli jest metoda wywolywana rekurencyjnie to jest to etykieta
-	 *           zmany zarejestrowana w poprzednim kroku
+	 *            jezeli jest metoda wywolywana rekurencyjnie to jest to
+	 *            etykieta zmany zarejestrowana w poprzednim kroku
 	 * @param level
-	 *           poziom zagniezdzenia podczas porownywania
+	 *            poziom zagniezdzenia podczas porownywania
 	 * @return lista zarejestrowanych zmian
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
 	private static List<ObjectsDifference> diff(
-			AnnotationFactory annotationFactory,
-			Object target,
-			Object source,
-			Hashtable<String, String> labelList,
-			String parentLabel,
-			int level)
+			AnnotationFactory annotationFactory, Object target, Object source,
+			Map<String, String> labelList, String parentLabel, int level)
 			throws Exception {
 
 		level++;
 
 		/*
-		 * sprawdzam czy nieporownuje zrodla z wartoscia null. Muzsze miec klase,
-		 * a moge je povrac tylko z obiektu not null.
+		 * sprawdzam czy nieporownuje zrodla z wartoscia null. Muzsze miec
+		 * klase, a moge je povrac tylko z obiektu not null.
 		 */
 		Object notNullObject = null;
 		if (source != null) {
@@ -430,12 +416,12 @@ public class Duplicator {
 		if (notNullObject == null)
 			return new ArrayList<ObjectsDifference>();
 
-		if ((target != null) && source != null && !target.getClass().equals(source.getClass()))
+		if ((target != null) && source != null
+				&& !target.getClass().equals(source.getClass()))
 			throw new IllegalArgumentException(
 					"Expect the same classes but have source at "
-					+ source.toString()
-					+ " and target at "
-					+ target.toString());
+							+ source.toString() + " and target at "
+							+ target.toString());
 
 		List<ObjectsDifference> result = new ArrayList<ObjectsDifference>();
 		log.trace("Diff '{}' START", parentLabel);
@@ -444,7 +430,8 @@ public class Duplicator {
 		for (Field field : fields) {
 			if (field.isAnnotationPresent(annotationFactory.getAnnotation())) {
 
-				String label = annotationFactory.getLabel(labelList, parentLabel, field);
+				String label = annotationFactory.getLabel(labelList,
+						parentLabel, field);
 
 				String getterMethodName = "get"
 						+ field.getName().substring(0, 1).toUpperCase()
@@ -459,35 +446,37 @@ public class Duplicator {
 					targetValue = target.getClass().getMethod(getterMethodName)
 							.invoke(target);
 
-				Hashtable<Object, Object> targetHashtable = null;
-				Hashtable<Object, Object> sourceHashtable = null;
+				Map<Object, Object> targetHashtable = null;
+				Map<Object, Object> sourceHashtable = null;
 
-				String referencedFieldName = annotationFactory.getReferencedFieldName(field);
+				String referencedFieldName = annotationFactory
+						.getReferencedFieldName(field);
 
 				boolean componentTypeIsPrimitive = false;
 				Class<?> componentType = null;
 
 				if (field.getType().toString().equals(List.class.toString())
-						|| field.getType().toString().equals(Vector.class.toString()))
-				{
+						|| field.getType().toString()
+								.equals(Vector.class.toString())) {
 					if (referencedFieldName == null)
-						log.warn("{}: Brak zdefiniowanej referencji do pola z unikalna "
-								+ "wartoscia charakteryzujaca obiekt z {} dla pola '{}'. "
-								+ "Porownanie obiektow moze przebiec nieprawidlowo.",
-								new Object[]
-							{ source.getClass(), field.getType().getCanonicalName(), field.getName() });
+						log.warn(
+								"{}: Brak zdefiniowanej referencji do pola z unikalna "
+										+ "wartoscia charakteryzujaca obiekt z {} dla pola '{}'. "
+										+ "Porownanie obiektow moze przebiec nieprawidlowo.",
+								new Object[] { source.getClass(),
+										field.getType().getCanonicalName(),
+										field.getName() });
 
 					if (sourceValue != null) {
 						sourceHashtable = list2Hashtable(
-								(List<Object>) sourceValue,
-								referencedFieldName);
+								(List<Object>) sourceValue, referencedFieldName);
 					}
 					if (targetValue != null) {
 						targetHashtable = list2Hashtable(
-								(List<Object>) targetValue,
-								referencedFieldName);
+								(List<Object>) targetValue, referencedFieldName);
 					}
-				} else if (field.getType().toString().equals(Hashtable.class.toString())) {
+				} else if (field.getType().toString()
+						.equals(Hashtable.class.toString())) {
 					if (sourceValue != null) {
 						sourceHashtable = hashtable2TmpCopy((Hashtable<Object, Object>) sourceValue);
 					}
@@ -507,115 +496,93 @@ public class Duplicator {
 					} else {
 						componentTypeIsPrimitive = true;
 						if (sourceValue != null) {
-							log.trace("Diff array source of primitive component {}", componentType);
+							log.trace(
+									"Diff array source of primitive component {}",
+									componentType);
 						}
 						if (targetValue != null) {
-							log.trace("Diff array target of primitive component {}", componentType);
+							log.trace(
+									"Diff array target of primitive component {}",
+									componentType);
 						}
 					}
 				}
 
-				if (isDifferent(
-						annotationFactory,
-						level,
-						field,
-						targetValue,
-						sourceValue,
-						label,
-						targetHashtable,
-						sourceHashtable,
-						componentTypeIsPrimitive,
-						componentType))
-				{
+				if (isDifferent(annotationFactory, level, field, targetValue,
+						sourceValue, label, targetHashtable, sourceHashtable,
+						componentTypeIsPrimitive, componentType)) {
 					if (targetHashtable != null && sourceHashtable != null) {
 						/* sa rozne listy */
-						result.addAll(diffHashtable(
-								annotationFactory,
-								label,
-								targetHashtable,
-								sourceHashtable,
-								field,
-								labelList,
-								level));
+						result.addAll(diffHashtable(annotationFactory, label,
+								targetHashtable, sourceHashtable, field,
+								labelList, level));
 					} else if (!componentTypeIsPrimitive) {
 						/* pole nie jest macierza */
-						if (field.getType().getCanonicalName().startsWith("java.")) {
+						if (field.getType().getCanonicalName()
+								.startsWith("java.")) {
 							/* jest typem wbudowanym w java */
 							Object sVal = sourceValue;
 							Object tVal = targetValue;
 							if (sVal != null) {
-								sVal = tryConvertCalendarToString(sourceValue, sVal);
+								sVal = tryConvertCalendarToString(sourceValue,
+										sVal);
 							}
 							if (sVal != null) {
-								tVal = tryConvertCalendarToString(targetValue, tVal);
+								tVal = tryConvertCalendarToString(targetValue,
+										tVal);
 							}
 
-							result
-									.add(new ObjectsDifference(label, tVal, sVal, field
-									.getType()));
+							result.add(new ObjectsDifference(label, tVal, sVal,
+									field.getType()));
 							log.trace("Diff (LEVEL={}): {}, {}, {}, {}",
-									new Object[]
-								{
-										level, label, tVal, sVal,
-										field.getType().getSimpleName() });
+									new Object[] { level, label, tVal, sVal,
+											field.getType().getSimpleName() });
 						} else if (level <= Duplicator.REQURENCY_LEVEL) {
 							/*
-							 * nie jest typem wbudowanym w java, ale moge dokonac
-							 * kolejnego zagniezdzenia
+							 * nie jest typem wbudowanym w java, ale moge
+							 * dokonac kolejnego zagniezdzenia
 							 */
-							result.addAll(
-									diff(
-									annotationFactory,
-									targetValue,
-									sourceValue,
-									labelList,
-									label,
-									level));
+							result.addAll(diff(annotationFactory, targetValue,
+									sourceValue, labelList, label, level));
 						} else {
-							result
-									.add(new ObjectsDifference(label, targetValue, sourceValue, field
-									.getType()));
+							result.add(new ObjectsDifference(label,
+									targetValue, sourceValue, field.getType()));
 							log.trace("Diff (LEVEL={}): {}, {}, {}, {}",
-									new Object[]
-								{
-										level, label, targetValue, sourceValue,
-										field.getType().getSimpleName() });
+									new Object[] { level, label, targetValue,
+											sourceValue,
+											field.getType().getSimpleName() });
 						}
 
 					} else if (componentTypeIsPrimitive
-							&& ((sourceValue == null || targetValue == null)))
-					{
-						/* pole jest macierza i macierz zostala dodana lub usunieta */
-						result
-								.add(new ObjectsDifference(label, targetValue, sourceValue, field
-								.getType()));
+							&& ((sourceValue == null || targetValue == null))) {
+						/*
+						 * pole jest macierza i macierz zostala dodana lub
+						 * usunieta
+						 */
+						result.add(new ObjectsDifference(label, targetValue,
+								sourceValue, field.getType()));
 						log.trace("Diff (LEVEL={}): {}, {}, {}, {}",
-								new Object[]
-							{
-									level, label, targetValue, sourceValue,
-									field.getType().getSimpleName() });
+								new Object[] { level, label, targetValue,
+										sourceValue,
+										field.getType().getSimpleName() });
 					} else if (componentTypeIsPrimitive
 							&& (sourceValue != null && targetValue != null)
-							&& componentType != null)
-					{
+							&& componentType != null) {
 						/*
 						 * pole jest macierza i w tej macierzy zostaly zmienione
 						 * elementy
 						 */
 						String component = "" + componentType;
-						Hashtable<Object, Object> sArrayHashtable =
-								PrimitiveType.get(component).primitiveArray2Hashtable(sourceValue);
-						Hashtable<Object, Object> tArrayHashtable =
-								PrimitiveType.get(component).primitiveArray2Hashtable(targetValue);
+						Map<Object, Object> sArrayHashtable = PrimitiveType
+								.get(component).primitiveArray2Hashtable(
+										sourceValue);
+						Map<Object, Object> tArrayHashtable = PrimitiveType
+								.get(component).primitiveArray2Hashtable(
+										targetValue);
 
-						result.addAll(diffHashtable(
-								annotationFactory,
-								label,
-								tArrayHashtable,
-								sArrayHashtable,
-								field,
-								labelList,
-								level));
+						result.addAll(diffHashtable(annotationFactory, label,
+								tArrayHashtable, sArrayHashtable, field,
+								labelList, level));
 
 					}
 
@@ -633,13 +600,14 @@ public class Duplicator {
 	 * zaprezentowac roznice pol.
 	 * 
 	 * @param originalValue
-	 *           obiekt wartosci do analizy
+	 *            obiekt wartosci do analizy
 	 * @param convertedValue
-	 *           obiekt do konwersji
+	 *            obiekt do konwersji
 	 * @return obiekt skonwertowany lub nie (w zaleznosci od tego czy obiekt
 	 *         oryginalny byl faktycznie data
 	 */
-	private static Object tryConvertCalendarToString(Object originalValue, Object convertedValue) {
+	private static Object tryConvertCalendarToString(Object originalValue,
+			Object convertedValue) {
 		if (originalValue instanceof java.util.Date) {
 			convertedValue = Calendar.getInstance(timeZone);
 			((Calendar) convertedValue).setTime((java.util.Date) originalValue);
@@ -652,7 +620,8 @@ public class Duplicator {
 			} else {
 				sdf = new SimpleDateFormat(getDateLongFormat());
 			}
-			convertedValue = (String) sdf.format(((Calendar) convertedValue).getTime());
+			convertedValue = (String) sdf.format(((Calendar) convertedValue)
+					.getTime());
 		}
 		return convertedValue;
 	}
@@ -667,9 +636,9 @@ public class Duplicator {
 	 * Jezeli w obiektach wystepuja listy, to aby moc bezblednie je porownac
 	 * nalezy pamietac o tym, ze w obiektach, ktore beda umieszczone w takiej
 	 * liscie trzeba dodac annotacje Id.class przy polu definiujacym unikalny
-	 * klucz lub przy annotacji podac atrybut 'referencedFieldName', ktore wskażą
-	 * pole jednoznacznie identyfikujace dany obiekt. Jezeli tego nie zrobimy
-	 * moga zostać zwrócone nieoczekiwane wyniki. Metoda stara sie byc
+	 * klucz lub przy annotacji podac atrybut 'referencedFieldName', ktore
+	 * wskażą pole jednoznacznie identyfikujace dany obiekt. Jezeli tego nie
+	 * zrobimy moga zostać zwrócone nieoczekiwane wyniki. Metoda stara sie byc
 	 * niewrażliwa na różny 'characterset' porownywanych String-ów.
 	 * 
 	 * @see javax.persistence.Id
@@ -678,16 +647,16 @@ public class Duplicator {
 	 * 
 	 * 
 	 * @param annotationFactory
-	 *           bean zarzadzajacy argumentami sledzonej annotacji
+	 *            bean zarzadzajacy argumentami sledzonej annotacji
 	 * @param target
-	 *           nowa wartosc
+	 *            nowa wartosc
 	 * @param source
-	 *           stara wartosc
+	 *            stara wartosc
 	 * @return [true|false]
 	 * @throws Exception
 	 */
-	static boolean assertEquals(AnnotationFactory annotationFactory, Object target, Object source)
-			throws Exception {
+	static boolean assertEquals(AnnotationFactory annotationFactory,
+			Object target, Object source) throws Exception {
 		return assertEquals(annotationFactory, target, source, 0);
 	}
 
@@ -712,24 +681,20 @@ public class Duplicator {
 	 * @see pl.slawas.diffs.Property
 	 * 
 	 * @param annotationFactory
-	 *           bean zarzadzajacy argumentami sledzonej annotacji
+	 *            bean zarzadzajacy argumentami sledzonej annotacji
 	 * @param target
-	 *           nowa wartosc
+	 *            nowa wartosc
 	 * @param source
-	 *           stara wartosc
+	 *            stara wartosc
 	 * @param level
-	 *           aktualny poziom zagniezdzenia podczas porownywania rekurencji.
-	 *           dla pierwszego wykonania level = 0
+	 *            aktualny poziom zagniezdzenia podczas porownywania rekurencji.
+	 *            dla pierwszego wykonania level = 0
 	 * @return [true|false]
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	private static boolean assertEquals(
-			AnnotationFactory annotationFactory,
-			Object target,
-			Object source,
-			int level)
-			throws Exception {
+	private static boolean assertEquals(AnnotationFactory annotationFactory,
+			Object target, Object source, int level) throws Exception {
 
 		level++;
 
@@ -757,40 +722,44 @@ public class Duplicator {
 				String getterMethodName = "get"
 						+ field.getName().substring(0, 1).toUpperCase()
 						+ field.getName().substring(1);
-				Object sourceValue = source.getClass().getMethod(getterMethodName).invoke(source);
-				Object targetValue = target.getClass().getMethod(getterMethodName).invoke(target);
+				Object sourceValue = source.getClass()
+						.getMethod(getterMethodName).invoke(source);
+				Object targetValue = target.getClass()
+						.getMethod(getterMethodName).invoke(target);
 
 				String label = annotationFactory.getLabel(field);
 
-				String referencedFieldName = annotationFactory.getReferencedFieldName(field);
+				String referencedFieldName = annotationFactory
+						.getReferencedFieldName(field);
 
-				Hashtable<Object, Object> targetHashtable = null;
-				Hashtable<Object, Object> sourceHashtable = null;
+				Map<Object, Object> targetHashtable = null;
+				Map<Object, Object> sourceHashtable = null;
 
 				boolean componentTypeIsPrimitive = false;
 				Class<?> componentType = null;
 
 				if (field.getType().toString().equals(List.class.toString())
-						|| field.getType().toString().equals(Vector.class.toString()))
-				{
+						|| field.getType().toString()
+								.equals(Vector.class.toString())) {
 					if (referencedFieldName == null)
-						log.warn("{}: Brak zdefiniowanej referencji do pola z unikalna "
-								+ "wartoscia charakteryzujaca obiekt z {} dla pola '{}'. "
-								+ "Porownanie obiektow moze przebiec nieprawidlowo.",
-								new Object[]
-							{ source.getClass(), field.getType().getCanonicalName(), field.getName() });
+						log.warn(
+								"{}: Brak zdefiniowanej referencji do pola z unikalna "
+										+ "wartoscia charakteryzujaca obiekt z {} dla pola '{}'. "
+										+ "Porownanie obiektow moze przebiec nieprawidlowo.",
+								new Object[] { source.getClass(),
+										field.getType().getCanonicalName(),
+										field.getName() });
 
 					if (sourceValue != null) {
 						sourceHashtable = list2Hashtable(
-								(List<Object>) sourceValue,
-								referencedFieldName);
+								(List<Object>) sourceValue, referencedFieldName);
 					}
 					if (targetValue != null) {
 						targetHashtable = list2Hashtable(
-								(List<Object>) targetValue,
-								referencedFieldName);
+								(List<Object>) targetValue, referencedFieldName);
 					}
-				} else if (field.getType().toString().equals(Hashtable.class.toString())) {
+				} else if (field.getType().toString()
+						.equals(Hashtable.class.toString())) {
 					if (sourceValue != null) {
 						sourceHashtable = hashtable2TmpCopy((Hashtable<Object, Object>) sourceValue);
 					}
@@ -810,25 +779,21 @@ public class Duplicator {
 					} else {
 						componentTypeIsPrimitive = true;
 						if (sourceValue != null) {
-							log.trace("Diff array source of primitive component {}", componentType);
+							log.trace(
+									"Diff array source of primitive component {}",
+									componentType);
 						}
 						if (targetValue != null) {
-							log.trace("Diff array target of primitive component {}", componentType);
+							log.trace(
+									"Diff array target of primitive component {}",
+									componentType);
 						}
 					}
 				}
 
-				if (isDifferent(
-						annotationFactory,
-						level,
-						field,
-						targetValue,
-						sourceValue,
-						label,
-						targetHashtable,
-						sourceHashtable,
-						componentTypeIsPrimitive,
-						componentType))
+				if (isDifferent(annotationFactory, level, field, targetValue,
+						sourceValue, label, targetHashtable, sourceHashtable,
+						componentTypeIsPrimitive, componentType))
 					return false;
 
 			}
@@ -838,187 +803,166 @@ public class Duplicator {
 	}
 
 	/**
-	 * Metoda sprawdzajaca czy wartosci pol są rózne. Metoda wykorzystywana przez
-	 * prawie wszystkie glowne metody porownywania, mozliwa do wykorzytywania
-	 * przez podobne fabryki korzystajace z dobrodziejstw tej klasy.
+	 * Metoda sprawdzajaca czy wartosci pol są rózne. Metoda wykorzystywana
+	 * przez prawie wszystkie glowne metody porownywania, mozliwa do
+	 * wykorzytywania przez podobne fabryki korzystajace z dobrodziejstw tej
+	 * klasy.
 	 * 
 	 * @see #assertEquals(AnnotationFactory, Object, Object, int)
 	 * @see #equalsHashtable(AnnotationFactory, Field, String, Hashtable,
 	 *      Hashtable, int)
 	 * 
 	 * @param annotationFactory
-	 *           bean zarzadzajacy argumentami sledzonej annotacji
+	 *            bean zarzadzajacy argumentami sledzonej annotacji
 	 * @param level
-	 *           poziom zagniezdzenia
+	 *            poziom zagniezdzenia
 	 * @param field
-	 *           pole, ktorego wartosci sa porownywane
+	 *            pole, ktorego wartosci sa porownywane
 	 * @param targetValue
-	 *           wartosc "nowa"
+	 *            wartosc "nowa"
 	 * @param sourceValue
-	 *           wartosc "stara"
+	 *            wartosc "stara"
 	 * @param label
-	 *           pozim zagniezdzenia
+	 *            pozim zagniezdzenia
 	 * @param targetHashtable
-	 *           ewentulana hashtablica wartosci pola, jezeli mamy do czynienia z
-	 *           listami, macierzami, wartosc nowa
+	 *            ewentulana hashtablica wartosci pola, jezeli mamy do czynienia
+	 *            z listami, macierzami, wartosc nowa
 	 * @param sourceHashtable
-	 *           ewentulana hashtablica wartosci pola, jezeli mamy do czynienia z
-	 *           listami, macierzami, wartosc nowa
+	 *            ewentulana hashtablica wartosci pola, jezeli mamy do czynienia
+	 *            z listami, macierzami, wartosc nowa
 	 * @param componentTypeIsPrimitive
-	 *           czy pole jest macierza typow prymitywnych?
+	 *            czy pole jest macierza typow prymitywnych?
 	 * @param componentType
-	 *           typ prymitywny (skladnik) pola, ktory jest macierza typow
-	 *           prymitywnych
+	 *            typ prymitywny (skladnik) pola, ktory jest macierza typow
+	 *            prymitywnych
 	 * @return zwraca dokladnie odwrotny wynik niz metoda "equals" tzn. jezeli
 	 *         "equals" zwraca 'true' to metoda zwraca wartosc 'false'.
 	 * @throws Exception
 	 * @throws UnsupportedEncodingException
 	 */
-	static boolean isDifferent(
-			AnnotationFactory annotationFactory,
-			int level,
-			Field field,
-			Object targetValue,
-			Object sourceValue,
-			String label,
-			Hashtable<Object, Object> targetHashtable,
-			Hashtable<Object, Object> sourceHashtable,
-			boolean componentTypeIsPrimitive,
-			Class<?> componentType) throws Exception, UnsupportedEncodingException {
+	static boolean isDifferent(AnnotationFactory annotationFactory, int level,
+			Field field, Object targetValue, Object sourceValue, String label,
+			Map<Object, Object> targetHashtable,
+			Map<Object, Object> sourceHashtable,
+			boolean componentTypeIsPrimitive, Class<?> componentType)
+			throws Exception, UnsupportedEncodingException {
 
-		log.trace("'{}' (LEVEL={}) Check difference: {} == {}", new Object[]
-			{ label, level, sourceValue, targetValue });
+		log.trace("'{}' (LEVEL={}) Check difference: {} == {}", new Object[] {
+				label, level, sourceValue, targetValue });
 
 		if (targetHashtable != null && sourceHashtable != null) {
 
-			if (!equalsHashtable(
-					annotationFactory,
-					field,
-					label,
-					targetHashtable,
-					sourceHashtable,
-					level))
-			{
+			if (!equalsHashtable(annotationFactory, field, label,
+					targetHashtable, sourceHashtable, level)) {
 				log.trace("'{}' (LEVEL={}) Lists are different: return FALSE",
-						new Object[]
-					{ label, level });
+						new Object[] { label, level });
 				return true;
 			}
 
 		} else {
 
 			/* dodano nowa liste */
-			if (targetHashtable != null
-					|| sourceHashtable != null)
-			{
+			if (targetHashtable != null || sourceHashtable != null) {
 				log.trace("'{}' (LEVEL={}) New list was added: return FALSE",
-						new Object[]
-					{ label, level });
+						new Object[] { label, level });
 				return true;
 			}
 
 			/* zmieniono warosc pola na NULL */
 			if ((sourceValue == null && targetValue != null)
-					|| (sourceValue != null && targetValue == null))
-			{
+					|| (sourceValue != null && targetValue == null)) {
 				log.trace("'{}' (LEVEL={}) Value of field was changed "
-						+ "(before/after is NULL): return FALSE",
-						new Object[]
-					{ label, level });
+						+ "(before/after is NULL): return FALSE", new Object[] {
+						label, level });
 				return true;
 			}
 
-			if (!componentTypeIsPrimitive && (sourceValue != null && targetValue != null)) {
+			if (!componentTypeIsPrimitive
+					&& (sourceValue != null && targetValue != null)) {
 
 				/* porownuje stringi */
 				if (sourceValue.getClass().equals(String.class)) {
 					String scompareValue = (String) sourceValue;
 					if (!Strings.isInUTF8(scompareValue)) {
-						log.trace("'{}': String is not in UTF-8 ", new Object[]
-							{ scompareValue });
-						scompareValue = new String((scompareValue).getBytes("UTF-8"));
+						log.trace("'{}': String is not in UTF-8 ",
+								new Object[] { scompareValue });
+						scompareValue = new String(
+								(scompareValue).getBytes("UTF-8"));
 					}
 
 					String tcompareValue = (String) targetValue;
 					if (!Strings.isInUTF8(tcompareValue)) {
-						log.trace("'{}': String is not in UTF-8 ", new Object[]
-							{ tcompareValue });
-						tcompareValue = new String((tcompareValue).getBytes("UTF-8"));
+						log.trace("'{}': String is not in UTF-8 ",
+								new Object[] { tcompareValue });
+						tcompareValue = new String(
+								(tcompareValue).getBytes("UTF-8"));
 					}
 
 					if (!scompareValue.equals(tcompareValue)) {
-						log.trace("'{}' (LEVEL={}) Strings are different: {}, {}, return FALSE",
-								new Object[]
-							{ label, level, scompareValue, tcompareValue });
+						log.trace(
+								"'{}' (LEVEL={}) Strings are different: {}, {}, return FALSE",
+								new Object[] { label, level, scompareValue,
+										tcompareValue });
 						return true;
 					}
 				} else if (level <= Duplicator.REQURENCY_LEVEL
-						&& !sourceValue.getClass().getCanonicalName().startsWith("java."))
-				{
-					if (!assertEquals(annotationFactory, targetValue, sourceValue, level)) {
-						log.trace("'{}' (LEVEL={}) Custom equals - objects are different: return FALSE",
-								new Object[]
-							{ label, level });
+						&& !sourceValue.getClass().getCanonicalName()
+								.startsWith("java.")) {
+					if (!assertEquals(annotationFactory, targetValue,
+							sourceValue, level)) {
+						log.trace(
+								"'{}' (LEVEL={}) Custom equals - objects are different: return FALSE",
+								new Object[] { label, level });
 						return true;
 					}
 				} else if (!sourceValue.equals(targetValue)) {
-					if ((sourceValue instanceof java.util.Date
-							&& targetValue instanceof java.util.Date)
-							|| (sourceValue instanceof java.util.Calendar
-							&& targetValue instanceof java.util.Calendar))
-					{
+					if ((sourceValue instanceof java.util.Date && targetValue instanceof java.util.Date)
+							|| (sourceValue instanceof java.util.Calendar && targetValue instanceof java.util.Calendar)) {
 						/*
-						 * jezeli to daty, to sprawdzam czy czasy sa sobie rowne, bo
-						 * obiekty moga byc rozne ze wzgledu np. na strefe czasowa
+						 * jezeli to daty, to sprawdzam czy czasy sa sobie
+						 * rowne, bo obiekty moga byc rozne ze wzgledu np. na
+						 * strefe czasowa
 						 */
 						Object sConvertedValue = sourceValue;
 						Object tConvertedValue = targetValue;
 						if (sourceValue instanceof java.util.Date
-								&& targetValue instanceof java.util.Date)
-						{
+								&& targetValue instanceof java.util.Date) {
 							sConvertedValue = Calendar.getInstance();
 							tConvertedValue = Calendar.getInstance();
-							((Calendar) sConvertedValue).setTime((java.util.Date) sourceValue);
-							((Calendar) tConvertedValue).setTime((java.util.Date) targetValue);
+							((Calendar) sConvertedValue)
+									.setTime((java.util.Date) sourceValue);
+							((Calendar) tConvertedValue)
+									.setTime((java.util.Date) targetValue);
 						}
 						if (((Calendar) sConvertedValue).getTimeInMillis() != ((Calendar) tConvertedValue)
-								.getTimeInMillis())
-						{
-							log.trace("'{}' (LEVEL={}) Date equals - dates are different: return FALSE",
-									new Object[]
-								{ label, level });
+								.getTimeInMillis()) {
+							log.trace(
+									"'{}' (LEVEL={}) Date equals - dates are different: return FALSE",
+									new Object[] { label, level });
 							return true;
 						}
 					} else {
 						log.trace(
 								"'{}' (LEVEL={}) Standard equals - objects are different: return FALSE",
-								new Object[]
-							{ label, level });
+								new Object[] { label, level });
 						return true;
 					}
 				}
 			} else if (componentTypeIsPrimitive
 					&& (sourceValue != null && targetValue != null)
-					&& componentType != null)
-			{
+					&& componentType != null) {
 
 				String component = "" + componentType;
-				Hashtable<Object, Object> sArrayHashtable =
-						PrimitiveType.get(component).primitiveArray2Hashtable(sourceValue);
-				Hashtable<Object, Object> tArrayHashtable =
-						PrimitiveType.get(component).primitiveArray2Hashtable(targetValue);
+				Map<Object, Object> sArrayHashtable = PrimitiveType.get(
+						component).primitiveArray2Hashtable(sourceValue);
+				Map<Object, Object> tArrayHashtable = PrimitiveType.get(
+						component).primitiveArray2Hashtable(targetValue);
 
-				if (!equalsHashtable(
-						annotationFactory,
-						field,
-						label,
-						tArrayHashtable,
-						sArrayHashtable,
-						level))
-				{
-					log.trace("'{}' (LEVEL={}) Arrays are different: return FALSE",
-							new Object[]
-						{ label, level });
+				if (!equalsHashtable(annotationFactory, field, label,
+						tArrayHashtable, sArrayHashtable, level)) {
+					log.trace(
+							"'{}' (LEVEL={}) Arrays are different: return FALSE",
+							new Object[] { label, level });
 					return true;
 				}
 			}
@@ -1028,21 +972,22 @@ public class Duplicator {
 	}
 
 	/**
-	 * Metoda pomocnicza zwracajaca wartosc pola charakteryzujaca unikalny obiekt
-	 * znajdujacy sie na liscie
+	 * Metoda pomocnicza zwracajaca wartosc pola charakteryzujaca unikalny
+	 * obiekt znajdujacy sie na liscie
 	 * 
 	 * @see javax.persistence.Id
 	 * 
 	 * @param obj
-	 *           analizowany obiekt
+	 *            analizowany obiekt
 	 * @param idFieldName
-	 *           nazwa pola z identyfikatorem, jezeli jest null, wtedy metoda
-	 *           sprobuje znalez pole z annotacja javax.persistence.Id
+	 *            nazwa pola z identyfikatorem, jezeli jest null, wtedy metoda
+	 *            sprobuje znalez pole z annotacja javax.persistence.Id
 	 * @return wartosc pola o podanej nazwie albo (jezeli nazwa pola nie zostala
 	 *         podana) pola oznaczonego annotacja Id.class
 	 * @throws Exception
 	 */
-	private static Object getIdValue(Object obj, String referencedFieldName) throws Exception {
+	private static Object getIdValue(Object obj, String referencedFieldName)
+			throws Exception {
 
 		if (referencedFieldName != null) {
 			String methodName = "get"
@@ -1068,18 +1013,16 @@ public class Duplicator {
 	 * porownywania list.
 	 * 
 	 * @param list
-	 *           lista do porownania
+	 *            lista do porownania
 	 * @param idFieldName
-	 *           nazwa pola z identyfikatorem, jezeli jest null, wtedy metoda
-	 *           sprobuje znalez pole z annotacja javax.persistence.Id
+	 *            nazwa pola z identyfikatorem, jezeli jest null, wtedy metoda
+	 *            sprobuje znalez pole z annotacja javax.persistence.Id
 	 * @return przetworzona lista do porownania jako hashtable
 	 * @throws Exception
 	 */
-	static Hashtable<Object, Object> list2Hashtable(
-			List<Object> list,
-			String referencedFieldName)
-			throws Exception {
-		Hashtable<Object, Object> result = new Hashtable<Object, Object>();
+	static Map<Object, Object> list2Hashtable(List<Object> list,
+			String referencedFieldName) throws Exception {
+		Map<Object, Object> result = new Hashtable<Object, Object>();
 		Integer indx = Integer.valueOf(0);
 
 		for (Object obj : list) {
@@ -1104,9 +1047,8 @@ public class Duplicator {
 	 * @return
 	 * @throws Exception
 	 */
-	static Hashtable<Object, Object> array2Hashtable(Object[] array)
-			throws Exception {
-		Hashtable<Object, Object> result = new Hashtable<Object, Object>();
+	static Map<Object, Object> array2Hashtable(Object[] array) throws Exception {
+		Map<Object, Object> result = new Hashtable<Object, Object>();
 		Integer indx = Integer.valueOf(0);
 		for (Object obj : array) {
 			Object key = indx;
@@ -1125,14 +1067,13 @@ public class Duplicator {
 	 * @param hashtable
 	 * @return
 	 */
-	static Hashtable<Object, Object> hashtable2TmpCopy(
-			Hashtable<Object, Object> hashtable) {
-		Hashtable<Object, Object> result = new Hashtable<Object, Object>();
-		Enumeration<Object> hashtableKeys = hashtable.keys();
-		while (hashtableKeys.hasMoreElements()) {
-			Object key = hashtableKeys.nextElement();
+	static Map<Object, Object> hashtable2TmpCopy(Map<Object, Object> hashtable) {
+		Map<Object, Object> result = new Hashtable<Object, Object>();
+		Set<Entry<Object, Object>> hashtableEntrySet = hashtable.entrySet();
+		for (Entry<Object, Object> hashtableEntry : hashtableEntrySet) {
+			Object key = hashtableEntry.getKey();
 			log.trace("--> hashtable2TmpCopy: {}", key);
-			result.put(key, hashtable.get(key));
+			result.put(key, hashtableEntry.getValue());
 		}
 		return result;
 	}
@@ -1141,65 +1082,53 @@ public class Duplicator {
 	 * Porownanie obiektow znajdujacych sie w dwich hashtable
 	 * 
 	 * @param annotationFactory
-	 *           bean zarzadzajacy argumentami sledzonej annotacji
+	 *            bean zarzadzajacy argumentami sledzonej annotacji
 	 * @param field
-	 *           pole, ktorego wartosci sa porownywane
+	 *            pole, ktorego wartosci sa porownywane
 	 * @param label
-	 *           etykieta porownania
+	 *            etykieta porownania
 	 * @param target
-	 *           nowa wartosc, tablica musi byc tymczasowa, bo jej elementy sa
-	 *           usuwane i nie nadaje sie do ponownego uzytku
+	 *            nowa wartosc, tablica musi byc tymczasowa, bo jej elementy sa
+	 *            usuwane i nie nadaje sie do ponownego uzytku
 	 * @param source
-	 *           stara wartosc, tablica musi byc tymczasowa, bo jej elementy sa
-	 *           usuwane i nie nadaje sie do ponownego uzytku
+	 *            stara wartosc, tablica musi byc tymczasowa, bo jej elementy sa
+	 *            usuwane i nie nadaje sie do ponownego uzytku
 	 * @param level
-	 *           poziom zagniezdzenia podczas porownywania
+	 *            poziom zagniezdzenia podczas porownywania
 	 * @return wynik porownania [true|false]
 	 * @throws Exception
 	 */
-	private static boolean equalsHashtable(
-			AnnotationFactory annotationFactory,
-			Field field,
-			String label,
-			Hashtable<Object, Object> target,
-			Hashtable<Object, Object> source,
-			int level) throws Exception {
+	private static boolean equalsHashtable(AnnotationFactory annotationFactory,
+			Field field, String label, Map<Object, Object> target,
+			Map<Object, Object> source, int level) throws Exception {
 
-		log.debug("--> target.size(): {}; source.size(): {}", new Object[]
-			{ target.size(), source.size() });
+		log.debug("--> target.size(): {}; source.size(): {}", new Object[] {
+				target.size(), source.size() });
 		if (target.size() != source.size())
 			return false;
 
-		Enumeration<Object> sourceKeys = source.keys();
-		Hashtable<Object, Object> testTarget = new Hashtable<Object, Object>();
+		Map<Object, Object> testTarget = new Hashtable<Object, Object>();
 		testTarget.putAll(target);
 
-		while (sourceKeys.hasMoreElements()) {
-			Object key = sourceKeys.nextElement();
+		Set<Entry<Object, Object>> sourceEntrySet = source.entrySet();
+		for (Entry<Object, Object> sourceEntry : sourceEntrySet) {
+			Object key = sourceEntry.getKey();
 			log.trace("--> equalHashtable: {}", key);
-			Object sourceValue = source.get(key);
+			Object sourceValue = sourceEntry.getValue();
 			Object targetValue = testTarget.get(key);
 			if (targetValue == null) {
 				return false;
 			}
 
-			if (isDifferent(
-					annotationFactory,
-					level,
-					field,
-					targetValue,
-					sourceValue,
-					label + "[" + key + "]",
-					null,
-					null,
-					false,
+			if (isDifferent(annotationFactory, level, field, targetValue,
+					sourceValue, label + "[" + key + "]", null, null, false,
 					null))
 				return false;
 
 			testTarget.remove(key);
 		}
-		log.debug("--> testTarget.isEmpty(): {}; testTarget.size: {}", new Object[]
-			{ testTarget.isEmpty(), testTarget.size() });
+		log.debug("--> testTarget.isEmpty(): {}; testTarget.size: {}",
+				new Object[] { testTarget.isEmpty(), testTarget.size() });
 		return testTarget.isEmpty();
 	}
 
@@ -1207,47 +1136,41 @@ public class Duplicator {
 	 * Metoda wyciagajaca zmiany obiektow umieszczonych w listach.
 	 * 
 	 * @param label
-	 *           etykieta zmian
+	 *            etykieta zmian
 	 * @param target
-	 *           nowa wartosc
+	 *            nowa wartosc
 	 * @param source
-	 *           stara wartosc
+	 *            stara wartosc
 	 * @param field
-	 *           pole listy
+	 *            pole listy
 	 * @param labelList
-	 *           dynamiczne etykiety zmian
+	 *            dynamiczne etykiety zmian
 	 * @param level
-	 *           poziom zagniezdzenia podczas porownywania
+	 *            poziom zagniezdzenia podczas porownywania
 	 * @return lista znalezionych zmian pomiedzy obiektami umieszczonymi w
 	 *         listach
 	 * @throws Exception
 	 */
 	private static List<ObjectsDifference> diffHashtable(
-			AnnotationFactory annotationFactory,
-			String label,
-			Hashtable<Object, Object> target,
-			Hashtable<Object, Object> source,
-			Field field,
-			Hashtable<String, String> labelList,
-			int level)
+			AnnotationFactory annotationFactory, String label,
+			Map<Object, Object> target, Map<Object, Object> source,
+			Field field, Map<String, String> labelList, int level)
 			throws Exception {
 		List<ObjectsDifference> result = new ArrayList<ObjectsDifference>();
-		Enumeration<Object> sourceKeys = source.keys();
-		while (sourceKeys.hasMoreElements()) {
-			Object key = sourceKeys.nextElement();
-			Object sourceValue = source.get(key);
+		Set<Entry<Object, Object>> sourceEntrySet = source.entrySet();
+		for (Entry<Object, Object> sourceEntry : sourceEntrySet) {
+			Object key = sourceEntry.getKey();
+			Object sourceValue = sourceEntry.getValue();
 			Object targetValue = target.get(key);
 			if (log.isTraceEnabled()) {
 				if (sourceValue.getClass().toString().contains("java.lang"))
-					log
-							.trace(
-									"\n[Source's hastable] --> diffHashtable (LEVEL={}):\n key: {}:\n source: {}\n target: {}",
-									new Object[]
-										{ level, key, sourceValue, targetValue });
+					log.trace(
+							"\n[Source's hastable] --> diffHashtable (LEVEL={}):\n key: {}:\n source: {}\n target: {}",
+							new Object[] { level, key, sourceValue, targetValue });
 				else
-					log.trace("\n[Source's hastable] --> diffHashtable (LEVEL={}): {}",
-							new Object[]
-						{ level, key });
+					log.trace(
+							"\n[Source's hastable] --> diffHashtable (LEVEL={}): {}",
+							new Object[] { level, key });
 			}
 			boolean targetWasNull = false;
 			if (targetValue == null) {
@@ -1257,26 +1180,16 @@ public class Duplicator {
 
 			if (sourceValue.getClass().toString().contains("java.lang")) {
 				if (!sourceValue.equals(targetValue)) {
-					result
-							.add(new ObjectsDifference(
-							label + "[" + key.toString() + "]",
-							targetValue,
-							sourceValue,
-							field
-							.getType()));
-					log.trace("Diff: {}, {}, {}, {}",
-							new Object[]
-						{ label, targetValue, sourceValue, field.getType().getSimpleName() });
+					result.add(new ObjectsDifference(label + "["
+							+ key.toString() + "]", targetValue, sourceValue,
+							field.getType()));
+					log.trace("Diff: {}, {}, {}, {}", new Object[] { label,
+							targetValue, sourceValue,
+							field.getType().getSimpleName() });
 				}
 			} else {
-				result.addAll(
-						diff(
-						annotationFactory,
-						targetValue,
-						sourceValue,
-						labelList,
-						label + "[" + key.toString() + "]",
-						level));
+				result.addAll(diff(annotationFactory, targetValue, sourceValue,
+						labelList, label + "[" + key.toString() + "]", level));
 			}
 
 			if (!targetWasNull) {
@@ -1284,43 +1197,30 @@ public class Duplicator {
 			}
 			source.remove(key);
 		}
-		Enumeration<Object> targetKeys = target.keys();
-		while (targetKeys.hasMoreElements()) {
-			Object key = targetKeys.nextElement();
-			Object targetValue = target.get(key);
+		Set<Entry<Object, Object>> targetEntrySet = target.entrySet();
+		for (Entry<Object, Object> targetEntry : targetEntrySet) {
+			Object key = targetEntry.getKey();
+			Object targetValue = targetEntry.getValue();
 			Object sourceValue = targetValue.getClass().newInstance();
 			if (log.isTraceEnabled()) {
 				if (sourceValue.getClass().toString().contains("java.lang"))
-					log
-							.trace(
-									"\n[Target's hashtable] --> diffHashtable (LEVEL={}): \n key: {}:\n source: {}\n target: {}",
-									new Object[]
-										{ level, key, "null", targetValue });
+					log.trace(
+							"\n[Target's hashtable] --> diffHashtable (LEVEL={}): \n key: {}:\n source: {}\n target: {}",
+							new Object[] { level, key, "null", targetValue });
 				else
-					log.trace("\n[Target's hashtable] --> diffHashtable (LEVEL={}): {}",
-							new Object[]
-						{ level, key });
+					log.trace(
+							"\n[Target's hashtable] --> diffHashtable (LEVEL={}): {}",
+							new Object[] { level, key });
 			}
 			if (sourceValue.getClass().toString().contains("java.lang")) {
-				result
-						.add(new ObjectsDifference(
-						label + "[" + key.toString() + "]",
-						targetValue,
-						sourceValue,
-						field
-						.getType()));
-				log.trace("Diff: {}, {}, {}, {}",
-						new Object[]
-					{ label, targetValue, sourceValue, field.getType().getSimpleName() });
+				result.add(new ObjectsDifference(label + "[" + key.toString()
+						+ "]", targetValue, sourceValue, field.getType()));
+				log.trace("Diff: {}, {}, {}, {}", new Object[] { label,
+						targetValue, sourceValue,
+						field.getType().getSimpleName() });
 			} else {
-				result.addAll(
-						diff(
-						annotationFactory,
-						targetValue,
-						sourceValue,
-						labelList,
-						label + "[" + key.toString() + "]",
-						level));
+				result.addAll(diff(annotationFactory, targetValue, sourceValue,
+						labelList, label + "[" + key.toString() + "]", level));
 			}
 		}
 
@@ -1333,7 +1233,7 @@ public class Duplicator {
 	 * ktora jest bezposrednio zwiazana z badanym obiektem.
 	 * 
 	 * @param obj
-	 *           badany obiekt
+	 *            badany obiekt
 	 * @return lista pol badanego obiektu
 	 */
 	public static Field[] getFields(Object obj) {
@@ -1342,17 +1242,13 @@ public class Duplicator {
 		Class<?> superclass = obj.getClass().getSuperclass();
 		if (superclass != null
 				&& !superclass.getCanonicalName().startsWith("java")
-				&& !superclass.getCanonicalName().startsWith("com.sun"))
-		{
+				&& !superclass.getCanonicalName().startsWith("com.sun")) {
 
 			Field[] superfields = superclass.getDeclaredFields();
 			if (superfields.length != 0) {
 				log.debug("superclass = {}, declaredFields is {}",
-						new Object[]
-					{ superclass.getCanonicalName(),
-							superfields.length
-						}
-						);
+						new Object[] { superclass.getCanonicalName(),
+								superfields.length });
 				int superfieldsSize = superfields.length;
 				int localfieldsSize = localfields.length;
 				fields = new Field[superfieldsSize + localfieldsSize];
@@ -1380,7 +1276,8 @@ public class Duplicator {
 	 * @return the dateLongFormat
 	 */
 	static String getDateLongFormat() {
-		return (customDateLongFormat != null ? customDateLongFormat : dateLongFormat);
+		return (customDateLongFormat != null ? customDateLongFormat
+				: dateLongFormat);
 	}
 
 	/**
@@ -1400,7 +1297,7 @@ public class Duplicator {
 	 * @see java.text.SimpleDateFormat
 	 * 
 	 * @param dateLongFormat
-	 *           the dateLongFormat to set
+	 *            the dateLongFormat to set
 	 */
 	static void setDateLongFormat(String dateLongFormat) {
 		customDateLongFormat = dateLongFormat;
@@ -1412,7 +1309,8 @@ public class Duplicator {
 	 * @return the dateShortFormat
 	 */
 	static String getDateShortFormat() {
-		return (customDateShortFormat != null ? customDateShortFormat : dateShortFormat);
+		return (customDateShortFormat != null ? customDateShortFormat
+				: dateShortFormat);
 	}
 
 	/**
@@ -1421,39 +1319,42 @@ public class Duplicator {
 	 * @see java.text.SimpleDateFormat
 	 * 
 	 * @param dateShortFormat
-	 *           the dateShortFormat to set
+	 *            the dateShortFormat to set
 	 */
 	static void setDateShortFormat(String dateShortFormat) {
 		Duplicator.customDateShortFormat = dateShortFormat;
 	}
 
 	/**
-	 * Metoda probujaca konwertowac dany typ do string-a. Implementacja obejmuje:
+	 * Metoda probujaca konwertowac dany typ do string-a. Implementacja
+	 * obejmuje:
 	 * <ul>
 	 * <li>rozpoznanie i konwersja {@link java.util.Date}
 	 * <li>rozpoznanie i konwersja {@link java.util.Calendar}
 	 * </ul>
 	 * 
 	 * @param originalValue
-	 *           obiekt wartosci do analizy
+	 *            obiekt wartosci do analizy
 	 * @return obiekt skonwertowany lub nie (w zaleznosci od tego czy obiekt
 	 *         oryginalny byl faktycznie data) przekształcony do string-a
 	 */
 	static String tryConvertToString(Object originalValue) {
-		if (originalValue instanceof java.util.Date || originalValue instanceof java.util.Calendar) {
-			return (String) tryConvertCalendarToString(originalValue, originalValue);
+		if (originalValue instanceof java.util.Date
+				|| originalValue instanceof java.util.Calendar) {
+			return (String) tryConvertCalendarToString(originalValue,
+					originalValue);
 		}
 		return originalValue.toString();
 	}
 
 	/**
 	 * @param timeZone
-	 *           the timeZone to set
+	 *            the timeZone to set
 	 */
 	static void setTimeZone(TimeZone timeZone) {
 		customTimeZone = timeZone;
 	}
-	
+
 	/**
 	 * @return the timeZone
 	 */

@@ -16,14 +16,14 @@
  */
 package pl.slawas.helper.info;
 
-import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.Set;
 
 import pl.slawas.helpers.Configurations;
 import pl.slawas.twl4j.Logger;
 import pl.slawas.twl4j.LoggerFactory;
-
 
 /**
  * 
@@ -42,7 +42,7 @@ public class LibraryConfig {
 
 	public static final String FILE_DIRECTORY = "";
 
-	private static Hashtable<String, String> _Properties = null;
+	private static Map<String, String> _Properties = null;
 
 	private static Object lock = new Object();
 
@@ -110,10 +110,10 @@ public class LibraryConfig {
 
 		synchronized (lock) {
 			this.propertyList = new Properties();
-			Enumeration<String> props = _Properties.keys();
-			while (props.hasMoreElements()) {
-				String key = props.nextElement();
-				String value = _Properties.get(key);
+			Set<Entry<String, String>> propEntrySet = _Properties.entrySet();
+			for (Entry<String, String> propEntry : propEntrySet) {
+				String key = propEntry.getKey();
+				String value = propEntry.getValue();
 				this.propertyList.put(key, value);
 			}
 

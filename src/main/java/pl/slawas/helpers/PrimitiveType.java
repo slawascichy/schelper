@@ -18,6 +18,7 @@ package pl.slawas.helpers;
 
 import java.util.Arrays;
 import java.util.Hashtable;
+import java.util.Map;
 
 /**
  * 
@@ -66,9 +67,9 @@ public enum PrimitiveType {
 	 * @param array
 	 * @return tablica z zamienionymi typami prymitywnymi do obiektow
 	 */
-	public Hashtable<Object, Object> primitiveArray2Hashtable(Object array) {
+	public Map<Object, Object> primitiveArray2Hashtable(Object array) {
 
-		Hashtable<Object, Object> hashtable = new Hashtable<Object, Object>();
+		Map<Object, Object> hashtable = new Hashtable<Object, Object>();
 		switch (this) {
 		case INT:
 			for (int indx = 0; indx < ((int[]) array).length; indx++) {

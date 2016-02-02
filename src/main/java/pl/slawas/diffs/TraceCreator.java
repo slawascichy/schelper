@@ -17,8 +17,8 @@
 package pl.slawas.diffs;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 
 import pl.slawas.twl4j.Logger;
@@ -32,16 +32,18 @@ import pl.slawas.twl4j.LoggerFactory;
  * 
  * <pre>
  * Example: {
- * 	//...
- * 	// budowanie historii z uzyciem dynamicznych etykiet zmian 
- * 	TracerParentMock copyNewObject = (TracerParentMock) Tracer.copy(testedObject4Track);
+ * 	// ...
+ * 	// budowanie historii z uzyciem dynamicznych etykiet zmian
+ * 	TracerParentMock copyNewObject = (TracerParentMock) Tracer
+ * 			.copy(testedObject4Track);
  * 	getEntityManager().refresh(testedObject4Track);
  * 
- * 	//przygotowanie dynamicznej listy etykiet
+ * 	// przygotowanie dynamicznej listy etykiet
  * 	Hashtable&lt;String, String&gt; labelList = new Hashtable&lt;String, String&gt;();
  * 	labelList.put(&quot;id&quot;, &quot;Identyfikator szefa&quot;);
  * 	labelList.put(&quot;childId&quot;, &quot;Identyfikator pracownika&quot;);
- * 	List&lt;TraceDifference&gt; diffList = Tracer.diff(copyNewObject, testedObject4Track, labelList);
+ * 	List&lt;TraceDifference&gt; diffList = Tracer.diff(copyNewObject,
+ * 			testedObject4Track, labelList);
  * 
  * 	// teraz mozna zapisac zmiany w historii
  * 	List&lt;History&gt; historyList = new ArrayList&lt;History&gt;();
@@ -57,9 +59,9 @@ import pl.slawas.twl4j.LoggerFactory;
  * 	((AresDictionaryDAO) historyDAO).insertList(newHistRow);
  * 	getEntityManager().getTransaction().commit();
  * 
- * 	//teraz przywracamy obiekt do nowej wartosci
+ * 	// teraz przywracamy obiekt do nowej wartosci
  * 	Tracer.copy(testedObject4Track, copyOkClass);
- * 	//...
+ * 	// ...
  * }
  * </pre>
  * 
@@ -73,20 +75,21 @@ import pl.slawas.twl4j.LoggerFactory;
  */
 public class TraceCreator {
 
-	final protected static Logger log = LoggerFactory.getLogger(TraceCreator.class);
+	final protected static Logger log = LoggerFactory
+			.getLogger(TraceCreator.class);
 
 	/**
-	 * Kopiowanie obiektu do nowej instancji, klonowanie obiektu. Powstaly obiekt
-	 * ma skopiowane tylko te pola, dla ktorych ustwiona zostala annotacja
-	 * {@link Trace}. Metoda nie nadaje sie do kopiowania (klonowania) calych
-	 * obiektow, chyba ze wszystkie pola zostana oznaczone wczesniej wymieniona
-	 * annotacja.
+	 * Kopiowanie obiektu do nowej instancji, klonowanie obiektu. Powstaly
+	 * obiekt ma skopiowane tylko te pola, dla ktorych ustwiona zostala
+	 * annotacja {@link Trace}. Metoda nie nadaje sie do kopiowania (klonowania)
+	 * calych obiektow, chyba ze wszystkie pola zostana oznaczone wczesniej
+	 * wymieniona annotacja.
 	 * 
 	 * @see pl.slawas.diffs.Trace
 	 * @see pl.slawas.diffs.Duplicator#copy(Class, Object)
 	 * 
 	 * @param source
-	 *           obiekt do skopiowania (sklonowania)
+	 *            obiekt do skopiowania (sklonowania)
 	 * @return kopia obiektu
 	 * @throws InstantiationException
 	 * @throws IllegalAccessException
@@ -95,13 +98,9 @@ public class TraceCreator {
 	 * @throws InvocationTargetException
 	 * @throws NoSuchMethodException
 	 */
-	public static Object copy(Object source)
-			throws InstantiationException,
-			IllegalAccessException,
-			IllegalArgumentException,
-			SecurityException,
-			InvocationTargetException,
-			NoSuchMethodException {
+	public static Object copy(Object source) throws InstantiationException,
+			IllegalAccessException, IllegalArgumentException,
+			SecurityException, InvocationTargetException, NoSuchMethodException {
 
 		return Duplicator.copy(Trace.class, source);
 	}
@@ -117,9 +116,9 @@ public class TraceCreator {
 	 * @see Duplicator#copy(Class, Object, Object, int)
 	 * 
 	 * @param target
-	 *           obiekt, do ktorego sa kopiowane wartosci
+	 *            obiekt, do ktorego sa kopiowane wartosci
 	 * @param source
-	 *           obiekt, z ktorego sa kopiowane wartosci
+	 *            obiekt, z ktorego sa kopiowane wartosci
 	 * @return obiekt, do ktorego sa kopiowane wartosci
 	 * @throws InstantiationException
 	 * @throws IllegalAccessException
@@ -129,23 +128,20 @@ public class TraceCreator {
 	 * @throws NoSuchMethodException
 	 */
 	public static Object copy(Object target, Object source)
-			throws InstantiationException,
-			IllegalAccessException,
-			IllegalArgumentException,
-			SecurityException,
-			InvocationTargetException,
-			NoSuchMethodException {
+			throws InstantiationException, IllegalAccessException,
+			IllegalArgumentException, SecurityException,
+			InvocationTargetException, NoSuchMethodException {
 		return Duplicator.copy(Trace.class, target, source);
 	}
 
 	/**
-	 * Metoda do wykonania porownania dwoch obiektow i wygenerowania listy zmian.
-	 * Metoda porownuje tylko wartosci pol, ktore dla ktorych ustwiona zostala
-	 * annotacja {@link Trace}. Metoda nie nadaje sie do porownywania zawartosci
-	 * calych obiektow, chyba ze wszystkie pola zostana oznaczone wczesniej
-	 * wymieniona annotacja. Jezeli w obiektach wystepuja listy, to aby moc
-	 * bezblednie je porownac nalezy pamietac o tym, ze w obiektach, ktore beda
-	 * umieszczone w takiej liscie trzeba dodac annotacje
+	 * Metoda do wykonania porownania dwoch obiektow i wygenerowania listy
+	 * zmian. Metoda porownuje tylko wartosci pol, ktore dla ktorych ustwiona
+	 * zostala annotacja {@link Trace}. Metoda nie nadaje sie do porownywania
+	 * zawartosci calych obiektow, chyba ze wszystkie pola zostana oznaczone
+	 * wczesniej wymieniona annotacja. Jezeli w obiektach wystepuja listy, to
+	 * aby moc bezblednie je porownac nalezy pamietac o tym, ze w obiektach,
+	 * ktore beda umieszczone w takiej liscie trzeba dodac annotacje
 	 * {@link javax.persistence.Id} przy polu definiujacym unikalny klucz lub
 	 * przy annotacji podac atrybut 'referencedFieldName', ktore wskażą pole
 	 * jednoznacznie identyfikujace dany obiekt. Jezeli tego nie zrobimy moga
@@ -156,9 +152,9 @@ public class TraceCreator {
 	 * @see pl.slawas.diffs.ObjectsDifference
 	 * 
 	 * @param target
-	 *           nowa wartosc
+	 *            nowa wartosc
 	 * @param source
-	 *           stara wartosc
+	 *            stara wartosc
 	 * @return lista zarejestrowanych zmian
 	 * @throws Exception
 	 */
@@ -168,13 +164,13 @@ public class TraceCreator {
 	}
 
 	/**
-	 * Metoda do wykonania porownania dwoch obiektow i wygenerowania listy zmian.
-	 * Metoda porownuje tylko wartosci pol, ktore dla ktorych ustwiona zostala
-	 * annotacja {@link Trace}. Metoda nie nadaje sie do porownywania zawartosci
-	 * calych obiektow, chyba ze wszystkie pola zostana oznaczone wczesniej
-	 * wymieniona annotacja. Jezeli w obiektach wystepuja listy, to aby moc
-	 * bezblednie je porownac nalezy pamietac o tym, ze w obiektach, ktore beda
-	 * umieszczone w takiej liscie trzeba dodac annotacje
+	 * Metoda do wykonania porownania dwoch obiektow i wygenerowania listy
+	 * zmian. Metoda porownuje tylko wartosci pol, ktore dla ktorych ustwiona
+	 * zostala annotacja {@link Trace}. Metoda nie nadaje sie do porownywania
+	 * zawartosci calych obiektow, chyba ze wszystkie pola zostana oznaczone
+	 * wczesniej wymieniona annotacja. Jezeli w obiektach wystepuja listy, to
+	 * aby moc bezblednie je porownac nalezy pamietac o tym, ze w obiektach,
+	 * ktore beda umieszczone w takiej liscie trzeba dodac annotacje
 	 * {@link javax.persistence.Id} przy polu definiujacym unikalny klucz lub
 	 * przy annotacji podac atrybut 'referencedFieldName', ktore wskażą pole
 	 * jednoznacznie identyfikujace dany obiekt. Jezeli tego nie zrobimy moga
@@ -185,35 +181,34 @@ public class TraceCreator {
 	 * @see pl.slawas.diffs.ObjectsDifference
 	 * 
 	 * @param target
-	 *           nowa wartosc
+	 *            nowa wartosc
 	 * @param source
-	 *           stara wartosc
+	 *            stara wartosc
 	 * @param labelList
-	 *           hashtable z etykietami zmian pol
+	 *            hashtable z etykietami zmian pol
 	 * @return lista zarejestrowanych zmian
 	 * @throws Exception
 	 */
-	public static List<ObjectsDifference> diff(
-			Object target,
-			Object source,
-			Hashtable<String, String> labelList)
-			throws Exception {
-		return Duplicator.diff(new TraceAnnotationFactory(), target, source, labelList);
+	public static List<ObjectsDifference> diff(Object target, Object source,
+			Map<String, String> labelList) throws Exception {
+		return Duplicator.diff(new TraceAnnotationFactory(), target, source,
+				labelList);
 	}
 
 	/**
 	 * Porównanie dwóch obiektów. Metoda porownuje tylko wartosci pol, ktore dla
-	 * ktorych ustwiona zostala annotacja {@link Trace}. Metoda nie nadaje sie do
-	 * porownywania zawartosci calych obiektow, chyba ze wszystkie pola zostana
-	 * oznaczone wczesniej wymieniona annotacja. Dodatkowo, ze jej pomoca mozna
-	 * wstrzyknac dynamiczna liste etykiet. Aby to zadzialalo, oczywiscie trzeba
-	 * podac odpowiednie parametry annotacji Track. Jezeli w obiektach wystepuja
-	 * listy, to aby moc bezblednie je porownac nalezy pamietac o tym, ze w
-	 * obiektach, ktore beda umieszczone w takiej liscie trzeba dodac annotacje
-	 * {@link javax.persistence.Id} przy polu definiujacym unikalny klucz lub
-	 * przy annotacji podac atrybut 'referencedFieldName', ktore wskażą pole
-	 * jednoznacznie identyfikujace dany obiekt. Jezeli tego nie zrobimy moga
-	 * zostać zwrócone nieoczekiwane wyniki.
+	 * ktorych ustwiona zostala annotacja {@link Trace}. Metoda nie nadaje sie
+	 * do porownywania zawartosci calych obiektow, chyba ze wszystkie pola
+	 * zostana oznaczone wczesniej wymieniona annotacja. Dodatkowo, ze jej
+	 * pomoca mozna wstrzyknac dynamiczna liste etykiet. Aby to zadzialalo,
+	 * oczywiscie trzeba podac odpowiednie parametry annotacji Track. Jezeli w
+	 * obiektach wystepuja listy, to aby moc bezblednie je porownac nalezy
+	 * pamietac o tym, ze w obiektach, ktore beda umieszczone w takiej liscie
+	 * trzeba dodac annotacje {@link javax.persistence.Id} przy polu
+	 * definiujacym unikalny klucz lub przy annotacji podac atrybut
+	 * 'referencedFieldName', ktore wskażą pole jednoznacznie identyfikujace
+	 * dany obiekt. Jezeli tego nie zrobimy moga zostać zwrócone nieoczekiwane
+	 * wyniki.
 	 * 
 	 * @see javax.persistence.Id
 	 * @see pl.slawas.diffs.Trace
@@ -221,15 +216,16 @@ public class TraceCreator {
 	 * 
 	 * 
 	 * @param target
-	 *           nowa wartosc
+	 *            nowa wartosc
 	 * @param source
-	 *           stara wartosc
+	 *            stara wartosc
 	 * @return [true|false]
 	 * @throws Exception
 	 */
 	public static boolean assertEquals(Object target, Object source)
 			throws Exception {
-		return Duplicator.assertEquals(new TraceAnnotationFactory(), target, source);
+		return Duplicator.assertEquals(new TraceAnnotationFactory(), target,
+				source);
 	}
 
 	/**
@@ -240,11 +236,11 @@ public class TraceCreator {
 	}
 
 	/**
-	 * @param timeZone the timeZone to set
+	 * @param timeZone
+	 *            the timeZone to set
 	 */
 	public static void setTimeZone(TimeZone timeZone) {
 		Duplicator.setTimeZone(timeZone);
 	}
 
-	
 }

@@ -18,7 +18,7 @@ package pl.slawas.test.helpers;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Hashtable;
+import java.util.Map;
 import java.util.Properties;
 
 import junit.framework.Assert;
@@ -32,96 +32,88 @@ import pl.slawas.helpers.Strings;
 import pl.slawas.twl4j.Logger;
 import pl.slawas.twl4j.LoggerFactory;
 
-
 public class ConfigurationsTest extends TestCase {
 
 	@SuppressWarnings("unused")
-	final private static Logger log = LoggerFactory.getLogger(ConfigurationsTest.class);
-	
+	final private static Logger log = LoggerFactory
+			.getLogger(ConfigurationsTest.class);
+
 	private static final String SYSTEM_TEST_PROPERTY_NEME = "SYS_TEST_VALUE";
 	private static final String SYSTEM_TEST_PROPERTY_EXPECTED_VALUE = "testValue";
-	private String getSysEnvVarErrorMassage = "I can't find system property '" 
-		+ SYSTEM_TEST_PROPERTY_NEME + "=" 
-		+ SYSTEM_TEST_PROPERTY_EXPECTED_VALUE 
-		+ "'. Please try run following command in yours console command line: ";
-	
+	private String getSysEnvVarErrorMassage = "I can't find system property '"
+			+ SYSTEM_TEST_PROPERTY_NEME
+			+ "="
+			+ SYSTEM_TEST_PROPERTY_EXPECTED_VALUE
+			+ "'. Please try run following command in yours console command line: ";
+
 	private static final String APP_TEST_PROPERTY_NEME = "cacheParams.CacheName";
 	private static final String APP_TEST_PROPERTY_EXPECTED_VALUE = "TestCacheName";
-	
 
-	@Before public void setUp() throws IOException {
+	@Before
+	public void setUp() throws IOException {
 		String OS = System.getProperty("os.name").toLowerCase();
-		if ((OS.indexOf("windows 9") > -1) 
-			|| (OS.indexOf("nt") > -1) 
-			|| (OS.indexOf("windows 2000") > -1)
-			|| (OS.indexOf("windows xp") > -1)) {
-			getSysEnvVarErrorMassage += "'set " 
-					+ SYSTEM_TEST_PROPERTY_NEME + "=" 
-					+ SYSTEM_TEST_PROPERTY_EXPECTED_VALUE 
+		if ((OS.indexOf("windows 9") > -1) || (OS.indexOf("nt") > -1)
+				|| (OS.indexOf("windows 2000") > -1)
+				|| (OS.indexOf("windows xp") > -1)) {
+			getSysEnvVarErrorMassage += "'set " + SYSTEM_TEST_PROPERTY_NEME
+					+ "=" + SYSTEM_TEST_PROPERTY_EXPECTED_VALUE
 					+ "' and tay again.";
 		} else {
-			getSysEnvVarErrorMassage += "'export " 
-					+ SYSTEM_TEST_PROPERTY_NEME + "=" 
-					+ SYSTEM_TEST_PROPERTY_EXPECTED_VALUE 
+			getSysEnvVarErrorMassage += "'export " + SYSTEM_TEST_PROPERTY_NEME
+					+ "=" + SYSTEM_TEST_PROPERTY_EXPECTED_VALUE
 					+ "' and tay again.";
 		}
 	}
-	
+
 	@Test
 	public void testLoadSystemProperties() throws IOException {
 		Properties sysProp = Configurations.loadSystemProperties();
 		/*
-		Enumeration keys = sysProp.keys(); 
-		while (keys.hasMoreElements()) {
-			String key = (String) keys.nextElement();
-			String value = sysProp.getProperty(key);  
-			log.debug("{} = {}", new Object[] {key, value});
-		}
-		*/
+		 * Enumeration keys = sysProp.keys(); while (keys.hasMoreElements()) {
+		 * String key = (String) keys.nextElement(); String value =
+		 * sysProp.getProperty(key); log.debug("{} = {}", new Object[] {key,
+		 * value}); }
+		 */
 		Assert.assertEquals(
-				"\n" + Strings.breakText(getSysEnvVarErrorMassage, 60) + "\n", 
-				SYSTEM_TEST_PROPERTY_EXPECTED_VALUE, 
+				"\n" + Strings.breakText(getSysEnvVarErrorMassage, 60) + "\n",
+				SYSTEM_TEST_PROPERTY_EXPECTED_VALUE,
 				sysProp.get(SYSTEM_TEST_PROPERTY_NEME));
 	}
-	
+
 	@Test
 	public void testLoadProperties() throws FileNotFoundException, IOException {
-		
-		Properties appProp = Configurations.loadProperties(getClass(), "/test.properties");
+
+		Properties appProp = Configurations.loadProperties(getClass(),
+				"/test.properties");
 		/*
-		Enumeration<Object> keys = appProp.keys();
-		while (keys.hasMoreElements()) {
-			String key = (String) keys.nextElement();
-			String value = appProp.getProperty(key);  
-			log.debug("{} = {}", new Object[] {key, value});
-		}
-		*/
+		 * Enumeration<Object> keys = appProp.keys(); while
+		 * (keys.hasMoreElements()) { String key = (String) keys.nextElement();
+		 * String value = appProp.getProperty(key); log.debug("{} = {}", new
+		 * Object[] {key, value}); }
+		 */
 		Assert.assertEquals(
-				"\nCan't find property in file '/test.properties'\n", 
-				APP_TEST_PROPERTY_EXPECTED_VALUE, 
+				"\nCan't find property in file '/test.properties'\n",
+				APP_TEST_PROPERTY_EXPECTED_VALUE,
 				appProp.get(APP_TEST_PROPERTY_NEME));
-		
-	}
-	
-	@Test
-	public void testLoadHashtable() throws FileNotFoundException, IOException {
-		
-		Hashtable<String, String> appProp = Configurations.loadHashtable(getClass(), "/test.properties");
-		/*
-		Enumeration<String> keys = appProp.keys();
-		while (keys.hasMoreElements()) {
-			String key = (String) keys.nextElement();
-			String value = appProp.get(key);  
-			log.debug("{} = {}", new Object[] {key, value});
-		}
-		*/
-		Assert.assertEquals(
-				"\nCan't find property in file '/test.properties'\n", 
-				APP_TEST_PROPERTY_EXPECTED_VALUE, 
-				appProp.get(APP_TEST_PROPERTY_NEME));
-		
+
 	}
 
-	
-	
+	@Test
+	public void testLoadHashtable() throws FileNotFoundException, IOException {
+
+		Map<String, String> appProp = Configurations.loadHashtable(getClass(),
+				"/test.properties");
+		/*
+		 * Enumeration<String> keys = appProp.keys(); while
+		 * (keys.hasMoreElements()) { String key = (String) keys.nextElement();
+		 * String value = appProp.get(key); log.debug("{} = {}", new Object[]
+		 * {key, value}); }
+		 */
+		Assert.assertEquals(
+				"\nCan't find property in file '/test.properties'\n",
+				APP_TEST_PROPERTY_EXPECTED_VALUE,
+				appProp.get(APP_TEST_PROPERTY_NEME));
+
+	}
+
 }

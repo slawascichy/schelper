@@ -2,6 +2,7 @@ package pl.slawas.helper.jndi;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Map;
 
 import javax.naming.Context;
 import javax.naming.Name;
@@ -14,7 +15,7 @@ import pl.slawas.twl4j.LoggerFactory;
 
 public class JndiDataSourceObjectFactory implements ObjectFactory {
 
-	private static Hashtable<String, Object> objectHashTable = new Hashtable<String, Object>();
+	private static Map<String, Object> objectHashTable = new Hashtable<String, Object>();
 
 	/**
 	 * Wstawia do tablicy odpowiednie obiekty managerów połączeń, fabryk i

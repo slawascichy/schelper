@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import pl.slawas.twl4j.Logger;
@@ -391,7 +392,8 @@ public class Strings implements Serializable {
 		}
 		/* Pick a pivot and move it out of the way */
 		if (a.length <= ((lo + hi) / 2)) {
-			throw new Exception("Pick a pivot and move it out of the way failed. Dont'use this method for sorting - it is deprecated.");
+			throw new Exception(
+					"Pick a pivot and move it out of the way failed. Dont'use this method for sorting - it is deprecated.");
 		}
 		String pivot = a[(lo + hi) / 2];
 		a[(lo + hi) / 2] = a[hi];
@@ -765,7 +767,7 @@ public class Strings implements Serializable {
 	public static String translate(String text, String sourceMask,
 			String targetMask) {
 
-		Hashtable<Integer, String> tranMap = new Hashtable<Integer, String>();
+		Map<Integer, String> tranMap = new Hashtable<Integer, String>();
 		int tLength = 0;
 
 		tLength = sourceMask.length();

@@ -2,6 +2,7 @@ package pl.slawas.helper.jndi;
 
 import java.io.Serializable;
 import java.util.Hashtable;
+import java.util.Map;
 
 import javax.naming.NamingException;
 import javax.naming.Reference;
@@ -28,7 +29,7 @@ public class TObjectReference implements Referenceable, Serializable {
 
 	private final String jndiReferenceName;
 
-	protected static Hashtable<String, Object> ccInstances = new Hashtable<String, Object>();
+	protected static Map<String, Object> ccInstances = new Hashtable<String, Object>();
 
 	public void addInstance(Object ccInstance, String jndiName) {
 		ccInstances.put(jndiName, ccInstance);

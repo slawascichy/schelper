@@ -18,7 +18,7 @@ package pl.slawas.diffs;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.util.Hashtable;
+import java.util.Map;
 
 /**
  * 
@@ -67,15 +67,16 @@ public class TraceAnnotationFactory implements AnnotationFactory {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see pl.wp.ares.core.diffs.AnnotationFactory#getLabel(Hashtable<String,
+	 * @see pl.wp.ares.core.diffs.AnnotationFactory#getLabel(Map<String,
 	 * String>, String, Field)
 	 */
-	public String getLabel(Hashtable<String, String> labelList, String parentLabel, Field field) {
+	public String getLabel(Map<String, String> labelList, String parentLabel,
+			Field field) {
 		String label = getLabel(field);
-		if (((Trace) field.getAnnotation(Trace.class)).isDynamic() &&
-				labelList != null && labelList.size() != 0)
-		{
-			String labelKey = ((Trace) field.getAnnotation(Trace.class)).labelKey();
+		if (((Trace) field.getAnnotation(Trace.class)).isDynamic()
+				&& labelList != null && labelList.size() != 0) {
+			String labelKey = ((Trace) field.getAnnotation(Trace.class))
+					.labelKey();
 			if (labelKey.equals(DEFAULT_FIELD_NAME)) {
 				labelKey = field.getName();
 			}
@@ -92,10 +93,12 @@ public class TraceAnnotationFactory implements AnnotationFactory {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see pl.wp.ares.core.diffs.AnnotationFactory#getReferencedFieldName(Field)
+	 * @see
+	 * pl.wp.ares.core.diffs.AnnotationFactory#getReferencedFieldName(Field)
 	 */
 	public String getReferencedFieldName(Field field) {
-		String referencedFieldName = ((Trace) field.getAnnotation(Trace.class)).referencedFieldName();
+		String referencedFieldName = ((Trace) field.getAnnotation(Trace.class))
+				.referencedFieldName();
 		if (referencedFieldName.equals(DEFAULT_REFERENCED_FIELD_NAME)) {
 			referencedFieldName = null;
 		}
