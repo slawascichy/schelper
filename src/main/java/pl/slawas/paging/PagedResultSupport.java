@@ -104,7 +104,9 @@ public abstract class PagedResultSupport<Obj> implements Serializable,
 			Long startPosition = this.result.getStartPosition();
 			firstRowNumber = startPosition;
 			lastRowNumber = this.result.getEndPosition();
-			if (this.result.getAbsoluteFirstRowPosition() != firstRowNumber) {
+			if (firstRowNumber != null
+					&& !firstRowNumber.equals(this.result
+							.getAbsoluteFirstRowPosition())) {
 				/**
 				 * Problem z ustawieniem numeru strony gdy jej rozmiar jest
 				 * równy 1:
@@ -352,8 +354,8 @@ public abstract class PagedResultSupport<Obj> implements Serializable,
 	 */
 	private int calculateFirstPageNumber() {
 		Long firstPageNumber = 0L + Page.MIN_PAGE_NR;
-		if (this.result.getFirstRowPosition() != this.result
-				.getAbsoluteFirstRowPosition()) {
+		if (!this.result.getFirstRowPosition().equals(
+				this.result.getAbsoluteFirstRowPosition())) {
 			firstPageNumber = (this.result.getFirstRowPosition() / pageInfo
 					.getSize()) + 1;
 		}
@@ -411,8 +413,8 @@ public abstract class PagedResultSupport<Obj> implements Serializable,
 	}
 
 	public boolean hasPreviousResultRows() {
-		return (this.result.getFirstRowPosition() != this.result
-				.getAbsoluteFirstRowPosition());
+		return (!this.result.getFirstRowPosition().equals(
+				this.result.getAbsoluteFirstRowPosition()));
 	}
 
 	/*

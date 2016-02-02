@@ -390,6 +390,9 @@ public class Strings implements Serializable {
 			return;
 		}
 		/* Pick a pivot and move it out of the way */
+		if (a.length <= ((lo + hi) / 2)) {
+			throw new Exception("Pick a pivot and move it out of the way failed. Dont'use this method for sorting - it is deprecated.");
+		}
 		String pivot = a[(lo + hi) / 2];
 		a[(lo + hi) / 2] = a[hi];
 		a[hi] = pivot;

@@ -686,9 +686,9 @@ public class Duplicator {
 	 * @return [true|false]
 	 * @throws Exception
 	 */
-	static boolean equals(AnnotationFactory annotationFactory, Object target, Object source)
+	static boolean assertEquals(AnnotationFactory annotationFactory, Object target, Object source)
 			throws Exception {
-		return equals(annotationFactory, target, source, 0);
+		return assertEquals(annotationFactory, target, source, 0);
 	}
 
 	/**
@@ -724,7 +724,7 @@ public class Duplicator {
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	private static boolean equals(
+	private static boolean assertEquals(
 			AnnotationFactory annotationFactory,
 			Object target,
 			Object source,
@@ -842,7 +842,7 @@ public class Duplicator {
 	 * prawie wszystkie glowne metody porownywania, mozliwa do wykorzytywania
 	 * przez podobne fabryki korzystajace z dobrodziejstw tej klasy.
 	 * 
-	 * @see #equals(AnnotationFactory, Object, Object, int)
+	 * @see #assertEquals(AnnotationFactory, Object, Object, int)
 	 * @see #equalsHashtable(AnnotationFactory, Field, String, Hashtable,
 	 *      Hashtable, int)
 	 * 
@@ -955,7 +955,7 @@ public class Duplicator {
 				} else if (level <= Duplicator.REQURENCY_LEVEL
 						&& !sourceValue.getClass().getCanonicalName().startsWith("java."))
 				{
-					if (!equals(annotationFactory, targetValue, sourceValue, level)) {
+					if (!assertEquals(annotationFactory, targetValue, sourceValue, level)) {
 						log.trace("'{}' (LEVEL={}) Custom equals - objects are different: return FALSE",
 								new Object[]
 							{ label, level });

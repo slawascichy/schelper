@@ -76,7 +76,7 @@ public class PagingParams implements Serializable, _ICopyable<PagingParams> {
 		private Param checkAccessibilityOperation(Long currCalue,
 				Long newValue, boolean objectIsReadOnly) {
 			setValue(Long.toString(newValue));
-			if (objectIsReadOnly && currCalue != newValue)
+			if (objectIsReadOnly && !currCalue.equals(newValue))
 				throw new PaginigParamsException("[" + getMsgLabel()
 						+ "] Parametr jest tylko do odczytu");
 			return this;

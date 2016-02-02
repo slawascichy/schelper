@@ -251,7 +251,7 @@ public class DuplicatorTest extends TestCase {
 
 		log.info("Powinny byc takie same z punktu widzenia danych sledzonych");
 		assertTrue("Powinny byc takie same z punktu widzenia danych sledzonych",
-				TraceCreator.equals(
+				TraceCreator.assertEquals(
 				copyOkClass,
 				testedObject4Track));
 
@@ -263,7 +263,7 @@ public class DuplicatorTest extends TestCase {
 		
 		log.info("Sprawdzanie obiektu daty");
 		assertTrue("Sprawdzanie obiektu daty: powinny byc rozne z punktu widzenia danych sledzonych",
-				!TraceCreator.equals(
+				!TraceCreator.assertEquals(
 				copyOkClass,
 				testedObject4Track));
 
@@ -289,7 +289,7 @@ public class DuplicatorTest extends TestCase {
 
 		log.info("Powinny byc rozne z punktu widzenia danych sledzonych");
 		assertTrue("Powinny byc rozne z punktu widzenia danych sledzonych",
-				!TraceCreator.equals(
+				!TraceCreator.assertEquals(
 				copyOkClass,
 				testedObject4Track));
 
@@ -362,7 +362,7 @@ public class DuplicatorTest extends TestCase {
 		TraceCreator.copy(copyOkClass, testedObject4Track);
 
 		assertTrue("Powinny byc takie same z punktu widzenia danych sledzonych",
-				TraceCreator.equals(
+				TraceCreator.assertEquals(
 				copyOkClass,
 				testedObject4Track));
 
@@ -573,7 +573,7 @@ public class DuplicatorTest extends TestCase {
 				Integer.valueOf(diffList.size()));
 
 		assertTrue("Obiekty powinny byc takie 'same' z punktu widzenia annotacji Property",
-				PropertyCreator.equals(testedObject4Track, testedObject));
+				PropertyCreator.assertEquals(testedObject4Track, testedObject));
 
 		String changedValue = "DBA super admin";
 		testedProperties.put("childVector.3.child.description", changedValue);
@@ -584,7 +584,7 @@ public class DuplicatorTest extends TestCase {
 		printChanges(diffList);
 
 		assertFalse("Obiekty powinny byc 'rozne' z punktu widzenia annotacji Property",
-				PropertyCreator.equals(testedObject4Track, testedObject));
+				PropertyCreator.assertEquals(testedObject4Track, testedObject));
 
 		boolean differenceIsOK = false;
 		for (DiffMockChild child : testedObject.getChildVector()) {
@@ -600,7 +600,7 @@ public class DuplicatorTest extends TestCase {
 		PropertyCreator.copy(testedObject4Track, testedObject);
 
 		assertTrue("Obiekty powinny byc takie 'same' z punktu widzenia annotacji Property",
-				PropertyCreator.equals(testedObject4Track, testedObject));
+				PropertyCreator.assertEquals(testedObject4Track, testedObject));
 
 		
 		assertFalse("Pola powinny byc 'rozne' z punktu widzenia annotacji Property",

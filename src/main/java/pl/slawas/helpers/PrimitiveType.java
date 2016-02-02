@@ -35,7 +35,7 @@ public enum PrimitiveType {
 	 * Pobieranie obiektu enum na podstawie jego nazwy typu prymitywnego
 	 * 
 	 * @param typeName
-	 *           nazwa typu
+	 *            nazwa typu
 	 * @return obiekt PrimitiveType
 	 */
 	public static PrimitiveType get(String typeName) {
@@ -46,12 +46,13 @@ public enum PrimitiveType {
 	 * Sprawdzenie czy typ o podanej nazwie jest typem prostym
 	 * 
 	 * @param typeName
-	 *           nazwa typu
+	 *            nazwa typu
 	 * @return [true|false]
 	 */
 	public static boolean isPrimitiveType(String typeName) {
 		try {
-			return (PrimitiveType.valueOf(typeName.toUpperCase()) != null);
+			PrimitiveType.valueOf(typeName.toUpperCase());
+			return true;
 		} catch (Exception e) {
 		}
 		return false;
@@ -59,8 +60,8 @@ public enum PrimitiveType {
 	}
 
 	/**
-	 * Metoda zmieniająca tablice prymitywnych typow (array) do hashtable. Metoda
-	 * niezbedna do poprawnego zamienienia tablic do właściwości.
+	 * Metoda zmieniająca tablice prymitywnych typow (array) do hashtable.
+	 * Metoda niezbedna do poprawnego zamienienia tablic do właściwości.
 	 * 
 	 * @param array
 	 * @return tablica z zamienionymi typami prymitywnymi do obiektow
@@ -71,57 +72,49 @@ public enum PrimitiveType {
 		switch (this) {
 		case INT:
 			for (int indx = 0; indx < ((int[]) array).length; indx++) {
-				hashtable.put(
-						Integer.valueOf(indx),
+				hashtable.put(Integer.valueOf(indx),
 						Integer.valueOf(((int[]) array)[indx]));
 			}
 			return hashtable;
 		case BOOLEAN:
 			for (int indx = 0; indx < ((boolean[]) array).length; indx++) {
-				hashtable.put(
-						Integer.valueOf(indx),
+				hashtable.put(Integer.valueOf(indx),
 						Boolean.valueOf(((boolean[]) array)[indx]));
 			}
 			return hashtable;
 		case BYTE:
 			for (int indx = 0; indx < ((byte[]) array).length; indx++) {
-				hashtable.put(
-						Integer.valueOf(indx),
+				hashtable.put(Integer.valueOf(indx),
 						Integer.valueOf(((byte[]) array)[indx]));
 			}
 			return hashtable;
 		case CHAR:
 			for (int indx = 0; indx < ((char[]) array).length; indx++) {
-				hashtable.put(
-						Integer.valueOf(indx),
+				hashtable.put(Integer.valueOf(indx),
 						Integer.valueOf(((char[]) array)[indx]));
 			}
 			return hashtable;
 		case DOUBLE:
 			for (int indx = 0; indx < ((double[]) array).length; indx++) {
-				hashtable.put(
-						Integer.valueOf(indx),
+				hashtable.put(Integer.valueOf(indx),
 						Double.valueOf(((double[]) array)[indx]));
 			}
 			return hashtable;
 		case FLOAT:
 			for (int indx = 0; indx < ((float[]) array).length; indx++) {
-				hashtable.put(
-						Integer.valueOf(indx),
+				hashtable.put(Integer.valueOf(indx),
 						Float.valueOf(((float[]) array)[indx]));
 			}
 			return hashtable;
 		case LONG:
 			for (int indx = 0; indx < ((long[]) array).length; indx++) {
-				hashtable.put(
-						Integer.valueOf(indx),
+				hashtable.put(Integer.valueOf(indx),
 						Long.valueOf(((long[]) array)[indx]));
 			}
 			return hashtable;
 		case SHORT:
 			for (int indx = 0; indx < ((short[]) array).length; indx++) {
-				hashtable.put(
-						Integer.valueOf(indx),
+				hashtable.put(Integer.valueOf(indx),
 						Integer.valueOf(((short[]) array)[indx]));
 			}
 			return hashtable;
@@ -134,7 +127,7 @@ public enum PrimitiveType {
 	 * Metoda do kopiowania macierzy z prymitywnymi typami
 	 * 
 	 * @param sourceArray
-	 *           macierz zrodlowa
+	 *            macierz zrodlowa
 	 * @return skopiowana nowa macierz
 	 */
 	public Object copyOf(Object sourceArray) {
@@ -225,16 +218,19 @@ public enum PrimitiveType {
 			((int[]) sourceArray)[indx] = Integer.valueOf(value).intValue();
 			break;
 		case BOOLEAN:
-			((boolean[]) sourceArray)[indx] = Boolean.valueOf(value).booleanValue();
+			((boolean[]) sourceArray)[indx] = Boolean.valueOf(value)
+					.booleanValue();
 			break;
 		case BYTE:
 			((byte[]) sourceArray)[indx] = Byte.valueOf(value).byteValue();
 			break;
 		case CHAR:
-			((char[]) sourceArray)[indx] = (char) Integer.valueOf(value).intValue();
+			((char[]) sourceArray)[indx] = (char) Integer.valueOf(value)
+					.intValue();
 			break;
 		case DOUBLE:
-			((double[]) sourceArray)[indx] = Double.valueOf(value).doubleValue();
+			((double[]) sourceArray)[indx] = Double.valueOf(value)
+					.doubleValue();
 			break;
 		case FLOAT:
 			((float[]) sourceArray)[indx] = Float.valueOf(value).floatValue();
@@ -276,7 +272,7 @@ public enum PrimitiveType {
 
 	}
 
-	public static Class<?> getPrimitiveClass(Object obj){
+	public static Class<?> getPrimitiveClass(Object obj) {
 		if (obj instanceof Integer)
 			return int.class;
 		if (obj instanceof Boolean)
@@ -293,9 +289,8 @@ public enum PrimitiveType {
 			return long.class;
 		if (obj instanceof Short)
 			return short.class;
-	
+
 		return null;
 	}
-	
 
 }

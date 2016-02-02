@@ -227,9 +227,9 @@ public class TraceCreator {
 	 * @return [true|false]
 	 * @throws Exception
 	 */
-	public static boolean equals(Object target, Object source)
+	public static boolean assertEquals(Object target, Object source)
 			throws Exception {
-		return Duplicator.equals(new TraceAnnotationFactory(), target, source);
+		return Duplicator.assertEquals(new TraceAnnotationFactory(), target, source);
 	}
 
 	/**

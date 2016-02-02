@@ -21,6 +21,7 @@ public class LoggerConfig implements LoggerConfigConstants {
 	private static Hashtable<String, String> _Properties = null;
 
 	private static LoggerConfig _Instance;
+	private static Object _InstanceLock = new Object();
 
 	private boolean isInvalid = true;
 
@@ -139,21 +140,26 @@ public class LoggerConfig implements LoggerConfigConstants {
 	 * @return singleton obiektu z konfiguracją Mercure'ego
 	 */
 	public static LoggerConfig getInstance() {
-		if (_Instance == null) {
-			System.out.println("[LoggerConfig] Get new instance.");
-			_Instance = new LoggerConfig();
+		synchronized (_InstanceLock) {
+			if (_Instance == null) {
+				System.out.println("[LoggerConfig] Get new instance.");
+				_Instance = new LoggerConfig();
+			}
+			return _Instance;
 		}
-		return _Instance;
 	}
 
 	public static LoggerConfig getInstance(Class<?> resourceClass,
 			String externalConfigFileName) {
-		if (_Instance == null) {
-			System.out
-					.println("[LoggerConfig] Get new instance from external file...");
-			_Instance = new LoggerConfig(resourceClass, externalConfigFileName);
+		synchronized (_InstanceLock) {
+			if (_Instance == null) {
+				System.out
+						.println("[LoggerConfig] Get new instance from external file...");
+				_Instance = new LoggerConfig(resourceClass,
+						externalConfigFileName);
+			}
+			return _Instance;
 		}
-		return _Instance;
 	}
 
 	public String get(String propertyCode) {
