@@ -276,15 +276,14 @@ public class Strings implements Serializable {
 	 * 
 	 * @param a
 	 *            kolekcja
-	 * @throws Exception
 	 */
-	public static void sort(Vector<String> a) throws Exception {
+	public static void sort(List<String> a) {
 		Collections.sort(a, STRING_ORDER);
 	}
 
 	/**
 	 * Procedura sortowania kolekcji typu Vector<String>. Metoda nie sortuje
-	 * prawidłowo polskich znaków UTF-8. Lepiej używać {@link #sort(Vector)}
+	 * prawidłowo polskich znaków UTF-8. Lepiej używać {@link #sort(List)}
 	 * 
 	 * @param a
 	 *            kolekcja
@@ -293,11 +292,9 @@ public class Strings implements Serializable {
 	 * @param hi0
 	 *            pozycja, na ktorej ma byc zakonczone sortowanie, zazwyczaj
 	 *            a.size() -1
-	 * @throws Exception
 	 */
 	@Deprecated
-	public static void sort(Vector<String> a, int lo0, int hi0)
-			throws Exception {
+	public static void sort(List<String> a, int lo0, int hi0) {
 		int lo = lo0;
 		int hi = hi0;
 		if (lo >= hi) {
@@ -372,10 +369,9 @@ public class Strings implements Serializable {
 	 * @param hi0
 	 *            pozycja, na ktorej ma byc zakonczone sortowanie, zazwyczaj
 	 *            a.length -1
-	 * @throws Exception
 	 */
 	@Deprecated
-	public static void sort(String a[], int lo0, int hi0) throws Exception {
+	public static void sort(String a[], int lo0, int hi0) {
 		int lo = lo0;
 
 		int hi = hi0;
@@ -391,10 +387,6 @@ public class Strings implements Serializable {
 			return;
 		}
 		/* Pick a pivot and move it out of the way */
-		if (a.length <= ((lo + hi) / 2)) {
-			throw new Exception(
-					"Pick a pivot and move it out of the way failed. Dont'use this method for sorting - it is deprecated.");
-		}
 		String pivot = a[(lo + hi) / 2];
 		a[(lo + hi) / 2] = a[hi];
 		a[hi] = pivot;
