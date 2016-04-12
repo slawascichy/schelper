@@ -17,16 +17,11 @@ import pl.slawas.twl4j.logger.LogLevel;
 
 public class LoggerConfig implements LoggerConfigConstants {
 
-	private transient Object lockObject = new Object();
-
 	private static Map<String, String> _Properties = null;
 
 	private static LoggerConfig _Instance;
-	private static Object _InstanceLock = new Object();
 
-	private boolean isInvalid = true;
-
-	private ImmutableList<NameValuePair> propertyList;
+	private final static Object _InstanceLock = new Object();
 
 	private static final String configFileName;
 
@@ -44,30 +39,6 @@ public class LoggerConfig implements LoggerConfigConstants {
 	 */
 	private LoggerConfig() {
 		loadPropertiesFromFile();
-		init();
-
-	}
-
-	/**
-	 * Konstruktor z dodatkową zewnętrzną konfiguracją. Przydatne dla klienta,
-	 * który nie ma pamięci podręcznej dla atrybutów.
-	 * 
-	 * @param resourceClass
-	 *            klasa pomocnicza, ułatwiająca znalezienie pliku z konfiguracją
-	 * @param externalConfigFileName
-	 *            ścieżka do dodatkowego pliku z konfiguracją
-	 */
-	private LoggerConfig(Class<?> resourceClass, String externalConfigFileName) {
-		loadPropertiesFromFile(resourceClass, externalConfigFileName);
-		init();
-
-	}
-
-	/**
-	 * Inicjalizacja konfiguracji Mercure'ego
-	 */
-	private void init() {
-		propertyList = generatePropertyList();
 	}
 
 	/**
@@ -76,41 +47,26 @@ public class LoggerConfig implements LoggerConfigConstants {
 	 * 
 	 * @throws Exception
 	 */
-	private void loadPropertiesFromFile(Class<?> resourceClass,
-			String externalConfigFileName) {
-		synchronized (lockObject) {
+	private void loadPropertiesFromFile() {
+		synchronized (_InstanceLock) {
 			System.out.println("Loading configuration from file:"
-					+ externalConfigFileName + "...");
+					+ configFileName + "...");
 			if (_Properties == null) {
 				_Properties = new Hashtable<String, String>();
 			} else {
 				_Properties.clear();
 			}
 			Map<String, String> externalParam = Configurations.loadHashtable(
-					resourceClass, externalConfigFileName);
+					LoggerConfig.class, configFileName);
 			_Properties.putAll(externalParam);
 			System.out.println("[LoggerConfig] logger.level="
 					+ _Properties.get(PROP_LOGGER_LEVEL));
-			isInvalid = true;
 		}
 	}
 
-	/**
-	 * Metoda ładująca właściwości z pliku
-	 * 
-	 * @throws Exception
-	 */
-	private void loadPropertiesFromFile() {
-		loadPropertiesFromFile(LoggerConfig.class, configFileName);
-	}
-
 	private ImmutableList<NameValuePair> generatePropertyList() {
-		synchronized (lockObject) {
-			if (this.propertyList != null) {
-				this.propertyList.pClear();
-			} else {
-				this.propertyList = new ImmutableList<NameValuePair>();
-			}
+		synchronized (_InstanceLock) {
+			ImmutableList<NameValuePair> propertyList = new ImmutableList<NameValuePair>();
 			StringBuilder sb = new StringBuilder(
 					"\n-------- Logger properties --------");
 			Set<Entry<String, String>> propEntrySet = _Properties.entrySet();
@@ -120,7 +76,7 @@ public class LoggerConfig implements LoggerConfigConstants {
 				sb.append("\n ").append(key).append(" = ").append(value);
 				NameValuePair currValue = NameValuePairUtils.getNewInstanceNVP(
 						key, value);
-				this.propertyList.pAdd(currValue);
+				propertyList.pAdd(currValue);
 			}
 			if (StringUtils.isNotBlank(_Properties
 					.get(PROP_CONFIG_PRINT_PROPERTIES))
@@ -129,8 +85,7 @@ public class LoggerConfig implements LoggerConfigConstants {
 				sb.append("\n-----------------------------------");
 				System.out.println(sb.toString());
 			}
-			isInvalid = false;
-			return this.propertyList;
+			return propertyList;
 		}
 	}
 
@@ -150,33 +105,17 @@ public class LoggerConfig implements LoggerConfigConstants {
 		}
 	}
 
-	public static LoggerConfig getInstance(Class<?> resourceClass,
-			String externalConfigFileName) {
-		synchronized (_InstanceLock) {
-			if (_Instance == null) {
-				System.out
-						.println("[LoggerConfig] Get new instance from external file...");
-				_Instance = new LoggerConfig(resourceClass,
-						externalConfigFileName);
-			}
-			return _Instance;
-		}
-	}
-
 	public String get(String propertyCode) {
 		return (String) _Properties.get(propertyCode);
 	}
 
 	public void put(String propertyCode, String value) {
 		_Properties.put(propertyCode, value);
-		isInvalid = true;
+
 	}
 
 	public List<NameValuePair> getPropertyList() {
-		if (this.isInvalid || this.propertyList == null) {
-			generatePropertyList();
-		}
-		return this.propertyList;
+		return generatePropertyList();
 	}
 
 	/*

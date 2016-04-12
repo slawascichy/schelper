@@ -18,7 +18,7 @@ package pl.slawas.helpers;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -113,14 +113,16 @@ public abstract class ConfigJAXBFactory<Obj> implements ConfigFactory<Obj> {
 						is = resourceClass.getResourceAsStream(url);
 					else
 						is = persistentClass.getResourceAsStream(url);
-					br = new BufferedReader(new InputStreamReader(is));
+					br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 					config = (Obj) unmarshaller.unmarshal(br);
 				} else {
-					config = (Obj) unmarshaller.unmarshal(new FileReader(url));
+					config = (Obj) unmarshaller
+							.unmarshal(new InputStreamReader(
+									new FileInputStream(url), "UTF-8"));
 				}
 			} else if (StringUtils.isNotBlank(configString)) {
 				is = new ByteArrayInputStream(configString.getBytes());
-				br = new BufferedReader(new InputStreamReader(is));
+				br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 				config = (Obj) unmarshaller.unmarshal(br);
 			} else {
 				throw new ConfigException(
