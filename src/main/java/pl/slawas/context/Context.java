@@ -45,6 +45,34 @@ public class Context implements Serializable {
 	}
 
 	/**
+	 * Konstruktor z bezpośrednim ustawianiem pól
+	 * 
+	 * @param appName
+	 * @param appVersion
+	 * @param userName
+	 * @param comment
+	 * @param maxResults
+	 * @param queryTimeout
+	 * @param locale
+	 * @param timeZone
+	 * @param userFullName
+	 */
+	public Context(String appName, String appVersion, String userName,
+			String comment, Integer maxResults, int queryTimeout,
+			String locale, String timeZone, String userFullName) {
+		super();
+		this.appName = appName;
+		this.appVersion = appVersion;
+		this.userName = userName;
+		this.comment = comment;
+		this.maxResults = maxResults;
+		this.queryTimeout = queryTimeout;
+		this.locale = locale;
+		this.timeZone = timeZone;
+		this.userFullName = userFullName;
+	}
+
+	/**
 	 * Konstruktor do szybkiego ustawienie parametrów wg kolejności za pomocą
 	 * listy stringów
 	 * 
