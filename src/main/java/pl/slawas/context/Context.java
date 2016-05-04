@@ -3,17 +3,40 @@
  */
 package pl.slawas.context;
 
-import java.util.TimeZone;
 import java.io.Serializable;
+import java.util.TimeZone;
 
 /**
- * Context.java podstawowe metody obsługi wejścia do metod
+ * 
+ * Context podstawowe metody obsługi wejścia do metod
  * 
  * @author Karol Kowalczyk
+ * @author Sławomir Cichy &lt;slawomir.cichy@ibpm.pro&gt;
+ * @version $Revision: 1.1 $
+ *
  */
 public class Context implements Serializable {
 
 	private static final long serialVersionUID = -2755058896817320793L;
+
+	/** Nazwa aplikacji */
+	private String appName;
+	/** Wersja aplikacji */
+	private String appVersion;
+	/** Nazwa użytkownika */
+	private String userName;
+	/** Komentarz użytkownika (dlaczego wykonuje daną akcję) */
+	private String comment;
+	/** Maksymalna liczba wyników uzyskana w wyniku wyszukiwania danych */
+	private Integer maxResults;
+	/** Definicja ewentualnego timeout'u operacji - liczba milisekund */
+	private int queryTimeout;
+	/** Definicja wersji językowej użytkownika */
+	private String locale;
+	/** Definicja strefy czasowej użytkownika */
+	private String timeZone;
+	/** Dodatkowa informacja na temat użytkownika - pełna nazwa */
+	private String userFullName;
 
 	/**
 	 * Domyślny konstruktor
@@ -22,30 +45,22 @@ public class Context implements Serializable {
 	}
 
 	/**
-	 * Parametry kontekstu
-	 */
-	private String appName;
-	private String appVersion;
-	private String userName;
-	private String comment;
-	private Integer maxResults;
-	private int queryTimeout;
-	private String locale;
-	private String timeZone;
-
-	/**
-	 * Tekst do logowania parametrów
-	 */
-	@Override
-	public String toString() {
-		return "Context[" + appName + ' ' + appVersion + ' ' + userName + ' '
-				+ comment + ' ' + maxResults + ' ' + queryTimeout + ' '
-				+ locale + ' ' + timeZone + ']';
-	}
-
-	/**
 	 * Konstruktor do szybkiego ustawienie parametrów wg kolejności za pomocą
 	 * listy stringów
+	 * 
+	 * @param properties
+	 *            parametry w kolejności:
+	 *            <ol>
+	 *            <li>appName</li>
+	 *            <li>appVersion</li>
+	 *            <li>userName</li>
+	 *            <li>comment</li>
+	 *            <li>maxResults</li>
+	 *            <li>queryTimeout</li>
+	 *            <li>locale</li>
+	 *            <li>timeZone</li>
+	 *            <li>userFullName</li>
+	 *            </ol>
 	 */
 	public Context(final String... properties) {
 		this();
@@ -79,6 +94,9 @@ public class Context implements Serializable {
 				case 8:
 					timeZone = property;
 					break;
+				case 9:
+					userFullName = property;
+					break;
 				}
 			}
 		}
@@ -86,6 +104,19 @@ public class Context implements Serializable {
 
 	/**
 	 * Tworzy nowy obiekt będący kopią bieżącego i ustawia nowe parametry
+	 * 
+	 * @param newProperties
+	 *            parametry w kolejności:
+	 *            <ol>
+	 *            <li>userName</li>
+	 *            <li>comment</li>
+	 *            <li>maxResults</li>
+	 *            <li>queryTimeout</li>
+	 *            <li>locale</li>
+	 *            <li>timeZone</li>
+	 *            <li>userFullName</li>
+	 *            </ol>
+	 * @return nowy kontekst
 	 */
 	public Context copy(final String... newProperties) {
 		Context newContext = new Context(this.appName, this.appVersion);
@@ -112,6 +143,9 @@ public class Context implements Serializable {
 					break;
 				case 6:
 					newContext.setTimeZone(newProperty);
+					break;
+				case 7:
+					newContext.setUserFullName(newProperty);
 					break;
 				}
 			}
@@ -267,5 +301,23 @@ public class Context implements Serializable {
 	 */
 	public void setMaxResults(Integer maxResults) {
 		this.maxResults = maxResults;
+	}
+
+	public String getUserFullName() {
+		return userFullName;
+	}
+
+	public void setUserFullName(String userFullName) {
+		this.userFullName = userFullName;
+	}
+
+	/**
+	 * Tekst do logowania parametrów
+	 */
+	@Override
+	public String toString() {
+		return "Context[" + appName + ' ' + appVersion + ' ' + userName + ' '
+				+ comment + ' ' + maxResults + ' ' + queryTimeout + ' '
+				+ locale + ' ' + timeZone + ']';
 	}
 }
