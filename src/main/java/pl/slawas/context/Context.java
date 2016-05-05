@@ -37,6 +37,11 @@ public class Context implements Serializable {
 	private String timeZone;
 	/** Dodatkowa informacja na temat użytkownika - pełna nazwa */
 	private String userFullName;
+	/**
+	 * Czy można ufać ustawionym danym? Wykorzystamy tę flagę do ewentualnej
+	 * aktualizacji danych o użytkowniku
+	 */
+	private boolean trustedData = false;
 
 	/**
 	 * Domyślny konstruktor
@@ -174,6 +179,52 @@ public class Context implements Serializable {
 					break;
 				case 7:
 					newContext.setUserFullName(newProperty);
+					break;
+				}
+			}
+		}
+		return newContext;
+	}
+
+	/**
+	 * Tworzy nowy obiekt będący kopią bieżącego i ustawia nowe parametry
+	 * związane z danymi użytkownika
+	 * 
+	 * @param userProperties
+	 *            parametry w kolejności:
+	 *            <ol>
+	 *            <li>userName</li>
+	 *            <li>comment</li>
+	 *            <li>userFullName</li>
+	 *            <li>locale</li>
+	 *            <li>timeZone</li>
+	 *            </ol>
+	 * @return
+	 */
+	public Context copyAndChangeUserInfo(final String... userProperties) {
+		Context newContext = new Context(appName, appVersion, userName,
+				comment, maxResults, queryTimeout, locale, timeZone,
+				userFullName);
+		if (userProperties != null) {
+			int i = 0;
+			String userProperty;
+			while (i < userProperties.length) {
+				userProperty = userProperties[i++];
+				switch (i) {
+				case 1:
+					newContext.setUserName(userProperty);
+					break;
+				case 2:
+					newContext.setComment(userProperty);
+					break;
+				case 3:
+					newContext.setUserFullName(userProperty);
+					break;
+				case 4:
+					newContext.setLocale(userProperty);
+					break;
+				case 5:
+					newContext.setTimeZone(userProperty);
 					break;
 				}
 			}
@@ -337,6 +388,14 @@ public class Context implements Serializable {
 
 	public void setUserFullName(String userFullName) {
 		this.userFullName = userFullName;
+	}
+
+	public boolean isTrustedData() {
+		return trustedData;
+	}
+
+	public void setTrustedData(boolean trustedData) {
+		this.trustedData = trustedData;
 	}
 
 	/**
