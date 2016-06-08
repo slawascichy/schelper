@@ -34,17 +34,17 @@
 			<url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
 		</license>
 	</licenses>
-	<url>http://scisoftware.pl/SC/Utils/${artifactId}/index.html</url>
+	<url>http://scisoftware.pl/SC/Utils/${project.artifactId}/index.html</url>
 	<organization>
 		<name>Sci Software</name>
 		<url>http://scisoftware.pl</url>
 	</organization>
 
 	<scm>
-		<connection>scm:git:ssh://${user}@sources.ibpm.pro/opt/git/repositories/SC/Utils/${artifactId}.git</connection>
-		<developerConnection>scm:git:ssh://${user}@sources.ibpm.pro/opt/git/repositories/SC/Utils/${artifactId}.git</developerConnection>
+		<connection>scm:git:ssh://${user}@sources.ibpm.pro/opt/git/repositories/SC/Utils/${project.artifactId}.git</connection>
+		<developerConnection>scm:git:ssh://${user}@sources.ibpm.pro/opt/git/repositories/SC/Utils/${project.artifactId}.git</developerConnection>
 		<tag>HEAD</tag>
-		<url>https://sources.ibpm.pro/?p=SC/Utils/${artifactId}.git;a=summary</url>
+		<url>https://sources.ibpm.pro/?p=SC/Utils/${project.artifactId}.git;a=summary</url>
 	</scm>
 	<!-- -->
 	<issueManagement>
@@ -60,7 +60,7 @@
 	<distributionManagement>
 		<site>
 			<id>wwwiq.ibpm.pro</id>
-			<url>scp://${user}@sources.ibpm.pro:/opt/ibpmusers/scichy/public_html/SC/Utils/${artifactId}</url>
+			<url>scp://${user}@sources.ibpm.pro:/opt/ibpmusers/scichy/public_html/SC/Utils/${project.artifactId}</url>
 		</site>
 		<repository>
 			<uniqueVersion>false</uniqueVersion>
@@ -96,6 +96,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.19.1</version>
 				<configuration>
 					<argLine>-Dsclogger.config.file=/sclogger.properties</argLine>
 					<skipTests>false</skipTests>
@@ -103,13 +104,14 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.5</version>
+				<version>3.0.0</version>
 				<configuration>
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version>
 				<configuration>
 					<encoding>UTF-8</encoding>
 					<source>1.6</source>
@@ -118,6 +120,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-site-plugin</artifactId>
+				<version>3.5.1</version>
 				<configuration>
 					<outputEncoding>UTF-8</outputEncoding>
 				</configuration>
