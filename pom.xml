@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>pl.slawas</groupId>
 	<artifactId>schelper</artifactId>
 	<name>SC Biblioteka Pomocnicza</name>
-	<version>0.0.9-SNAPSHOT</version>
+	<version>0.0.9</version>
 	<description>Pomocnicza biblioteka Sławka Cichego (SC)</description>
 	<developers>
 		<developer>
@@ -43,7 +42,7 @@
 	<scm>
 		<connection>scm:git:ssh://${user}@sources.ibpm.pro/opt/git/repositories/SC/Utils/${project.artifactId}.git</connection>
 		<developerConnection>scm:git:ssh://${user}@sources.ibpm.pro/opt/git/repositories/SC/Utils/${project.artifactId}.git</developerConnection>
-		<tag>HEAD</tag>
+		<tag>schelper-0.0.9</tag>
 		<url>https://sources.ibpm.pro/?p=SC/Utils/${project.artifactId}.git;a=summary</url>
 	</scm>
 	<!-- -->
