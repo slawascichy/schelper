@@ -4,7 +4,7 @@
 	<groupId>pl.slawas</groupId>
 	<artifactId>schelper</artifactId>
 	<name>SC Biblioteka Pomocnicza</name>
-	<version>0.0.10</version>
+	<version>0.0.11-SNAPSHOT</version>
 	<description>Pomocnicza biblioteka Sławka Cichego (SC)</description>
 	<developers>
 		<developer>
@@ -42,7 +42,7 @@
 	<scm>
 		<connection>scm:git:ssh://${user}@sources.ibpm.pro/opt/git/repositories/SC/Utils/${project.artifactId}.git</connection>
 		<developerConnection>scm:git:ssh://${user}@sources.ibpm.pro/opt/git/repositories/SC/Utils/${project.artifactId}.git</developerConnection>
-		<tag>schelper-0.0.10</tag>
+		<tag>HEAD</tag>
 		<url>https://sources.ibpm.pro/?p=SC/Utils/${project.artifactId}.git;a=summary</url>
 	</scm>
 	<!-- -->
