@@ -27,11 +27,11 @@ public interface LoggerConfigConstants {
 	String CONFIG_FILE_NAME_PATH = "sclogger.properties";
 
 	/** Domyślny format daty */
-	public final static String DEFAULT_DATE_LOGGER_FORMAT = "yyyy-MM-dddd HH:mm:ss,SSS";
+	public static final String DEFAULT_DATE_LOGGER_FORMAT = "yyyy-MM-dddd HH:mm:ss,SSS";
 	/**
 	 * Domyślne ustawienie, czy ma być dodawana data do rejestrowanego
 	 * komunikatu
 	 */
-	public final static boolean DEFAULT_LOGGER_ADD_DATE = false;
+	public static final boolean DEFAULT_LOGGER_ADD_DATE = false;
 
 }

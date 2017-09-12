@@ -21,7 +21,7 @@ public class LoggerConfig implements LoggerConfigConstants {
 
 	private static LoggerConfig _Instance;
 
-	private final static Object _InstanceLock = new Object();
+	private static final Object _InstanceLock = new Object();
 
 	private static final String configFileName;
 

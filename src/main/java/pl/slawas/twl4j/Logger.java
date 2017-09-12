@@ -5,7 +5,7 @@ import pl.slawas.twl4j.logger.LogLevel;
 public interface Logger {
 
 	/** rozszerzenie plików Java */
-	final static String JAVA_FILE_EXTENTION = ".java";
+	static final String JAVA_FILE_EXTENTION = ".java";
 
 	LogLevel level();
 

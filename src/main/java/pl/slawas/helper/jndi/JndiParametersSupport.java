@@ -43,7 +43,7 @@ import pl.slawas.twl4j.LoggerFactory;
  */
 public abstract class JndiParametersSupport implements JndiParameters {
 
-	protected final static Logger log = LoggerFactory
+	protected static final Logger log = LoggerFactory
 			.getLogger(JndiParametersSupport.class);
 
 	private String jnpDisableDiscovery;

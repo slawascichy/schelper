@@ -24,7 +24,7 @@ public class TObjectReference implements Referenceable, Serializable {
 
 	private static final long serialVersionUID = -2941400615511455043L;
 
-	private final static Logger log = LoggerFactory
+	private static final Logger log = LoggerFactory
 			.getLogger(TObjectReference.class);
 
 	private final String jndiReferenceName;

@@ -39,14 +39,14 @@ public enum BooleanEnum implements DictionaryWithIntegerId {
 	 * 
 	 * @see BooleanLangEnum#POLISH
 	 */
-	public final static String POLISH = BooleanLangEnum.POLISH.getLangCode();
+	public static final String POLISH = BooleanLangEnum.POLISH.getLangCode();
 
 	/**
 	 * Stała reprezentująca definicję języka angielskiego
 	 * 
 	 * @see BooleanLangEnum#ENGLISH
 	 */
-	public final static String ENGLISH = BooleanLangEnum.ENGLISH.getLangCode();
+	public static final String ENGLISH = BooleanLangEnum.ENGLISH.getLangCode();
 
 	private String lang = BooleanLangEnum.POLISH.getLangCode();
 

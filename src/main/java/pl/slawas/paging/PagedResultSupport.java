@@ -36,15 +36,13 @@ import pl.slawas.twl4j.LoggerFactory;
  *            klasa obiektu na liscie rezultatów
  */
 @SuppressWarnings("serial")
-public abstract class PagedResultSupport<Obj> implements Serializable,
-		_IPagedResult<Obj> {
+public abstract class PagedResultSupport<Obj> implements Serializable, _IPagedResult<Obj> {
+
+	private static final int MAX_ALL_PAGES_PRESENTATION = 10;
 
 	private final Page pageInfo;
 
-	final private transient Logger logger = LoggerFactory.getLogger(getClass()
-			.getName());
-
-	private Enumeration<Page> pages;
+	private final transient Logger logger = LoggerFactory.getLogger(getClass().getName());
 
 	protected _IPagedQuery<Obj> query;
 
@@ -57,34 +55,32 @@ public abstract class PagedResultSupport<Obj> implements Serializable,
 	 * @param pagingParams
 	 *            parametry stronicowania
 	 * @param result
-	 *            obiektu rezultatu "pierwotnego", który jest podstwą do
-	 *            zbudowania stronicowanego rezultatu
+	 *            obiektu rezultatu "pierwotnego", który jest podstwą do zbudowania
+	 *            stronicowanego rezultatu
 	 * @param query
 	 *            zapytanie, na podstwie, którego został zbudowany rezultat
 	 *            "pierwotny". Obiekt ten potrzebny jest aby bez konieczności
-	 *            odwoływania się do manager-ów zarządzajacych zapytaniami,
-	 *            można było pobrać kolejną stronę, czy też odświeżyć wynik.
+	 *            odwoływania się do manager-ów zarządzajacych zapytaniami, można
+	 *            było pobrać kolejną stronę, czy też odświeżyć wynik.
 	 * @param checkPagingParamRestrictions
 	 *            czy mają być przestrzegane parametry stronicowania. Niektóre
 	 *            systemy dają możliwość pobrania kolejnej "paczki" danych w
 	 *            systuacji, kiedy wynik ogólny (liczba zwracanych
 	 *            dokumentów/wierszy) nie spełnia warunków związnych z
-	 *            ograniczeniami np. ograniczenia pozwalają na pobranie
-	 *            maksymalnie {@code 5} stron i całość rezultatu nie mieści sie
-	 *            na nich. Gdy parametr ustawimy parametr na {@code true}, to
-	 *            wtedy nie bedziemy mogli pobrać kolejnej strony np. 6 wyniku,
-	 *            trzeba zmienic kryteria stronicowania. Jeżeli jednak ustawimy
-	 *            na {@code false}, parametry stronicowania zostaną zignorowane
-	 *            i stronicowany obiekt pozwoli na utworzenie kolejnej paczki
-	 *            stron np. {@code 6,7,8,9,10}. O tym czy wynik ma kolejną
-	 *            paczkę informuje nas metoda {@link #hasMoreResultRows()}, a o
-	 *            tym czy jesteśmy w "paczce rozszerzonej" (w kolejnej paczce)
-	 *            możemy rozpoznać po tym, że pierwsza strona paczki ma numer
-	 *            różny od {@link Page#MIN_PAGE_NR}, albo używając metody
-	 *            {@link #hasPreviousResultRows()}.
+	 *            ograniczeniami np. ograniczenia pozwalają na pobranie maksymalnie
+	 *            {@code 5} stron i całość rezultatu nie mieści sie na nich. Gdy
+	 *            parametr ustawimy parametr na {@code true}, to wtedy nie bedziemy
+	 *            mogli pobrać kolejnej strony np. 6 wyniku, trzeba zmienic kryteria
+	 *            stronicowania. Jeżeli jednak ustawimy na {@code false}, parametry
+	 *            stronicowania zostaną zignorowane i stronicowany obiekt pozwoli na
+	 *            utworzenie kolejnej paczki stron np. {@code 6,7,8,9,10}. O tym czy
+	 *            wynik ma kolejną paczkę informuje nas metoda
+	 *            {@link #hasMoreResultRows()}, a o tym czy jesteśmy w "paczce
+	 *            rozszerzonej" (w kolejnej paczce) możemy rozpoznać po tym, że
+	 *            pierwsza strona paczki ma numer różny od {@link Page#MIN_PAGE_NR},
+	 *            albo używając metody {@link #hasPreviousResultRows()}.
 	 */
-	public PagedResultSupport(PagingParams pagingParams,
-			ResultSupport<Obj> result, _IPagedQuery<Obj> query,
+	public PagedResultSupport(PagingParams pagingParams, ResultSupport<Obj> result, _IPagedQuery<Obj> query,
 			boolean checkPagingParamRestrictions) {
 		super();
 		this.query = query;
@@ -104,12 +100,9 @@ public abstract class PagedResultSupport<Obj> implements Serializable,
 			Long startPosition = this.result.getStartPosition();
 			firstRowNumber = startPosition;
 			lastRowNumber = this.result.getEndPosition();
-			if (firstRowNumber != null
-					&& !firstRowNumber.equals(this.result
-							.getAbsoluteFirstRowPosition())) {
+			if (firstRowNumber != null && !firstRowNumber.equals(this.result.getAbsoluteFirstRowPosition())) {
 				/**
-				 * Problem z ustawieniem numeru strony gdy jej rozmiar jest
-				 * równy 1:
+				 * Problem z ustawieniem numeru strony gdy jej rozmiar jest równy 1:
 				 * 
 				 * <pre>
 				 * pl.slawas.paging.PaginigParamsException: Problem z ustwieniem strony o numerze 2: PagingParams [offset=0, cursorOfPage=0, pageSize=1, maxCount=1, maxPageSize=1, page=Page [number=1, size=1, firstRowNumber=1, lastRowNumber=1, numberOfRowsOnThePage=0], valid=false]
@@ -118,21 +111,18 @@ public abstract class PagedResultSupport<Obj> implements Serializable,
 				 * 
 				 * Dalego też, gdy strona jest równa 1, dodaję 0.
 				 */
-				Long pNumber = 1L + (pagingParams.getPageSize() != 1 ? (startPosition / pagingParams
-						.getPageSize()) : 0);
+				Long pNumber = 1L
+						+ (pagingParams.getPageSize() != 1 ? (startPosition / pagingParams.getPageSize()) : 0);
 				pageNumber = pNumber.intValue();
 			}
 			if (checkPagingParamRestrictions) {
 				if (!pagingParams.setPage(pageNumber)) {
 					throw new PaginigParamsException(
-							"Problem z ustwieniem strony o numerze "
-									+ pageNumber + ": "
-									+ pagingParams.toString());
+							"Problem z ustwieniem strony o numerze " + pageNumber + ": " + pagingParams.toString());
 				}
 				this.pageInfo = pagingParams.getPage();
 			} else {
-				this.pageInfo = new Page(pagingParams.getPageSize(),
-						(pageNumber == 0 ? Page.MIN_PAGE_NR : pageNumber));
+				this.pageInfo = new Page(pagingParams.getPageSize(), (pageNumber == 0 ? Page.MIN_PAGE_NR : pageNumber));
 			}
 			break;
 		}
@@ -149,28 +139,19 @@ public abstract class PagedResultSupport<Obj> implements Serializable,
 	}
 
 	public Obj getUniqueResult() {
-		if (!getMessage().equals(ResultMessage.NO_DATA_FOUND)
-				&& this.result.getResult() != null
-				&& !this.result.getResult().isEmpty()
-				&& this.result.getResult().iterator().hasNext()) {
+		if (!getMessage().equals(ResultMessage.NO_DATA_FOUND) && this.result.getResult() != null
+				&& !this.result.getResult().isEmpty() && this.result.getResult().iterator().hasNext()) {
 			return this.result.getResult().iterator().next();
-		} else if (!getMessage().equals(ResultMessage.NO_DATA_FOUND)
-				&& (this.result.getResult() == null
-						|| this.result.getResult().isEmpty() || !this.result
-						.getResult().iterator().hasNext())) {
+		} else if (!getMessage().equals(ResultMessage.NO_DATA_FOUND) && (this.result.getResult() == null
+				|| this.result.getResult().isEmpty() || !this.result.getResult().iterator().hasNext())) {
 			logger.warn(
-					"Komunikat rezultatu jest niezgodny ze stanem faktycznym: "
-							+ "\n getMessage(): {}"
-							+ "\n (this.result.getResult() == null): {}"
-							+ "\n this.result.getResult().isEmpty(): {}"
+					"Komunikat rezultatu jest niezgodny ze stanem faktycznym: " + "\n getMessage(): {}"
+							+ "\n (this.result.getResult() == null): {}" + "\n this.result.getResult().isEmpty(): {}"
 							+ "\n this.result.getResult().iterator().hasNext(): {}",
-					new Object[] {
-							getMessage(),
-							(this.result.getResult() == null),
-							(this.result.getResult() != null ? this.result
-									.getResult().isEmpty() : "n/a"),
-							(this.result.getResult() != null ? this.result
-									.getResult().iterator().hasNext() : "n/a"), });
+					new Object[] { getMessage(), (this.result.getResult() == null),
+							(this.result.getResult() != null ? this.result.getResult().isEmpty() : "n/a"),
+							(this.result.getResult() != null ? this.result.getResult().iterator().hasNext()
+									: "n/a"), });
 		}
 		return null;
 	}
@@ -215,16 +196,14 @@ public abstract class PagedResultSupport<Obj> implements Serializable,
 	public Page getPreviousPageInfo() throws PagedResultException {
 		int firstPageNumber = calculateFirstPageNumber();
 		if (this.pageInfo.getNumber() == firstPageNumber)
-			throw new PagedResultException(
-					"Obecna strona jest pierwsza strona. Strona poprzednia nie istnieje");
+			throw new PagedResultException("Obecna strona jest pierwsza strona. Strona poprzednia nie istnieje");
 		return new Page(this.pageInfo.getSize(), this.pageInfo.getNumber() - 1);
 	}
 
 	public Page getNextPageInfo() throws PagedResultException {
 		Page nextPage = getNextPageInfo(this.pageInfo);
 		if (null == nextPage)
-			throw new PagedResultException(
-					"Obecna strona jest ostatnia strona. Strona nastepna nie istnieje");
+			throw new PagedResultException("Obecna strona jest ostatnia strona. Strona nastepna nie istnieje");
 		return nextPage;
 	}
 
@@ -232,19 +211,16 @@ public abstract class PagedResultSupport<Obj> implements Serializable,
 		int firstPageNumber = calculateFirstPageNumber();
 
 		if (pageNumber < firstPageNumber) {
-			throw new PagedResultException(
-					"Strona o numerze "
-							+ Integer.toString(pageNumber)
-							+ (firstPageNumber != Page.MIN_PAGE_NR ? " jest poza zakresem obecnego rezultatu"
-									: " nie istnieje"));
+			throw new PagedResultException("Strona o numerze " + Integer.toString(pageNumber)
+					+ (firstPageNumber != Page.MIN_PAGE_NR ? " jest poza zakresem obecnego rezultatu"
+							: " nie istnieje"));
 		}
 
 		Long resultSize = calculateResultSize();
 		Page page = new Page(this.pageInfo.getSize(), pageNumber);
 		if (page.getFirstRowNumber().longValue() > resultSize.longValue())
-			throw new PagedResultException("Strona o numerze "
-					+ Integer.toString(pageNumber)
-					+ " jest poza zakresem obecnego rezultatu");
+			throw new PagedResultException(
+					"Strona o numerze " + Integer.toString(pageNumber) + " jest poza zakresem obecnego rezultatu");
 
 		if (page.getLastRowNumber().longValue() > resultSize.longValue())
 			page.setLastRowNumber(resultSize);
@@ -253,8 +229,7 @@ public abstract class PagedResultSupport<Obj> implements Serializable,
 	}
 
 	/**
-	 * Metoda pomocnicza wyznaczająca kolejna strone dla podanej w argumencie
-	 * strony
+	 * Metoda pomocnicza wyznaczająca kolejna strone dla podanej w argumencie strony
 	 * 
 	 * @param page
 	 *            strona dla której wyznaczona zostanie strona następna
@@ -282,17 +257,12 @@ public abstract class PagedResultSupport<Obj> implements Serializable,
 	 */
 	private Long calculateResultSize() {
 		logger.trace(
-				"calculateResultSize(): "
-						+ "\n	this.result.getFirstRowPosition(): {}"
-						+ "\n	this.result.getAbsoluteFirstRowPosition(): {}"
-						+ "\n	this.result.getResultSize(): {}"
+				"calculateResultSize(): " + "\n	this.result.getFirstRowPosition(): {}"
+						+ "\n	this.result.getAbsoluteFirstRowPosition(): {}" + "\n	this.result.getResultSize(): {}"
 						+ "\n	this.pagingParams.getOffset(): {}",
-				new Object[] { this.result.getFirstRowPosition(),
-						this.result.getAbsoluteFirstRowPosition(),
-						this.result.getResultSize(),
-						this.pagingParams.getOffset() });
-		return (this.result.getFirstRowPosition() - this.result
-				.getAbsoluteFirstRowPosition())
+				new Object[] { this.result.getFirstRowPosition(), this.result.getAbsoluteFirstRowPosition(),
+						this.result.getResultSize(), this.pagingParams.getOffset() });
+		return (this.result.getFirstRowPosition() - this.result.getAbsoluteFirstRowPosition())
 				+ (this.result.getResultSize() - this.pagingParams.getOffset());
 	}
 
@@ -328,25 +298,44 @@ public abstract class PagedResultSupport<Obj> implements Serializable,
 	private int calculatePageNumber(Long resultSize) {
 		Long pNumber = (resultSize / this.pageInfo.getSize());
 		int pageNumber = pNumber.intValue();
-		if (((resultSize.longValue() % this.pageInfo.getSize()) != 0)
-				|| (pageNumber == 0)) {
+		if (((resultSize.longValue() % this.pageInfo.getSize()) != 0) || (pageNumber == 0)) {
 			pageNumber++;
 		}
 		return pageNumber;
 	}
 
 	public Enumeration<Page> getAllPages() {
-		if (this.pages == null) {
-			Vector<Page> pages = new Vector<Page>();
-			int firstPageNumber = calculateFirstPageNumber();
-			Page nextPage = new Page(this.pageInfo.getSize(), firstPageNumber);
-			while (nextPage != null) {
-				pages.add(nextPage);
-				nextPage = getNextPageInfo(nextPage);
-			}
-			this.pages = new PagesEnumerator(pages);
+
+		int startPage;
+		int endPage;
+
+		Vector<Page> pages = new Vector<Page>();
+		int firstPageNumber = calculateFirstPageNumber();
+		Page lastPage = getLastPageInfo();
+
+		Page currentPage = getCurrentPageInfo();
+		endPage = currentPage.getNumber() + MAX_ALL_PAGES_PRESENTATION / 2;
+		if (lastPage.getNumber() < endPage) {
+			startPage = currentPage.getNumber() - (MAX_ALL_PAGES_PRESENTATION / 2) - (endPage - lastPage.getNumber()) + 1;
+		} else {
+			startPage = currentPage.getNumber() - MAX_ALL_PAGES_PRESENTATION / 2;
 		}
-		return ((PagesEnumerator) this.pages).getNewInstance();
+
+		if (startPage <= 0) {
+			startPage = firstPageNumber;
+		}
+
+		Page nextPage = new Page(this.pageInfo.getSize(), startPage);
+		int i = 0;
+		while (nextPage != null) {
+			if (i >= MAX_ALL_PAGES_PRESENTATION) {
+				break;
+			}
+			pages.add(nextPage);
+			nextPage = getNextPageInfo(nextPage);
+			i++;
+		}
+		return new PagesEnumerator(pages);
 	}
 
 	/**
@@ -354,10 +343,8 @@ public abstract class PagedResultSupport<Obj> implements Serializable,
 	 */
 	private int calculateFirstPageNumber() {
 		Long firstPageNumber = 0L + Page.MIN_PAGE_NR;
-		if (!this.result.getFirstRowPosition().equals(
-				this.result.getAbsoluteFirstRowPosition())) {
-			firstPageNumber = (this.result.getFirstRowPosition() / pageInfo
-					.getSize()) + 1;
+		if (!this.result.getFirstRowPosition().equals(this.result.getAbsoluteFirstRowPosition())) {
+			firstPageNumber = (this.result.getFirstRowPosition() / pageInfo.getSize()) + 1;
 		}
 		return firstPageNumber.intValue();
 	}
@@ -405,16 +392,14 @@ public abstract class PagedResultSupport<Obj> implements Serializable,
 		if (!hasPreviousResultRows())
 			return null;
 
-		firstRowPositionOfPreviousResultRows = this.result
-				.getFirstRowPosition()
+		firstRowPositionOfPreviousResultRows = this.result.getFirstRowPosition()
 				- (this.result.getResultMaxPages() * pageInfo.getSize());
 
 		return firstRowPositionOfPreviousResultRows;
 	}
 
 	public boolean hasPreviousResultRows() {
-		return (!this.result.getFirstRowPosition().equals(
-				this.result.getAbsoluteFirstRowPosition()));
+		return (!this.result.getFirstRowPosition().equals(this.result.getAbsoluteFirstRowPosition()));
 	}
 
 	/*
@@ -452,9 +437,8 @@ public abstract class PagedResultSupport<Obj> implements Serializable,
 	}
 
 	/**
-	 * Pobieranie obiektu rezultatu "pierwotnego", który jest podstwą do
-	 * zbudowania stronicowanego rezultatu. Obiekt ten jest ustawiany w
-	 * konstruktorze
+	 * Pobieranie obiektu rezultatu "pierwotnego", który jest podstwą do zbudowania
+	 * stronicowanego rezultatu. Obiekt ten jest ustawiany w konstruktorze
 	 * {@link #PagedResultSupport(PagingParams, ResultSupport, _IPagedQuery, boolean)}
 	 * i nie raz może być potrzebny do dalszego przetwarzania.
 	 * 
