@@ -113,8 +113,8 @@
 				<version>3.5.1</version>
 				<configuration>
 					<encoding>UTF-8</encoding>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.7</source>
+					<target>1.7</target>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -229,7 +229,7 @@
 		<dependency>
 			<groupId>com.sun</groupId>
 			<artifactId>tools</artifactId>
-			<version>1.6.0_37</version>
+			<version>1.7.0_25</version>
 		</dependency>
 	</dependencies>
 </project>
