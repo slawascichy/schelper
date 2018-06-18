@@ -103,8 +103,10 @@ class MathExpressionCore {
 			/* unary minus */
 			return new MinusExpr(parseFactor());
 		}
-		logger.info("-->parseFactor: chPiervous='{}'({}), ch='{}'({}), chNext='{}'({})", new Object[] {
-				(char) this.chPiervous, this.chPiervous, (char) ch, ch, (char) this.chNext, this.chNext });
+		if (logger.isTraceEnabled()) {
+			logger.trace("-->parseFactor: chPiervous='{}'({}), ch='{}'({}), chNext='{}'({})", new Object[] {
+					(char) this.chPiervous, this.chPiervous, (char) ch, ch, (char) this.chNext, this.chNext });
+		}
 		IMathExpression x;
 		int startPos = this.pos;
 		if (eat('(')) {
@@ -116,8 +118,10 @@ class MathExpressionCore {
 				&& ((this.ch >= '0' && this.ch <= '9') || this.ch == '.')) {
 			/* liczby */
 			while ((ch >= '0' && ch <= '9') || ch == '.') {
-				logger.info("-->[{}..{}] parseFactor: bedzie liczba? mam '{}'...",
-						new Object[] { startPos, this.pos, (char) ch });
+				if (logger.isTraceEnabled()) {
+					logger.trace("-->[{}..{}] parseFactor: bedzie liczba? mam '{}'...",
+							new Object[] { startPos, this.pos, (char) ch });
+				}
 				nextChar();
 
 			}
@@ -128,8 +132,10 @@ class MathExpressionCore {
 			/* funkcje i parametry */
 			while ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9') || ch == '.'
 					|| ch == '_') {
-				logger.info("-->[{}..{}] parseFactor: bedzie słowo? mam '{}'...",
-						new Object[] { startPos, this.pos, (char) ch });
+				if (logger.isTraceEnabled()) {
+					logger.trace("-->[{}..{}] parseFactor: bedzie słowo? mam '{}'...",
+							new Object[] { startPos, this.pos, (char) ch });
+				}
 				nextChar();
 			}
 			String func = str.substring(startPos, this.pos);
@@ -209,7 +215,9 @@ class MathExpressionCore {
 		public BigDecimal eval() {
 			BigDecimal m = arg1.eval();
 			BigDecimal divisor = arg2.eval();
-			logger.info("-->DivExpr: {} + {}", new Object[] { m, divisor });
+			if (logger.isTraceEnabled()) {
+				logger.trace("-->DivExpr: {} + {}", new Object[] { m, divisor });
+			}
 			return m.divide(divisor, 10, RoundingMode.HALF_EVEN);
 		}
 
@@ -238,7 +246,9 @@ class MathExpressionCore {
 		public BigDecimal eval() {
 			BigDecimal m = arg1.eval();
 			BigDecimal multiplicand = arg2.eval();
-			logger.info("-->MultiExpr: {} + {}", new Object[] { m, multiplicand });
+			if (logger.isTraceEnabled()) {
+				logger.trace("-->MultiExpr: {} + {}", new Object[] { m, multiplicand });
+			}
 			return m.multiply(multiplicand);
 		}
 
@@ -267,7 +277,9 @@ class MathExpressionCore {
 		public BigDecimal eval() {
 			BigDecimal m = arg1.eval();
 			BigDecimal augend = arg2.eval();
-			logger.info("-->SumExpr: {} + {}", new Object[] { m, augend });
+			if (logger.isTraceEnabled()) {
+				logger.trace("-->SumExpr: {} + {}", new Object[] { m, augend });
+			}
 			return m.add(augend);
 		}
 
@@ -296,7 +308,9 @@ class MathExpressionCore {
 		public BigDecimal eval() {
 			BigDecimal m = arg1.eval();
 			BigDecimal subtrahend = arg2.eval();
-			logger.info("-->DiffExpr: {} - {}", new Object[] { m, subtrahend });
+			if (logger.isTraceEnabled()) {
+				logger.trace("-->DiffExpr: {} - {}", new Object[] { m, subtrahend });
+			}
 			return m.subtract(subtrahend);
 		}
 
@@ -317,7 +331,9 @@ class MathExpressionCore {
 		private final String param;
 
 		private ValueExpr(ExprFactory factory, String param, BigDecimal value) {
-			logger.info("->ValueExpr: param={}, value={}", new Object[] { param, (value != null ? value : 0d) });
+			if (logger.isTraceEnabled()) {
+				logger.trace("->ValueExpr: param={}, value={}", new Object[] { param, (value != null ? value : 0d) });
+			}
 			this.factory = factory;
 			this.factory.params.put(param, (value != null ? value : new BigDecimal(0)));
 			this.param = param;
@@ -374,7 +390,9 @@ class MathExpressionCore {
 		@Override
 		public BigDecimal eval() {
 			BigDecimal m = expression.eval();
-			logger.info("-->SqrtExpr: {}", new Object[] { m });
+			if (logger.isTraceEnabled()) {
+				logger.trace("-->SqrtExpr: {}", new Object[] { m });
+			}
 			return BigDecimal.valueOf(Math.sqrt(m.doubleValue()));
 		}
 
@@ -403,7 +421,9 @@ class MathExpressionCore {
 		public BigDecimal eval() {
 			BigDecimal m = expression.eval();
 			BigDecimal power = pow.eval();
-			logger.info("-->PovExpr: {}^{}", new Object[] { m, power });
+			if (logger.isTraceEnabled()) {
+				logger.trace("-->PovExpr: {}^{}", new Object[] { m, power });
+			}
 			return m.pow(power.intValue());
 		}
 
