@@ -1,6 +1,7 @@
 package pl.slawas.math;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.Set;
 
 /**
@@ -75,6 +76,7 @@ public class MathExpression implements IMathExpression {
 
 	private final MathExpressionCore eval;
 	private final IMathExpression expression;
+	private final MathContext context;
 
 	/**
 	 * Konstruktor wyrażenia. np.:<br/>
@@ -87,7 +89,12 @@ public class MathExpression implements IMathExpression {
 	 * @throws L0007MathExpressionException
 	 */
 	public MathExpression(final String str) throws MathExpressionException {
-		eval = new MathExpressionCore(str);
+		this(/* context */ null, str);
+	}
+
+	public MathExpression(MathContext context, final String str) throws MathExpressionException {
+		this.context = context;
+		eval = new MathExpressionCore(this.context, str);
 		expression = eval.parse();
 	}
 
@@ -99,7 +106,11 @@ public class MathExpression implements IMathExpression {
 	 */
 	@Override
 	public BigDecimal eval() {
-		return expression.eval();
+		if (this.context != null) {
+			return expression.eval().round(context);
+		} else {
+			return expression.eval();
+		}
 	}
 
 	/**
@@ -126,6 +137,12 @@ public class MathExpression implements IMathExpression {
 	public MathExpression setParam(String paramName, Double value) {
 		eval.setParam(paramName, value);
 		return this;
+	}
+
+	/* Overridden (non-Javadoc) */
+	@Override
+	public String toString() {
+		return eval.toString();
 	}
 
 }

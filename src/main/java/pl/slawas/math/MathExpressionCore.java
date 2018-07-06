@@ -1,6 +1,7 @@
 package pl.slawas.math;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,10 +27,12 @@ class MathExpressionCore {
 	private int pos = -1, ch, chPiervous, chNext;
 	private final String str;
 	private final ExprFactory factory = new ExprFactory();
+	private final MathContext context;
 
-	MathExpressionCore(String str) {
+	MathExpressionCore(MathContext context, String str) {
 		super();
 		this.str = str;
+		this.context = context;
 	}
 
 	private void nextChar() {
@@ -87,7 +90,7 @@ class MathExpressionCore {
 				x = new MultiExpr(x, parseTerm());
 			} else if (eat('/')) {
 				/* division */
-				x = new DivExpr(x, parseTerm());
+				x = new DivExpr(this.context, x, parseTerm());
 			} else {
 				return x;
 			}
@@ -190,7 +193,7 @@ class MathExpressionCore {
 	 *
 	 */
 	private static class ExprFactory {
-		private Map<String, BigDecimal> params = new HashMap<String, BigDecimal>();
+		private Map<String, BigDecimal> params = new HashMap<>();
 	}
 
 	/**
@@ -204,10 +207,12 @@ class MathExpressionCore {
 		protected static Logger logger = LoggerFactory.getLogger(MathExpression.class);
 		private final IMathExpression arg1;
 		private final IMathExpression arg2;
+		private final MathContext context;
 
-		private DivExpr(IMathExpression arg1, IMathExpression arg2) {
+		private DivExpr(MathContext context, IMathExpression arg1, IMathExpression arg2) {
 			this.arg1 = arg1;
 			this.arg2 = arg2;
+			this.context = context;
 		}
 
 		/* Overridden (non-Javadoc) */
@@ -218,7 +223,11 @@ class MathExpressionCore {
 			if (logger.isTraceEnabled()) {
 				logger.trace("-->DivExpr: {} + {}", new Object[] { m, divisor });
 			}
-			return m.divide(divisor, 10, RoundingMode.HALF_EVEN);
+			if (this.context != null) {
+				return m.divide(divisor, this.context);
+			} else {
+				return m.divide(divisor, 10, RoundingMode.HALF_EVEN);
+			}
 		}
 
 	}
@@ -502,6 +511,12 @@ class MathExpressionCore {
 			return BigDecimal.valueOf(Math.tan(Math.toRadians(m.doubleValue())));
 		}
 
+	}
+
+	/* Overridden (non-Javadoc) */
+	@Override
+	public String toString() {
+		return str;
 	}
 
 }
