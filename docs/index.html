@@ -1,20 +1,29 @@
 ---
 layout: default
 ---
-
 <div class="home">
-Hello World! This is sample page. I'm learning create Jekyll pages. Base is on <a href="https://github.com/jekyll/example">Jekyll Example</a>.
-<h1 class="page-heading">Posts</h1>
+	Hello World! This is sample page. I'm learning create Jekyll pages.
+	Base is on <a href="https://github.com/jekyll/example">Jekyll
+		Example</a>.
 
-  <ul class="post-list">
-    {% for post in site.posts %}
-      <li>
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+	<h1 class="page-heading">Pages</h1>
 
-        <h2>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        </h2>
-      </li>
-    {% endfor %}
-  </ul>
+	<div class="trigger">
+		{% for page in site.pages %} 
+		{% if page.title %} <a class="page-link"
+			href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a> 
+		{% endif %} 
+		{% endfor %}
+	</div>
+	
+	<h1 class="page-heading">Posts</h1>
+
+	<ul class="post-list">
+		{% for post in site.posts %}
+		<li><span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+			<h2>
+				<a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+			</h2></li> 
+		{% endfor %}
+	</ul>
 </div>
