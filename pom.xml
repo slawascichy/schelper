@@ -33,7 +33,7 @@
 			<url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
 		</license>
 	</licenses>
-	<url>http://scisoftware.pl/SC/Utils/${project.artifactId}/index.html</url>
+	<url>https://slawascichy.github.io/${project.artifactId}/index.html</url>
 	<organization>
 		<name>Sci Software</name>
 		<url>http://scisoftware.pl</url>
@@ -83,6 +83,7 @@
 				<artifactId>maven-site-plugin</artifactId>
 				<version>3.5.1</version>
 				<configuration>
+					<outputDirectory>${basedir}/docs</outputDirectory>
 					<outputEncoding>UTF-8</outputEncoding>
 				</configuration>
 				<dependencies>
@@ -92,6 +93,21 @@
 						<version>1.0</version>
 					</dependency>
 				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>2.7</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.0.1</version>
+				<configuration>
+					<doclint>none</doclint>
+					<outputDirectory>${basedir}/docs</outputDirectory>
+					<outputEncoding>UTF-8</outputEncoding>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
