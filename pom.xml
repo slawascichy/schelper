@@ -39,6 +39,12 @@
 		<url>http://scisoftware.pl</url>
 	</organization>
 
+	<scm>
+		<connection>scm:git:https://github.com/slawascichy/schelper.git</connection>
+		<developerConnection>scm:git:https://github.com/slawascichy/schelper.git</developerConnection>
+		<url>https://github.com/slawascichy/schelper</url>
+	</scm>
+
 	<build>
 		<extensions>
 			<extension>
