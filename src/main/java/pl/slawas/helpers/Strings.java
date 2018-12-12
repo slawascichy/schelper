@@ -103,7 +103,7 @@ public class Strings implements Serializable {
 			String replacement) {
 		int idx = source.lastIndexOf(toReplace);
 		if (idx != -1) {
-			StringBuffer ret = new StringBuffer(source);
+			StringBuilder ret = new StringBuilder(source);
 			ret.replace(idx, idx + toReplace.length(), replacement);
 			while ((idx = source.lastIndexOf(toReplace, idx - 1)) != -1) {
 				ret.replace(idx, idx + toReplace.length(), replacement);
@@ -434,7 +434,7 @@ public class Strings implements Serializable {
 	 */
 	public static String breakText(String text, int lineSize) {
 		text = replaceAll(text, "\r", "");
-		StringBuffer odp = new StringBuffer(text.length());
+		StringBuilder odp = new StringBuilder(text.length());
 		boolean wstaw_enter = false;
 		int j = 0;
 		int letterInWordCounter = 0;
@@ -456,7 +456,7 @@ public class Strings implements Serializable {
 							- letterInWordCounter + 1);
 					String rest = odp.substring(odp.length()
 							- letterInWordCounter + 1);
-					odp = new StringBuffer();
+					odp = new StringBuilder();
 					odp.append(x).append("\n").append(rest);
 					odp.append(text.charAt(i));
 					j = letterInWordCounter;
@@ -481,7 +481,7 @@ public class Strings implements Serializable {
 	 * @return skonwertowany tekst
 	 */
 	public static String forHTMLTag(String aTagFragment) {
-		final StringBuffer result = new StringBuffer();
+		final StringBuilder result = new StringBuilder();
 
 		final StringCharacterIterator iterator = new StringCharacterIterator(
 				aTagFragment);
@@ -517,7 +517,7 @@ public class Strings implements Serializable {
 	 * @return skonwertowany tekst
 	 */
 	public static String toDisableTags(String aText) {
-		final StringBuffer result = new StringBuffer();
+		final StringBuilder result = new StringBuilder();
 		final StringCharacterIterator iterator = new StringCharacterIterator(
 				aText);
 		char character = iterator.current();
@@ -542,7 +542,7 @@ public class Strings implements Serializable {
 	 * @return
 	 */
 	public static String forRegex(String aRegexFragment) {
-		final StringBuffer result = new StringBuffer();
+		final StringBuilder result = new StringBuilder();
 
 		final StringCharacterIterator iterator = new StringCharacterIterator(
 				aRegexFragment);
@@ -652,7 +652,7 @@ public class Strings implements Serializable {
 	 */
 	public static String codeUTF8Char(String text, String endTag) {
 
-		StringBuffer odp = new StringBuffer();
+		StringBuilder odp = new StringBuilder();
 		if (endTag == null)
 			endTag = "";
 
@@ -773,7 +773,7 @@ public class Strings implements Serializable {
 			tranMap.put(znak, toReplace);
 		}
 
-		StringBuffer odp = new StringBuffer();
+		StringBuilder odp = new StringBuilder();
 		tLength = text.length();
 		for (int i = 0; i < tLength; i++) {
 			int znak = (int) text.charAt(i);
@@ -802,7 +802,7 @@ public class Strings implements Serializable {
 
 	static String encodeUTF8_pl(String text) {
 
-		StringBuffer odp = new StringBuffer();
+		StringBuilder odp = new StringBuilder();
 		int tLength = text.length();
 		for (int i = 0; i < tLength; i++) {
 			int znak = (int) text.charAt(i);
