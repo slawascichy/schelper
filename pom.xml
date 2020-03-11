@@ -33,7 +33,7 @@
 			<url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
 		</license>
 	</licenses>
-	<url>https://slawascichy.github.io/${project.artifactId}/index.html</url>
+	<url>https://github.com/slawascichy/schelper</url>
 	<organization>
 		<name>Sci Software</name>
 		<url>http://scisoftware.pl</url>
